@@ -1,10 +1,10 @@
 package com.numble.whatz.domain.User.service;
 
+import com.numble.whatz.domain.User.dto.SessionUser;
 import com.numble.whatz.domain.User.dto.User;
 import com.numble.whatz.domain.User.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

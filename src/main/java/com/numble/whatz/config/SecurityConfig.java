@@ -27,15 +27,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login/**").permitAll()
-                .anyRequest()
-                .authenticated()
-            .and()
-                .logout()
-                .logoutSuccessUrl("/") // 로그아웃 이후
-            .and()
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService); // 로그인 성공하면 customOAuth2UserService에서 처리를 하겠다.
+                .anyRequest().permitAll();
+
+//        http.authorizeRequests()
+//                .antMatchers("/login/**").permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .logout()
+//                .logoutSuccessUrl("/") // 로그아웃 이후
+//                .and()
+//                .oauth2Login()
+//                .userInfoEndpoint()
+//                .userService(customOAuth2UserService); // 로
     }
 }

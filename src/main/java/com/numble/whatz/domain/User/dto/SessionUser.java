@@ -1,4 +1,4 @@
-package com.numble.whatz.domain.User.service;
+package com.numble.whatz.domain.User.dto;
 
 import com.numble.whatz.domain.User.dto.User;
 import lombok.Getter;

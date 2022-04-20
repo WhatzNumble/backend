@@ -31,7 +31,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     // access Token 을 할때 json 형식으로 변하게 변환
-    implementation 'com.google.code.gson:gson:2.8.7'
+//    implementation 'com.google.code.gson:gson:2.8.7'
+//    implementation group: 'org.json', name: 'json', version: '20090211'
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
 
 tasks.named('test') {

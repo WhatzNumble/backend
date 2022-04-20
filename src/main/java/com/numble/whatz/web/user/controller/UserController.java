@@ -1,5 +1,7 @@
 package com.numble.whatz.web.user.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.numble.whatz.domain.User.service.SessionUser;
@@ -15,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -75,13 +80,13 @@ public class UserController {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            log.info("response bode : ", result);
+            log.info("response bode : {}", result);
 
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
-
-            accessToken = element.getAsJsonObject().get("access_token").getAsString();
-            refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+            Map<String, String> map = new HashMap<>();
+            ObjectMapper obm = new ObjectMapper();
+            map = obm.readValue(result, new TypeReference<Map<String, String>>() {});
+            accessToken = map.get("access_token");
+            refreshToken = map.get("refresh_token");
 
             log.info("access_token : {}", accessToken);
             log.info("refresh_token : {}", refreshToken);

@@ -24,6 +24,7 @@ public class VideoController {
     public String uploadVideo(MultipartFile video) throws Exception {
         String fileDir = videoStore.storeVideo(video);
         System.out.println("fileDir = " + fileDir);
+
         return fileDir;
     }
 

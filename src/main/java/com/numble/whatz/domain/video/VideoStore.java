@@ -10,19 +10,27 @@ import java.util.UUID;
 @Component
 public class VideoStore {
 
+    /**
+     * application.properties 에서 file.dir , 파일 저장 경로
+     */
     @Value("${file.dir}")
     private String fileDir;
 
+    /**
+     * UUID로 바꿔서 파일을 저장한다. 테스트용에서는 파일이름 그대로 저장하고 있음
+     * @param multipartFile
+     * @return storeFilename
+     * @throws Exception
+     */
     public String storeVideo(MultipartFile multipartFile) throws Exception {
         if (multipartFile.isEmpty()) {
             return null;
         }
 
         String originalFilename = multipartFile.getOriginalFilename();
-        // UUID로 바꿔서 파일을 저장한다. 테스트용에서는 파일이름 그대로 저장하고 있음
 //        String storeFilename = createStoreFilename(originalFilename);
         multipartFile.transferTo(new File(getFullPath(originalFilename)));
-        return originalFilename;
+        return originalFilename; // 원래 return storeFilename;
     }
 
     public String getFullPath(String storeFilename) {

@@ -20,6 +20,12 @@ public class VideoController {
 
     private final VideoStore videoStore;
 
+    /**
+     * 비디오 업로드 - MultipartFile 로 받아와 videoStore에서 저장
+     * @param video
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/video/upload")
     public String uploadVideo(MultipartFile video) throws Exception {
         String fileDir = videoStore.storeVideo(video);
@@ -40,8 +46,6 @@ public class VideoController {
             @RequestHeader HttpHeaders headers) throws IOException {
         log.info("showVideo controller");
 
-        // 이 경로를 나중에 DB에서 가져오게 할 것.
-//        videoplayback.mp4
         String videoDB = "file:" + videoStore.getFullPath(filename);
 
         UrlResource video = new UrlResource(videoDB);

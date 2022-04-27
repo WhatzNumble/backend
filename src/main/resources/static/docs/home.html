@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Spring REST Docs</title>
+<title>API Documment</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,16 +438,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Spring REST Docs</h1>
+<h1>API Documment</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#resources-post">Post</a>
+<li><a href="#_공통사항">공통사항</a></li>
+<li><a href="#_홈_api">홈 API</a>
 <ul class="sectlevel2">
-<li><a href="#resources-post-create">Post 생성</a></li>
+<li><a href="#_홈_비디오">홈 비디오</a></li>
 </ul>
 </li>
 </ul>
@@ -455,47 +456,64 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="resources-post"><a class="link" href="#resources-post">Post</a></h2>
+<h2 id="_공통사항"><a class="link" href="#_공통사항">공통사항</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>데이터베이스가 추가되지 않았으므로,</p>
+</div>
+<div class="paragraph">
+<p>Pageable에 맞게 값이 나오지는 않습니다.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_홈_api"><a class="link" href="#_홈_api">홈 API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="resources-post-create"><a class="link" href="#resources-post-create">Post 생성</a></h3>
+<h3 id="_홈_비디오"><a class="link" href="#_홈_비디오">홈 비디오</a></h3>
 <div class="sect3">
-<h4 id="_http_request"><a class="link" href="#_http_request">HTTP request</a></h4>
+<h4 id="_endpoint"><a class="link" href="#_endpoint">EndPoint</a></h4>
+<div class="paragraph">
+<p>/home</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request"><a class="link" href="#_request">Request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /test HTTP/1.1
-Content-Type: application/json;charset=UTF-8
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /home?page=1&amp;size=3 HTTP/1.1
 Accept: application/json
-Content-Length: 34
-Host: www.whatz.ga
-
-{
-  "id" : 1,
-  "email" : "test"
-}</code></pre>
+Host: www.whatz.ga</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_http_response"><a class="link" href="#_http_response">HTTP response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 47
-
-{
-  "id" : 2,
-  "email" : "in Run Controller"
-}</code></pre>
+<h4 id="_request_parameters"><a class="link" href="#_request_parameters">Request Parameters</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 번호</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">가져올 크기</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
+<div class="sect3">
+<h4 id="_response_fields"><a class="link" href="#_response_fields">Response Fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
@@ -511,17 +529,74 @@ Content-Length: 47
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">결과코드</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].profile</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">결과메시지</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로필 사진 경로</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].like</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요의 상태</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].likes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">영상 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].videoDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시날짜</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].views</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].videoThumbnail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 사진 경로</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect3">
+<h4 id="_response_http_excample"><a class="link" href="#_response_http_excample">Response HTTP Excample</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>[ {
+  "nickname" : "user1",
+  "profile" : "사진경로1",
+  "likes" : 3,
+  "title" : "title1",
+  "videoDate" : "2022-04-27T20:18:50.153728",
+  "views" : 10,
+  "videoThumbnail" : "영상썸네일1",
+  "like" : false
+}, {
+  "nickname" : "user2",
+  "profile" : "사진경로2",
+  "likes" : 4,
+  "title" : "title2",
+  "videoDate" : "2022-04-27T20:18:50.15379",
+  "views" : 20,
+  "videoThumbnail" : "영상썸네일2",
+  "like" : false
+} ]</code></pre>
+</div>
+</div>
+<hr>
 </div>
 </div>
 </div>
@@ -530,7 +605,7 @@ Content-Length: 47
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-04-25 22:33:25 +0900
+Last updated 2022-04-27 18:42:52 +0900
 </div>
 </div>
 </body>

@@ -31,8 +31,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureRestDocs
@@ -66,7 +65,13 @@ public class VideoDocumentationTest {
         result.andExpect(status().isOk())
                 .andDo(document("video-upload-direct", // (4)
                         getDocumentRequest(),
-                        getDocumentResponse()
+                        getDocumentResponse(),
+                        requestParts(partWithName("file").optional().description("영상")),
+                        requestParameters(
+                                parameterWithName("videoThumbnail").description("영상 썸네일"),
+                                parameterWithName("title").description("영상 제목"),
+                                parameterWithName("content").description("영상 내용")
+                        )
                 ));
     }
 

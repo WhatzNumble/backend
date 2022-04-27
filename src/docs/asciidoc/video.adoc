@@ -21,6 +21,12 @@ Pageable에 맞게 값이 나오지는 않습니다.
 
 ==== Request
 include::{snippets}/video-upload-direct/http-request.adoc[]
+==== Request Fields
+include::{snippets}/video-upload-direct/request-parameters.adoc[]
+
+include::{snippets}/video-upload-direct/request-parts.adoc[]
+
+
 
 ==== Response HTTP Excample
 include::{snippets}/video-upload-direct/response-body.adoc[]

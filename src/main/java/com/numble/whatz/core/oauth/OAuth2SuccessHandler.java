@@ -30,8 +30,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         //아니면 회원가입 accessToken 반환
 
         String token = jwtTokenProvider.createToken(new TokenDataModel(Long.parseLong(oAuth2Model.getId()), oAuth2Model.getEmail(), Role.ROLE_MEMBER));
-        Cookie setCookie = new Cookie("ACCESS-TOKEN", token); // 쿠키 이름을 name으로 생성
-        response.addCookie(setCookie);
+        Cookie cookie = new Cookie("access-token", token); // 쿠키 이름을 name으로 생성
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        response.sendRedirect("/oauth/redirect");
     }
 
     private OAuth2Model toOAuth2Model(OAuth2User principal) {

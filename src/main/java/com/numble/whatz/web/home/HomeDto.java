@@ -3,28 +3,16 @@ package com.numble.whatz.web.home;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 public class HomeDto {
 
-    private String nickname;
-    private String profile;
-    private boolean isLike;
-    private int likes;
-    private String title;
-    private LocalDateTime videoDate;
-    private long views;
-    private String videoThumbnail;
+    private List<VideoInfoDto> videos;
+    private List<Long> likeList;
 
-    public HomeDto(String nickname, String profile, boolean isLike, int likes, String title, LocalDateTime videoDate, long views, String videoThumbnail) {
-        this.nickname = nickname;
-        this.profile = profile;
-        this.isLike = isLike;
-        this.likes = likes;
-        this.title = title;
-        this.videoDate = videoDate;
-        this.views = views;
-        this.videoThumbnail = videoThumbnail;
+    public HomeDto(List<VideoInfoDto> videos, List<Long> likeList) {
+        this.videos = videos;
+        this.likeList = likeList;
     }
 }

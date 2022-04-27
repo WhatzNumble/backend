@@ -14,7 +14,12 @@ import java.util.List;
 public class VideoController {
 
     @PostMapping("video/add/direct")
-    public String uploadVideoDirect(MultipartFile video) throws Exception {
+    public String uploadVideoDirect(DirectDto video) throws Exception {
+
+        System.out.println("video.getVideoThumbnail() = " + video.getVideoThumbnail());
+        System.out.println("video.getContent() = " + video.getContent());
+        System.out.println("video.getTitle() = " + video.getTitle());
+        System.out.println("video.getFile() = " + video.getFile());
 
         // 파일 저장
 
@@ -22,8 +27,12 @@ public class VideoController {
     }
 
     @PostMapping("video/add/embed")
-    public String uploadVideoEmbed(String link) throws Exception {
+    public String uploadVideoEmbed(EmbedDto video) throws Exception {
 
+        System.out.println("video.getVideoThumbnail() = " + video.getVideoThumbnail());
+        System.out.println("video.getContent() = " + video.getContent());
+        System.out.println("video.getTitle() = " + video.getTitle());
+        System.out.println("video.getFile() = " + video.getLink());
         // 링크 저장
 
         return "success";

@@ -109,14 +109,14 @@ public class HomeDocumentationTests {
                                 parameterWithName("size").description("가져올 크기")
                         ),
                         responseFields(
-                                fieldWithPath("[].nickname").description("닉네임"),
-                                fieldWithPath("[].profile").description("프로필 사진 경로"),
-                                fieldWithPath("[].like").description("좋아요의 상태"),
-                                fieldWithPath("[].likes").description("좋아요 수"),
-                                fieldWithPath("[].title").description("영상 제목"),
-                                fieldWithPath("[].videoDate").description("게시날짜"),
-                                fieldWithPath("[].views").description("조회수"),
-                                fieldWithPath("[].videoThumbnail").description("썸네일 사진 경로")
+                                fieldWithPath("videos[].nickname").description("닉네임"),
+                                fieldWithPath("videos[].profile").description("프로필 사진 경로"),
+                                fieldWithPath("videos[].likes").description("좋아요 수"),
+                                fieldWithPath("videos[].title").description("영상 제목"),
+                                fieldWithPath("videos[].videoDate").description("게시날짜"),
+                                fieldWithPath("videos[].views").description("조회수"),
+                                fieldWithPath("videos[].videoThumbnail").description("썸네일 사진 경로"),
+                                fieldWithPath("likeList[]").description("ddd")
                         )
                 ));
     }

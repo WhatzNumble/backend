@@ -1,7 +1,9 @@
 package com.numble.whatz.api.video;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.numble.whatz.api.home.TestDto;
+import com.numble.whatz.api.video.dto.EmbedDto;
 import com.numble.whatz.api.video.dto.LinkDto;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
@@ -18,6 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.nio.charset.StandardCharsets;
 
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentRequest;
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentResponse;
@@ -45,11 +49,16 @@ public class VideoDocumentationTest {
     @Test
     public void videoUploadDirect() throws Exception {
         //given
-        MockMultipartFile file = new MockMultipartFile("video", "video.mp4", "video/mp4", "<<video data>>".getBytes());
+        MockMultipartFile file = new MockMultipartFile("file", "video.mp4", "video/mp4", "<<video data>>".getBytes());
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/video/add/direct").file(file)
+                multipart("/video/add/direct")
+                        .file(file)
+                        .param("videoThumbnail", "This is Thumbnail")
+                        .param("title", "This is title")
+                        .param("content", "This is content")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -64,12 +73,12 @@ public class VideoDocumentationTest {
     @Test
     public void videoUploadEmbed() throws Exception {
         //given
-        LinkDto link = new LinkDto("임베드 링크");
+        EmbedDto embedDto = new EmbedDto("임베드 링크", "영상 썸네일", "영상 제목", "영상 내용");
 
         //when
         ResultActions result = this.mockMvc.perform(
                 post("/video/add/embed")
-                        .content(objectMapper.writeValueAsString(link))
+                        .content(objectMapper.writeValueAsString(embedDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -80,7 +89,10 @@ public class VideoDocumentationTest {
                         getDocumentRequest(),
                         getDocumentResponse(),
                         requestFields(
-                                fieldWithPath("link").description("임베드 링크")
+                                fieldWithPath("link").description("임베드 링크"),
+                                fieldWithPath("videoThumbnail").description("영상 썸네일"),
+                                fieldWithPath("title").description("영상 제목"),
+                                fieldWithPath("content").description("영상 내용")
                         )
                 ));
     }

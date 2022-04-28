@@ -1,4 +1,4 @@
-package com.numble.whatz.domain.video;
+package com.numble.whatz.application.video.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

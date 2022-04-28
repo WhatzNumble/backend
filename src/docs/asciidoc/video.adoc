@@ -1,0 +1,120 @@
+= API Documment
+:toc: left
+:toclevels: 2
+:sectlinks:
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 공통사항
+데이터베이스가 추가되지 않았으므로,
+
+Pageable에 맞게 값이 나오지는 않습니다.
+
+
+== 비디오 API
+
+=== 직접 영상 업로드
+
+==== EndPoint
+/api/video/add/direct
+
+==== Request
+include::{snippets}/video-upload-direct/http-request.adoc[]
+==== Request Fields
+include::{snippets}/video-upload-direct/request-parameters.adoc[]
+
+include::{snippets}/video-upload-direct/request-parts.adoc[]
+
+
+
+==== Response HTTP Excample
+include::{snippets}/video-upload-direct/response-body.adoc[]
+
+
+=== 임베드 영상 업로드
+
+==== EndPoint
+/api/video/add/embed
+
+==== Request
+include::{snippets}/video-upload-embed/http-request.adoc[]
+
+==== Request Fields
+include::{snippets}/video-upload-embed/request-fields.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/video-upload-embed/response-body.adoc[]
+---
+=== 마이 비디오
+
+==== EndPoint
+/api/video
+
+==== Request
+include::{snippets}/video-myvideo/http-request.adoc[]
+
+==== Request Parameters
+include::{snippets}/video-myvideo/request-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/video-myvideo/response-fields.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/video-myvideo/response-body.adoc[]
+---
+=== 마이 비디오
+
+==== EndPoint
+/api/video/{id}
+
+==== Request
+include::{snippets}/video-oneVideo/http-request.adoc[]
+
+==== Request Path Parameters
+include::{snippets}/video-oneVideo/path-parameters.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/video-oneVideo/response-body.adoc[]
+
+==== Response Fields
+include::{snippets}/video-oneVideo/response-fields.adoc[]
+
+---
+=== 비디오 삭제
+
+==== EndPoint
+/api/video/delete
+
+==== Request
+include::{snippets}/video-deleteVideo/http-request.adoc[]
+
+==== Request Parameters
+include::{snippets}/video-deleteVideo/request-parameters.adoc[]
+
+
+==== Response HTTP Excample
+include::{snippets}/video-deleteVideo/response-body.adoc[]
+
+---
+
+=== 관심 비디오
+
+==== EndPoint
+/api/favorite
+
+==== Request
+include::{snippets}/video-favorite/http-request.adoc[]
+
+==== Request Parameters
+include::{snippets}/video-favorite/request-parameters.adoc[]
+
+
+==== Response HTTP Excample
+include::{snippets}/video-favorite/response-body.adoc[]
+
+==== Response Fields
+include::{snippets}/video-favorite/response-fields.adoc[]
+
+---
+

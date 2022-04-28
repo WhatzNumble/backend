@@ -1,0 +1,32 @@
+= API Documment
+:toc: left
+:toclevels: 2
+:sectlinks:
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 공통사항
+데이터베이스가 추가되지 않았으므로,
+
+Pageable에 맞게 값이 나오지는 않습니다.
+
+== 홈 API
+
+=== 홈 비디오
+
+==== EndPoint
+/api/home
+
+==== Request
+include::{snippets}/home/http-request.adoc[]
+
+==== Request Parameters
+include::{snippets}/home/request-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/home/response-fields.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/home/response-body.adoc[]
+---

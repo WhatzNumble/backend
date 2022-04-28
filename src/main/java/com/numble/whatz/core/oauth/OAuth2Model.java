@@ -1,5 +1,7 @@
 package com.numble.whatz.core.oauth;
 
+import com.numble.whatz.application.Role;
+import com.numble.whatz.application.member.domain.Member;
 import lombok.Getter;
 
 @Getter
@@ -12,5 +14,14 @@ public class OAuth2Model {
         this.id = id;
         this.email = email;
         this.snsType = snsType;
+    }
+
+    public Member toEntity() {
+        return Member.builder()
+                .email(email)
+                .nickName(null)
+                .snsId(id)
+                .role(Role.ROLE_MEMBER)
+                .build();
     }
 }

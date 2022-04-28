@@ -40,6 +40,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         return new OAuth2Model(
                 principal.getAttribute("id"),
                 principal.getAttribute("email"),
-                (SnsType) principal.getAttribute("type"));
+                (Sns) principal.getAttribute("type"));
     }
 }

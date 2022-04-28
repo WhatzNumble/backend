@@ -1,6 +1,6 @@
 package com.numble.whatz.core.oauth;
 
-public enum SnsType {
+public enum Sns {
     KAKAO,
     UNKNOWN
 }

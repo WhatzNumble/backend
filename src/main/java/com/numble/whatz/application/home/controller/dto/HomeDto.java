@@ -1,4 +1,4 @@
-package com.numble.whatz.web.home;
+package com.numble.whatz.application.home.controller.dto;
 
 import lombok.Getter;
 import lombok.Setter;

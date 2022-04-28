@@ -1,5 +1,7 @@
-package com.numble.whatz.web.home;
+package com.numble.whatz.application.home.controller;
 
+import com.numble.whatz.application.home.controller.dto.HomeDto;
+import com.numble.whatz.application.home.controller.dto.VideoInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

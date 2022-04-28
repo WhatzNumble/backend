@@ -1,28 +1,29 @@
-package com.numble.whatz.web.video;
+package com.numble.whatz.application.home.controller.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+// api/home 에 쓰이는 DTO
 @Getter @Setter
-public class VideoOneDto {
+public class VideoInfoDto {
 
+    private String nickname;
+    private String profile;
     private int likes;
     private String title;
     private LocalDateTime videoDate;
     private long views;
     private String videoThumbnail;
-    private String linkOrPath;
-    private String content;
 
-    public VideoOneDto(int likes, String title, LocalDateTime videoDate, long views, String videoThumbnail, String linkOrPath, String content) {
+    public VideoInfoDto(String nickname, String profile, int likes, String title, LocalDateTime videoDate, long views, String videoThumbnail) {
+        this.nickname = nickname;
+        this.profile = profile;
         this.likes = likes;
         this.title = title;
         this.videoDate = videoDate;
         this.views = views;
         this.videoThumbnail = videoThumbnail;
-        this.linkOrPath = linkOrPath;
-        this.content = content;
     }
 }

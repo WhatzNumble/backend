@@ -1,11 +1,13 @@
 package com.numble.whatz.web.video;
 
+import com.numble.whatz.web.home.VideoInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class VideoController {
 
-    @PostMapping("video/add/direct")
+    @PostMapping("api/video/add/direct")
     public String uploadVideoDirect(DirectDto video) throws Exception {
 
         System.out.println("video.getVideoThumbnail() = " + video.getVideoThumbnail());
@@ -26,7 +28,7 @@ public class VideoController {
         return "success";
     }
 
-    @PostMapping("video/add/embed")
+    @PostMapping("api/video/add/embed")
     public String uploadVideoEmbed(EmbedDto video) throws Exception {
 
         System.out.println("video.getVideoThumbnail() = " + video.getVideoThumbnail());
@@ -38,7 +40,7 @@ public class VideoController {
         return "success";
     }
 
-    @GetMapping("video")
+    @GetMapping("api/video")
     public MyVideosDto myVideos(@PageableDefault(size = 5)Pageable pageable) {
 
         // ======== 서비스가 생기면 여기는 지우는 부분 ========
@@ -55,4 +57,47 @@ public class VideoController {
 
         return myVideosDto;
     }
+
+    @GetMapping("api/video/{id}")
+    public VideoOneDto myVideo(@PathVariable Long id) {
+
+        log.info("id={}", id);
+
+        // ======== 서비스가 생기면 여기는 지우는 부분 ========
+        VideoOneDto videoOneDto = new VideoOneDto(10, "title1", LocalDateTime.now(),
+                300L, "Thumbnail1", "linkOrPath1", "content");
+        // ======== 서비스가 생기면 여기는 지우는 부분 ========
+
+        return videoOneDto;
+    }
+
+    //-------------No Test yet--------------
+
+    @PostMapping("api/video/modify")
+    public String modifyVideo() {
+        return "success";
+    }
+
+    //-----------------------------------
+
+    @PostMapping("api/video/delete")
+    public String deleteVideo(String id) {
+        return "success";
+    }
+
+    @GetMapping("api/favorite")
+    public List<FavoritesDto> favoriteVideo(@PageableDefault(size = 5)Pageable pageable) {
+        // ======== 서비스가 생기면 여기는 지우는 부분 ========
+        FavoritesDto favoritesDto1 = new FavoritesDto(1L, "videoThumbnail1", 30L);
+        FavoritesDto favoritesDto2 = new FavoritesDto(1L, "videoThumbnail1", 30L);
+
+        List<FavoritesDto> favoritesDtos = new ArrayList<>();
+        favoritesDtos.add(favoritesDto1);
+        favoritesDtos.add(favoritesDto2);
+        // ======== 서비스가 생기면 여기는 지우는 부분 ========
+
+        return favoritesDtos;
+    }
+
+
 }

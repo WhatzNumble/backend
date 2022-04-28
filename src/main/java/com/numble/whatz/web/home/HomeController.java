@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 public class HomeController {
 
-    @GetMapping("/home")
+    @GetMapping("api/home")
     public HomeDto home(@PageableDefault(size = 5) Pageable pageable) {
 
         // ======== 서비스가 생기면 여기는 지우는 부분 ========

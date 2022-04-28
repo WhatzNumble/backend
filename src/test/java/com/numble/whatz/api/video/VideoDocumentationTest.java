@@ -52,7 +52,7 @@ public class VideoDocumentationTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/video/add/direct")
+                multipart("/api/video/add/direct")
                         .file(file)
                         .param("videoThumbnail", "This is Thumbnail")
                         .param("title", "This is title")
@@ -82,7 +82,7 @@ public class VideoDocumentationTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                post("/video/add/embed")
+                post("/api/video/add/embed")
                         .content(objectMapper.writeValueAsString(embedDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -108,7 +108,7 @@ public class VideoDocumentationTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/video")
+                get("/api/video")
                         .param("page", "1")
                         .param("size", "3")
                         .accept(MediaType.APPLICATION_JSON)
@@ -127,6 +127,91 @@ public class VideoDocumentationTest {
                                 fieldWithPath("videos[].videoId").description("비디오 번호"),
                                 fieldWithPath("videos[].videoThumbnail").description("비디오 썸네일"),
                                 fieldWithPath("videos[].views").description("조회수")
+                        )
+                ));
+    }
+
+    @Test
+    public void oneVideo() throws Exception {
+        //given
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                get("/api/video/{id}", 1L)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isOk())
+                .andDo(document("video-oneVideo", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        pathParameters(
+                                parameterWithName("id").description("비디오 번호")
+                        ),
+                        responseFields(
+                                fieldWithPath("likes").description("좋아요 수"),
+                                fieldWithPath("title").description("제목"),
+                                fieldWithPath("videoDate").description("게시된 날짜"),
+                                fieldWithPath("views").description("조회수"),
+                                fieldWithPath("videoThumbnail").description("영상 썸네일"),
+                                fieldWithPath("linkOrPath").description("링크 또는 경로"),
+                                fieldWithPath("content").description("영상 내용")
+                        )
+                ));
+    }
+
+    @Test
+    public void modifyVideo() throws Exception {
+    }
+
+    @Test
+    public void deleteVideo() throws Exception {
+        //given
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                post("/api/video/delete")
+                        .param("id", "1")
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isOk())
+                .andDo(document("video-deleteVideo", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParameters(
+                                parameterWithName("id").description("비디오 번호")
+                        )
+                ));
+    }
+
+    @Test
+    public void favoriteVideos() throws Exception {
+        //given
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                get("/api/favorite")
+                        .param("page", "1")
+                        .param("size", "3")
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isOk())
+                .andDo(document("video-favorite", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParameters(
+                                parameterWithName("page").description("페이지 번호"),
+                                parameterWithName("size").description("가져올 크기")
+                        ),
+                        responseFields(
+                                fieldWithPath("[].videoId").description("영상 번호"),
+                                fieldWithPath("[].videoThumbnail").description("영상 썸네일"),
+                                fieldWithPath("[].views").description("영상 조회수")
                         )
                 ));
     }

@@ -93,7 +93,7 @@ public class HomeDocumentationTests {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/home")
+                get("/api/home")
                         .param("page", "1")
                         .param("size", "3")
                         .accept(MediaType.APPLICATION_JSON)

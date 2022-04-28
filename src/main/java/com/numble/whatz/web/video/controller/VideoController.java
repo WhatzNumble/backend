@@ -1,4 +1,4 @@
-package com.numble.whatz.web.user.controller;
+package com.numble.whatz.web.video.controller;
 
 import com.numble.whatz.domain.video.VideoStore;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+//@RestController
 @Slf4j
 @RequiredArgsConstructor
 public class VideoController {

@@ -2,6 +2,8 @@ package com.numble.whatz.application.video.controller;
 
 import com.numble.whatz.application.video.controller.dto.*;
 import lombok.extern.slf4j.Slf4j;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;

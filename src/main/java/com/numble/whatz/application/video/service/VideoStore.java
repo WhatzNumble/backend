@@ -1,5 +1,7 @@
 package com.numble.whatz.application.video.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
@@ -9,23 +11,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
+import static com.numble.whatz.application.video.service.PathUtil.getFullPathMp4File;
+
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class VideoStore {
 
-    /**
-     * application.properties 에서 file.dir , 파일 저장 경로
-     */
+    private final S3Uploader s3Uploader;
+    private final FFmpegConverter fFmpegConverter;
+
     @Value("${file.dir}")
     private String fileDir;
 
-    /**
-     * UUID로 바꿔서 파일을 저장한다. 테스트용에서는 파일이름 그대로 저장하고 있음
-     * @param multipartFile
-     * @return storeFilename
-     * @throws Exception
-     */
     public String storeVideo(MultipartFile multipartFile) throws Exception {
         if (multipartFile.isEmpty()) {
             return null;
@@ -33,43 +34,33 @@ public class VideoStore {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
-        String storeFilename = createStoreFilename(uuid, originalFilename);
-        String executeFilename = createStoreExecuteFilename(uuid);
+        String storeFilename = createStoreFilename(uuid, originalFilename); //UUID.mp4
+        String executeFilename = createStoreExecuteFilename(uuid); // UUID.m3u8
 
-        FFmpeg ffmpeg = new FFmpeg(fileDir + "mp4File/");
-        FFprobe fFprobe = new FFprobe(fileDir + "executeFile/");
+        File mp4uuidFile = new File(getFullPathMp4File(storeFilename));
+        multipartFile.transferTo(mp4uuidFile);
 
-        multipartFile.transferTo(new File(getFullPathMp4File(storeFilename)));
+        fFmpegConverter.convert(storeFilename, executeFilename);
 
-        FFmpegBuilder builder = new FFmpegBuilder()
-                .setInput(storeFilename)
-                        .overrideOutputFiles(true)
-                                .addOutput(executeFilename)
-                                        .setFormat("m3u8")
-//                .setTargetSize(250_000) // 250KB
-//                .disableSubtitle() // 서브 타이틀 없음
-//                .setAudioChannels(1) // Mono audio
-//                .setAudioCodec("acc") // // acc codec 사용
-//                .setAudioSampleRate(48_000) // 48KHz
-//                .setVideoCodec("libx264") // 영상은 x264를 사용
-//                .setVideoFrameRate(24, 1) // 매초 24프레임
-//                .setVideoResolution(640, 480) // 640x480
-                                                .done();
+        s3Processor(mp4uuidFile);
 
-        FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, fFprobe);
-
-        executor.createJob(builder).run();
-
-//        executor.createTwoPassJob(builder).run(); 느리지만 더 좋은 품질
-
-
-        return originalFilename; // 원래 return storeFilename;
+        return executeFilename;
     }
 
+    private void s3Processor(File mp4uuidFile) throws IOException {
+        File executeFile = new File(fileDir + "executeFile/");
+        File[] executeFiles = executeFile.listFiles();
 
+        for (File file : executeFiles) {
+            s3Uploader.upload(file, "/WhatzDev");
+        }
+        deleteMp4File(mp4uuidFile);
+    }
 
-    public String getFullPathMp4File(String storeFilename) {
-        return fileDir + "mp4File/" + storeFilename;
+    private void deleteMp4File(File mp4uuidFile) {
+        if (mp4uuidFile.delete())
+            return ;
+        log.info("deleteMp4File fail");
     }
 
     private String createStoreFilename(String uuid, String originalFilename) {

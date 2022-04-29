@@ -1,9 +1,9 @@
 package com.numble.whatz.application.video.controller;
 
 import com.numble.whatz.application.video.controller.dto.*;
+import com.numble.whatz.application.video.service.VideoStore;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.bramp.ffmpeg.FFmpeg;
-import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +14,16 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class VideoController {
+
+    private final VideoStore videoStore;
 
     @PostMapping("api/video/add/direct")
     public String uploadVideoDirect(DirectDto video) throws Exception {
 
-        System.out.println("video.getVideoThumbnail() = " + video.getVideoThumbnail());
-        System.out.println("video.getContent() = " + video.getContent());
-        System.out.println("video.getTitle() = " + video.getTitle());
-        System.out.println("video.getFile() = " + video.getFile());
+        String s = videoStore.storeVideo(video.getFile());
+        System.out.println("s = " + s);
 
         // 파일 저장
 

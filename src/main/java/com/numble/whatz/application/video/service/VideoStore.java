@@ -1,46 +1,75 @@
 package com.numble.whatz.application.video.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
+import static com.numble.whatz.application.video.service.PathUtil.getFullPathMp4File;
+
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class VideoStore {
 
-    /**
-     * application.properties 에서 file.dir , 파일 저장 경로
-     */
+    private final S3Uploader s3Uploader;
+    private final FFmpegConverter fFmpegConverter;
+
     @Value("${file.dir}")
     private String fileDir;
 
-    /**
-     * UUID로 바꿔서 파일을 저장한다. 테스트용에서는 파일이름 그대로 저장하고 있음
-     * @param multipartFile
-     * @return storeFilename
-     * @throws Exception
-     */
     public String storeVideo(MultipartFile multipartFile) throws Exception {
         if (multipartFile.isEmpty()) {
             return null;
         }
 
         String originalFilename = multipartFile.getOriginalFilename();
-//        String storeFilename = createStoreFilename(originalFilename);
-        multipartFile.transferTo(new File(getFullPath(originalFilename)));
-        return originalFilename; // 원래 return storeFilename;
-    }
-
-    public String getFullPath(String storeFilename) {
-        return fileDir + storeFilename;
-    }
-
-    private String createStoreFilename(String originalFilename) {
-        String ext = extractedExt(originalFilename);
         String uuid = UUID.randomUUID().toString();
+        String storeFilename = createStoreFilename(uuid, originalFilename); //UUID.mp4
+        String executeFilename = createStoreExecuteFilename(uuid); // UUID.m3u8
+
+        File mp4uuidFile = new File(getFullPathMp4File(storeFilename));
+        multipartFile.transferTo(mp4uuidFile);
+
+        fFmpegConverter.convert(storeFilename, executeFilename);
+
+        s3Processor(mp4uuidFile);
+
+        return executeFilename;
+    }
+
+    private void s3Processor(File mp4uuidFile) throws IOException {
+        File executeFile = new File(fileDir + "executeFile/");
+        File[] executeFiles = executeFile.listFiles();
+
+        for (File file : executeFiles) {
+            s3Uploader.upload(file, "/WhatzDev");
+        }
+        deleteMp4File(mp4uuidFile);
+    }
+
+    private void deleteMp4File(File mp4uuidFile) {
+        if (mp4uuidFile.delete())
+            return ;
+        log.info("deleteMp4File fail");
+    }
+
+    private String createStoreFilename(String uuid, String originalFilename) {
+        String ext = extractedExt(originalFilename);
         return uuid + "." + ext;
+    }
+
+    private String createStoreExecuteFilename(String uuid) {
+        return uuid + ".m3u8";
     }
 
     private String extractedExt(String originalFilename) {

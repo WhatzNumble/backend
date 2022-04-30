@@ -2,15 +2,24 @@ package com.numble.whatz.api.video;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.numble.whatz.api.video.dto.EmbedDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentationConfigurer;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentRequest;
@@ -21,6 +30,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureRestDocs
@@ -52,6 +62,36 @@ public class VideoDocumentationTest {
 
         //then
         result.andExpect(status().isOk())
+                .andDo(document("video-upload-direct", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParts(partWithName("file").optional().description("영상")),
+                        requestParameters(
+                                parameterWithName("videoThumbnail").description("영상 썸네일"),
+                                parameterWithName("title").description("영상 제목"),
+                                parameterWithName("content").description("영상 내용")
+                        )
+                ));
+    }
+
+    @Test
+    public void videoUploadDirectException() throws Exception {
+        //given
+        MockMultipartFile file = new MockMultipartFile("file", "video.mp4", "video/mp4", "<<video data>>".getBytes());
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                multipart("/api/video/add/direct")
+                        .file(file)
+                        .param("videoThumbnail", "This is Thumbnail")
+                        .param("title", "This is title")
+                        .param("content", "This is content")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+        );
+
+        //then
+        result.andExpect(status().isForbidden())
                 .andDo(document("video-upload-direct", // (4)
                         getDocumentRequest(),
                         getDocumentResponse(),

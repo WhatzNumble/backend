@@ -1,5 +1,7 @@
 package com.numble.whatz.application.video.service;
 
+import com.numble.whatz.core.advice.VideoStoreExceptionMessage;
+import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.bramp.ffmpeg.FFmpeg;
@@ -27,7 +29,7 @@ public class VideoStore {
     @Value("${file.dir}")
     private String fileDir;
 
-    public String storeVideo(MultipartFile multipartFile) throws Exception {
+    public String storeVideo(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
             return null;
         }
@@ -38,8 +40,11 @@ public class VideoStore {
         String executeFilename = createStoreExecuteFilename(uuid); // UUID.m3u8
 
         File mp4uuidFile = new File(getFullPathMp4File(storeFilename));
-        multipartFile.transferTo(mp4uuidFile);
-
+        try {
+            multipartFile.transferTo(mp4uuidFile);
+        } catch (IOException e) {
+            throw new CustomVideoStoreException(VideoStoreExceptionMessage.MULTIPART_EX, e);
+        }
         fFmpegConverter.convert(storeFilename, executeFilename);
 
         s3Processor(mp4uuidFile);

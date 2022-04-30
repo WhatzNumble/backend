@@ -1,11 +1,15 @@
 package com.numble.whatz.application.video.controller;
 
 import com.numble.whatz.application.video.controller.dto.*;
+import com.numble.whatz.application.video.service.VideoService;
 import com.numble.whatz.application.video.service.VideoStore;
+import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -18,20 +22,22 @@ import java.util.List;
 public class VideoController {
 
     private final VideoStore videoStore;
+    private final VideoService videoService;
 
     @PostMapping("api/video/add/direct")
-    public String uploadVideoDirect(DirectDto video) throws Exception {
+    public ResponseEntity uploadVideoDirect(DirectDto video) throws Exception {
 
-        String s = videoStore.storeVideo(video.getFile());
-        System.out.println("s = " + s);
+        String executeFileName = videoStore.storeVideo(video.getFile());
+
+
 
         // 파일 저장
 
-        return "success";
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("api/video/add/embed")
-    public String uploadVideoEmbed(EmbedDto video) throws Exception {
+    public ResponseEntity uploadVideoEmbed(EmbedDto video) {
 
         System.out.println("video.getVideoThumbnail() = " + video.getVideoThumbnail());
         System.out.println("video.getContent() = " + video.getContent());
@@ -39,7 +45,7 @@ public class VideoController {
         System.out.println("video.getFile() = " + video.getLink());
         // 링크 저장
 
-        return "success";
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("api/video")

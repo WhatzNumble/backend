@@ -19,7 +19,7 @@ public class LogTraceAspect {
         this.logTrace = logTrace;
     }
 
-    @Around("execution(* com.numble.whatz.web..*(..))")
+    @Around("execution(* com.numble.whatz.application..*(..))")
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
         TraceStatus status = null;
 

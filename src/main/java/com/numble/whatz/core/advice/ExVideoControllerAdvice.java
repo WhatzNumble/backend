@@ -19,6 +19,13 @@ public class ExVideoControllerAdvice {
         return new ErrorResult("VideoDirectException", e.getVideoStoreExceptionMessage().getMessage());
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IllegalStateException.class)
+    public ErrorResult notFoundHandler(IllegalStateException e) {
+        log.error("[exceptionHandler] ex", e);
+        return new ErrorResult("IllegalStateException", e.getMessage());
+    }
+
 
 
 

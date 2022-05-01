@@ -1,14 +1,13 @@
 package com.numble.whatz.application.video.service;
 
-import com.numble.whatz.application.video.repository.VideoRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.numble.whatz.application.video.controller.dto.DirectDto;
+import com.numble.whatz.application.video.controller.dto.EmbedDto;
 
-@Service
-@RequiredArgsConstructor
-public class VideoService {
+import java.io.IOException;
+import java.security.Principal;
 
-    private final VideoRepository videoRepository;
-
-
+public interface VideoService {
+    void saveDirect(DirectDto video, Principal principal) throws IOException;
+    void saveEmbed(EmbedDto video, Principal principal);
+    void removeVideo(String id, Principal principal);
 }

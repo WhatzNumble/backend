@@ -1,10 +1,12 @@
 package com.numble.whatz.application.video.controller;
 
 import com.numble.whatz.application.home.controller.dto.VideoInfoDto;
+import com.numble.whatz.application.member.domain.Member;
+import com.numble.whatz.application.member.repository.MemberRepository;
 import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.service.VideoService;
+import com.numble.whatz.application.video.service.VideoServiceImpl;
 import com.numble.whatz.application.video.service.VideoStore;
-import com.numble.whatz.application.video.service.VideoStoreImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,33 +25,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VideoController {
 
-    private final VideoStore videoStore;
     private final VideoService videoService;
 
     @PostMapping("api/video/add/direct")
-    public ResponseEntity uploadVideoDirect(DirectDto video) throws Exception {
-
-        String executeFileName = videoStore.storeVideo(video.getFile());
-
-        // 파일 저장
-
+    public ResponseEntity uploadVideoDirect(DirectDto video, Principal principal) throws Exception {
+        videoService.saveDirect(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("api/video/add/embed")
-    public ResponseEntity uploadVideoEmbed(EmbedDto video) {
-
-        System.out.println("video.getVideoThumbnail() = " + video.getVideoThumbnail());
-        System.out.println("video.getContent() = " + video.getContent());
-        System.out.println("video.getTitle() = " + video.getTitle());
-        System.out.println("video.getFile() = " + video.getLink());
-        // 링크 저장
-
+    public ResponseEntity uploadVideoEmbed(EmbedDto video, Principal principal) {
+        videoService.saveEmbed(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("api/video")
-    public MyVideosDto myVideos(@PageableDefault(size = 5)Pageable pageable) {
+    public MyVideosDto myVideos(@PageableDefault(size = 5)Pageable pageable, Principal principal) {
 
         // ======== 서비스가 생기면 여기는 지우는 부분 ========
 
@@ -103,26 +95,12 @@ public class VideoController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //-----------------------------------
-
     @PostMapping("api/video/delete")
-    public String deleteVideo(String id) {
-        return "success";
+    public ResponseEntity deleteVideo(String id, Principal principal) {
+        videoService.removeVideo(id, principal);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("api/favorite")
-    public List<FavoritesDto> favoriteVideo(@PageableDefault(size = 5)Pageable pageable) {
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-        FavoritesDto favoritesDto1 = new FavoritesDto(1L, "videoThumbnail1", 30L);
-        FavoritesDto favoritesDto2 = new FavoritesDto(1L, "videoThumbnail1", 30L);
-
-        List<FavoritesDto> favoritesDtos = new ArrayList<>();
-        favoritesDtos.add(favoritesDto1);
-        favoritesDtos.add(favoritesDto2);
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-
-        return favoritesDtos;
-    }
-
+    //-----------------------------------
 
 }

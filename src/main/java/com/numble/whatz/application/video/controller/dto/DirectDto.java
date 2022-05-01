@@ -8,11 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class DirectDto {
 
     private MultipartFile file;
-    private String videoThumbnail;
+    private MultipartFile videoThumbnail;
     private String title;
     private String content;
 
-    public DirectDto(MultipartFile file, String videoThumbnail, String title, String content) {
+    public DirectDto(MultipartFile file, MultipartFile videoThumbnail, String title, String content) {
         this.file = file;
         this.videoThumbnail = videoThumbnail;
         this.title = title;

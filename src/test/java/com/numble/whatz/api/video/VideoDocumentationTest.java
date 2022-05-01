@@ -231,12 +231,7 @@ public class VideoDocumentationTest {
                         ),
                         responseFields(
                                 fieldWithPath("videos[].videoId").description("비디오 번호"),
-                                fieldWithPath("videos[].videoThumbnail").description("비디오 썸네일"),
-                                fieldWithPath("videos[].directDir").description("직접 업로드 경로").optional(),
-                                fieldWithPath("videos[].embedLink").description("임베드 경로").optional(),
-                                fieldWithPath("videos[].title").description("제목"),
-                                fieldWithPath("videos[].content").description("내용"),
-                                fieldWithPath("videos[].views").description("조회수")
+                                fieldWithPath("videos[].videoThumbnail").description("비디오 썸네일")
                         )
                 ));
     }
@@ -260,13 +255,15 @@ public class VideoDocumentationTest {
                                 parameterWithName("id").description("비디오 번호")
                         ),
                         responseFields(
+                                fieldWithPath("nickname").description("닉네임"),
+                                fieldWithPath("profile").description("프로필 사진 경로"),
                                 fieldWithPath("likes").description("좋아요 수"),
-                                fieldWithPath("title").description("제목"),
-                                fieldWithPath("videoDate").description("게시된 날짜"),
+                                fieldWithPath("title").description("영상 제목"),
+                                fieldWithPath("content").description("영상 내용"),
+                                fieldWithPath("videoDate").description("게시날짜"),
                                 fieldWithPath("views").description("조회수"),
-                                fieldWithPath("videoThumbnail").description("영상 썸네일"),
-                                fieldWithPath("linkOrPath").description("링크 또는 경로"),
-                                fieldWithPath("content").description("영상 내용")
+                                fieldWithPath("directDir").description("직접 업로드 경로").optional(),
+                                fieldWithPath("embedLink").description("임베드 링크").optional()
                         )
                 ));
     }

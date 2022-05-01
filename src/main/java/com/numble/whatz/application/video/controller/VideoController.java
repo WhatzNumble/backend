@@ -1,5 +1,6 @@
 package com.numble.whatz.application.video.controller;
 
+import com.numble.whatz.application.home.controller.dto.VideoInfoDto;
 import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.service.VideoService;
 import com.numble.whatz.application.video.service.VideoStore;
@@ -50,16 +51,14 @@ public class VideoController {
     public MyVideosDto myVideos(@PageableDefault(size = 5)Pageable pageable) {
 
         // ======== 서비스가 생기면 여기는 지우는 부분 ========
-        MyVideoDto video1 = new MyVideoDto(1L, "영상 썸네일1", "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8",
-                null, "title1", "내용1", 100);
-        MyVideoDto video2 = new MyVideoDto(2L, "영상 썸네일2", "93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8",
-                null, "title2", "내용2", 200);
-        MyVideoDto video3 = new MyVideoDto(3L, "영상 썸네일3", "5dc04aa2-6297-4cce-aab6-a43ab761da65.m3u8",
-                null, "title3", "내용3", 300);
-        MyVideoDto video4 = new MyVideoDto(4L, "영상 썸네일4", null,
-                "https://youtube.com/shorts/E4BR0sAM3-8?feature=share", "title4", "내용4", 400);
+
 
         List<MyVideoDto> videos = new ArrayList<>();
+
+        MyVideoDto video1 = new MyVideoDto(1L, "VideoThumbnail1");
+        MyVideoDto video2 = new MyVideoDto(2L, "VideoThumbnail1");
+        MyVideoDto video3 = new MyVideoDto(3L, "VideoThumbnail1");
+        MyVideoDto video4 = new MyVideoDto(4L, "VideoThumbnail1");
 
         videos.add(video1);
         videos.add(video2);
@@ -73,16 +72,22 @@ public class VideoController {
     }
 
     @GetMapping("api/video/{id}")
-    public VideoOneDto myVideo(@PathVariable Long id) {
+    public VideoInfoDto myVideo(@PathVariable Long id) {
 
         log.info("id={}", id);
 
         // ======== 서비스가 생기면 여기는 지우는 부분 ========
-        VideoOneDto videoOneDto = new VideoOneDto(10, "title1", LocalDateTime.now(),
-                300L, "Thumbnail1", "linkOrPath1", "content");
+        if (id.equals(1L)) return new VideoInfoDto("user1", "profile1", 5, "title1", "content1",
+                LocalDateTime.now(), 20L, "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8", null);
+        if (id.equals(2L)) return new VideoInfoDto("user2", "profile2", 10, "title2", "content2",
+                LocalDateTime.now(), 30L, "93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8", null);
+        if (id.equals(3L)) return new VideoInfoDto("user1", "profile1", 15, "title3", "content3",
+                LocalDateTime.now(), 40L, "5dc04aa2-6297-4cce-aab6-a43ab761da65.m3u8", null);
+        if (id.equals(4L)) return new VideoInfoDto("user3", "profile3", 5, "title4", "content4",
+                LocalDateTime.now(), 50L, null, "https://youtube.com/shorts/E4BR0sAM3-8?feature=share");
         // ======== 서비스가 생기면 여기는 지우는 부분 ========
 
-        return videoOneDto;
+        return null;
     }
 
     //-------------No Test yet--------------

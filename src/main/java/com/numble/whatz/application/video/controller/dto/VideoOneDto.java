@@ -8,21 +8,25 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class VideoOneDto {
 
+    private String nickname;
+    private String profile;
     private int likes;
     private String title;
+    private String content;
     private LocalDateTime videoDate;
     private long views;
-    private String videoThumbnail;
-    private String linkOrPath;
-    private String content;
+    private String directDir;
+    private String embedLink;
 
-    public VideoOneDto(int likes, String title, LocalDateTime videoDate, long views, String videoThumbnail, String linkOrPath, String content) {
+    public VideoOneDto(String nickname, String profile, int likes, String title, String content, LocalDateTime videoDate, long views, String directDir, String embedLink) {
+        this.nickname = nickname;
+        this.profile = profile;
         this.likes = likes;
         this.title = title;
+        this.content = content;
         this.videoDate = videoDate;
         this.views = views;
-        this.videoThumbnail = videoThumbnail;
-        this.linkOrPath = linkOrPath;
-        this.content = content;
+        this.directDir = directDir;
+        this.embedLink = embedLink;
     }
 }

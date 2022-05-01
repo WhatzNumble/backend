@@ -549,6 +549,11 @@ Host: www.whatz.ga</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">영상 제목</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">영상 내용</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].videoDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">게시날짜</p></td>
@@ -559,14 +564,19 @@ Host: www.whatz.ga</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].videoThumbnail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].directDir</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">썸네일 사진 경로</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">직접 업로드 경로</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].embedLink</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">임베드 링크</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>likeList[]</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ddd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">로그인 회원의 관심 리스트</p></td>
 </tr>
 </tbody>
 </table>
@@ -578,20 +588,44 @@ Host: www.whatz.ga</code></pre>
 <pre class="highlight nowrap"><code>{
   "videos" : [ {
     "nickname" : "user1",
-    "profile" : "사진경로1",
-    "likes" : 3,
+    "profile" : "profile1",
+    "likes" : 5,
     "title" : "title1",
-    "videoDate" : "2022-05-01T13:24:23.787144",
-    "views" : 10,
-    "videoThumbnail" : "영상썸네일1"
+    "content" : "content1",
+    "videoDate" : "2022-05-02T02:32:54.78173",
+    "views" : 20,
+    "directDir" : "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8",
+    "embedLink" : null
   }, {
     "nickname" : "user2",
-    "profile" : "사진경로2",
-    "likes" : 4,
+    "profile" : "profile2",
+    "likes" : 10,
     "title" : "title2",
-    "videoDate" : "2022-05-01T13:24:23.787255",
-    "views" : 20,
-    "videoThumbnail" : "영상썸네일2"
+    "content" : "content2",
+    "videoDate" : "2022-05-02T02:32:54.781777",
+    "views" : 30,
+    "directDir" : "93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8",
+    "embedLink" : null
+  }, {
+    "nickname" : "user1",
+    "profile" : "profile1",
+    "likes" : 15,
+    "title" : "title3",
+    "content" : "content3",
+    "videoDate" : "2022-05-02T02:32:54.781837",
+    "views" : 40,
+    "directDir" : "5dc04aa2-6297-4cce-aab6-a43ab761da65.m3u8",
+    "embedLink" : null
+  }, {
+    "nickname" : "user3",
+    "profile" : "profile3",
+    "likes" : 5,
+    "title" : "title4",
+    "content" : "content4",
+    "videoDate" : "2022-05-02T02:32:54.781864",
+    "views" : 50,
+    "directDir" : null,
+    "embedLink" : "https://youtube.com/shorts/E4BR0sAM3-8?feature=share"
   } ],
   "likeList" : [ 1, 5 ]
 }</code></pre>

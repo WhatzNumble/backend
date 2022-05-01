@@ -750,31 +750,6 @@ Host: www.whatz.ga</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">비디오 썸네일</p></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].directDir</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">직접 업로드 경로</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].embedLink</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">임베드 경로</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].views</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -785,36 +760,16 @@ Host: www.whatz.ga</code></pre>
 <pre class="highlight nowrap"><code>{
   "videos" : [ {
     "videoId" : 1,
-    "videoThumbnail" : "영상 썸네일1",
-    "directDir" : "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8",
-    "embedLink" : null,
-    "title" : "title1",
-    "content" : "내용1",
-    "views" : 100
+    "videoThumbnail" : "VideoThumbnail1"
   }, {
     "videoId" : 2,
-    "videoThumbnail" : "영상 썸네일2",
-    "directDir" : "93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8",
-    "embedLink" : null,
-    "title" : "title2",
-    "content" : "내용2",
-    "views" : 200
+    "videoThumbnail" : "VideoThumbnail1"
   }, {
     "videoId" : 3,
-    "videoThumbnail" : "영상 썸네일3",
-    "directDir" : "5dc04aa2-6297-4cce-aab6-a43ab761da65.m3u8",
-    "embedLink" : null,
-    "title" : "title3",
-    "content" : "내용3",
-    "views" : 300
+    "videoThumbnail" : "VideoThumbnail1"
   }, {
     "videoId" : 4,
-    "videoThumbnail" : "영상 썸네일4",
-    "directDir" : null,
-    "embedLink" : "https://youtube.com/shorts/E4BR0sAM3-8?feature=share",
-    "title" : "title4",
-    "content" : "내용4",
-    "views" : 400
+    "videoThumbnail" : "VideoThumbnail1"
   } ]
 }</code></pre>
 </div>
@@ -867,13 +822,15 @@ Host: www.whatz.ga</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
-  "likes" : 10,
+  "nickname" : "user1",
+  "profile" : "profile1",
+  "likes" : 5,
   "title" : "title1",
-  "videoDate" : "2022-05-01T13:24:27.593117",
-  "views" : 300,
-  "videoThumbnail" : "Thumbnail1",
-  "linkOrPath" : "linkOrPath1",
-  "content" : "content"
+  "content" : "content1",
+  "videoDate" : "2022-05-02T02:32:57.838063",
+  "views" : 20,
+  "directDir" : "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8",
+  "embedLink" : null
 }</code></pre>
 </div>
 </div>
@@ -895,6 +852,16 @@ Host: www.whatz.ga</code></pre>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>profile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">프로필 사진 경로</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>likes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
@@ -902,12 +869,17 @@ Host: www.whatz.ga</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">영상 제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">영상 내용</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>videoDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">게시된 날짜</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">게시날짜</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>views</code></p></td>
@@ -915,19 +887,14 @@ Host: www.whatz.ga</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videoThumbnail</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>directDir</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">영상 썸네일</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">직접 업로드 경로</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>linkOrPath</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">링크 또는 경로</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">영상 내용</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>embedLink</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">임베드 링크</p></td>
 </tr>
 </tbody>
 </table>

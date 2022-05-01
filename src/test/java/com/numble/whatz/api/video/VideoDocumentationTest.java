@@ -272,6 +272,7 @@ public class VideoDocumentationTest {
     public void modifyVideo() throws Exception {
     }
 
+    /*
     @Test
     public void deleteVideo() throws Exception {
         //given
@@ -322,4 +323,6 @@ public class VideoDocumentationTest {
                         )
                 ));
     }
+
+     */
 }

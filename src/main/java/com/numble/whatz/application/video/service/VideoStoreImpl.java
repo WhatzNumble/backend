@@ -4,10 +4,6 @@ import com.numble.whatz.core.advice.VideoStoreExceptionMessage;
 import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.bramp.ffmpeg.FFmpeg;
-import net.bramp.ffmpeg.FFmpegExecutor;
-import net.bramp.ffmpeg.FFprobe;
-import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +36,12 @@ public class VideoStoreImpl implements VideoStore{
         String storeFilename = createStoreFilename(uuid, originalFilename); //UUID.mp4
         String executeFilename = createStoreExecuteFilename(uuid); // UUID.m3u8
 
+        System.out.println("executeFilename = " + executeFilename);
+        System.out.println("storeFilename = " + storeFilename);
+
+
         File mp4uuidFile = new File(getFullPathMp4File(storeFilename));
+        System.out.println("mp4uuidFile = " + mp4uuidFile.getAbsolutePath());
         try {
             multipartFile.transferTo(mp4uuidFile);
         } catch (IOException e) {
@@ -53,7 +54,12 @@ public class VideoStoreImpl implements VideoStore{
         return executeFilename;
     }
 
-    private void s3Processor(File mp4uuidFile) throws IOException {
+    @Override
+    public String modifyVideo(MultipartFile multipartFile) throws IOException {
+        return "modifyFilename";
+    }
+
+    private void s3Processor(File mp4uuidFile) throws CustomVideoStoreException {
         File executeFile = new File(fileDir + "executeFile/");
         File[] executeFiles = executeFile.listFiles();
 

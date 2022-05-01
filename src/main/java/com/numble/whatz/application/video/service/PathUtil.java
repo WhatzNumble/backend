@@ -7,8 +7,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PathUtil {
 
-    @Value("${file.dir}")
     private static String fileDir;
+
+    @Value("${file.dir}")
+    public void setFileDir(String value) {
+        fileDir = value;
+    }
+
 
     static public String getFullPathExecuteFile(String executeFilename) {
         return fileDir + "executeFile/" + executeFilename;
@@ -16,6 +21,7 @@ public class PathUtil {
 
 
     static public String getFullPathMp4File(String storeFilename) {
+        System.out.println("fileDir = " + fileDir);
         return fileDir + "mp4File/" + storeFilename;
     }
 }

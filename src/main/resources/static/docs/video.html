@@ -561,11 +561,48 @@ Content-Type: video/mp4
 </div>
 <div class="sect3">
 <h4 id="_response_http_excample"><a class="link" href="#_response_http_excample">Response HTTP Excample</a></h4>
+<div class="sect4">
+<h5 id="_httpstatus_200"><a class="link" href="#_httpstatus_200">HTTPStatus - 200</a></h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>success</code></pre>
+<pre class="highlight nowrap"><code></code></pre>
 </div>
 </div>
+</div>
+<div class="sect4">
+<h5 id="_httpstatus_403"><a class="link" href="#_httpstatus_403">HTTPStatus - 403</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "errorCode" : "VideoDirectException",
+  "errorMessage" : ".mp4 -&gt; .m3u8 변환에 실패하였습니다."
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "errorCode" : "VideoDirectException",
+  "errorMessage" : "s3 업로드에 실패하였습니다."
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "errorCode" : "VideoDirectException",
+  "errorMessage" : "파일 저장에 실패하였습니다."
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>에러 코드는 임시로 넣어놓았습니다. 프론트와 추후 상의하고 변경 할 것</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_response_http_excample_2"><a class="link" href="#_response_http_excample_2">Response HTTP Excample</a></h4>
+
 </div>
 </div>
 <div class="sect2">
@@ -582,7 +619,7 @@ Content-Type: video/mp4
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/video/add/embed HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Accept: application/json
+Accept: application/json;charset=UTF-8
 Content-Length: 134
 Host: www.whatz.ga
 
@@ -635,10 +672,10 @@ Host: www.whatz.ga
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_http_excample_2"><a class="link" href="#_response_http_excample_2">Response HTTP Excample</a></h4>
+<h4 id="_response_http_excample_3"><a class="link" href="#_response_http_excample_3">Response HTTP Excample</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>success</code></pre>
+<pre class="highlight nowrap"><code></code></pre>
 </div>
 </div>
 <hr>
@@ -714,6 +751,26 @@ Host: www.whatz.ga</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">비디오 썸네일</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].directDir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">직접 업로드 경로</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].embedLink</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">임베드 경로</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">제목</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">내용</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>videos[].views</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">조회수</p></td>
@@ -722,18 +779,42 @@ Host: www.whatz.ga</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_http_excample_3"><a class="link" href="#_response_http_excample_3">Response HTTP Excample</a></h4>
+<h4 id="_response_http_excample_4"><a class="link" href="#_response_http_excample_4">Response HTTP Excample</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
   "videos" : [ {
     "videoId" : 1,
-    "videoThumbnail" : "비디오 썸네일1",
-    "views" : 123
+    "videoThumbnail" : "영상 썸네일1",
+    "directDir" : "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8",
+    "embedLink" : null,
+    "title" : "title1",
+    "content" : "내용1",
+    "views" : 100
   }, {
     "videoId" : 2,
-    "videoThumbnail" : "비디오 썸네일2",
-    "views" : 223
+    "videoThumbnail" : "영상 썸네일2",
+    "directDir" : "93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8",
+    "embedLink" : null,
+    "title" : "title2",
+    "content" : "내용2",
+    "views" : 200
+  }, {
+    "videoId" : 3,
+    "videoThumbnail" : "영상 썸네일3",
+    "directDir" : "5dc04aa2-6297-4cce-aab6-a43ab761da65.m3u8",
+    "embedLink" : null,
+    "title" : "title3",
+    "content" : "내용3",
+    "views" : 300
+  }, {
+    "videoId" : 4,
+    "videoThumbnail" : "영상 썸네일4",
+    "directDir" : null,
+    "embedLink" : "https://youtube.com/shorts/E4BR0sAM3-8?feature=share",
+    "title" : "title4",
+    "content" : "내용4",
+    "views" : 400
   } ]
 }</code></pre>
 </div>
@@ -782,13 +863,13 @@ Host: www.whatz.ga</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_http_excample_4"><a class="link" href="#_response_http_excample_4">Response HTTP Excample</a></h4>
+<h4 id="_response_http_excample_5"><a class="link" href="#_response_http_excample_5">Response HTTP Excample</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
   "likes" : 10,
   "title" : "title1",
-  "videoDate" : "2022-04-28T18:57:25.677273",
+  "videoDate" : "2022-05-01T13:24:27.593117",
   "views" : 300,
   "videoThumbnail" : "Thumbnail1",
   "linkOrPath" : "linkOrPath1",
@@ -896,7 +977,7 @@ id=1</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_http_excample_5"><a class="link" href="#_response_http_excample_5">Response HTTP Excample</a></h4>
+<h4 id="_response_http_excample_6"><a class="link" href="#_response_http_excample_6">Response HTTP Excample</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>success</code></pre>
@@ -949,7 +1030,7 @@ Host: www.whatz.ga</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_http_excample_6"><a class="link" href="#_response_http_excample_6">Response HTTP Excample</a></h4>
+<h4 id="_response_http_excample_7"><a class="link" href="#_response_http_excample_7">Response HTTP Excample</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>[ {
@@ -1006,7 +1087,7 @@ Host: www.whatz.ga</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-04-28 18:08:47 +0900
+Last updated 2022-05-01 13:23:53 +0900
 </div>
 </div>
 </body>

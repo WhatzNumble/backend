@@ -27,10 +27,20 @@ include::{snippets}/video-upload-direct/request-parameters.adoc[]
 include::{snippets}/video-upload-direct/request-parts.adoc[]
 
 
-
 ==== Response HTTP Excample
+===== HTTPStatus - 200
+
 include::{snippets}/video-upload-direct/response-body.adoc[]
 
+===== HTTPStatus - 403
+include::{snippets}/video-upload-direct-ffmpeg/response-body.adoc[]
+
+include::{snippets}/video-upload-direct-s3/response-body.adoc[]
+
+include::{snippets}/video-upload-direct-multi/response-body.adoc[]
+에러 코드는 임시로 넣어놓았습니다. 프론트와 추후 상의하고 변경 할 것
+
+==== Response HTTP Excample
 
 === 임베드 영상 업로드
 

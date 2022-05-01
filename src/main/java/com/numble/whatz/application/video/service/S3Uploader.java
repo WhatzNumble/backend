@@ -21,14 +21,14 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
-    public String upload(File uploadFile, String dirName) throws IOException {
+    public String upload(File uploadFile, String dirName) throws CustomVideoStoreException {
         String uploadImageUrl = putS3(uploadFile, dirName); // s3로 업로드
         removeNewFile(uploadFile);
         return uploadImageUrl;
     }
 
     // S3로 업로드
-    private String putS3(File uploadFile, String dirName) throws IOException {
+    private String putS3(File uploadFile, String dirName) throws CustomVideoStoreException {
         try {
             ObjectMetadata objectMetadata = getObjectMetadata(uploadFile);
             InputStream inputStream = new FileInputStream(uploadFile);

@@ -17,7 +17,7 @@ import static com.numble.whatz.application.video.service.PathUtil.getFullPathMp4
 public class FFmpegConverter {
 
     // brew 설치했을시 경로
-    public void convert(String storeFilename, String executeFilename) throws IOException {
+    public void convert(String storeFilename, String executeFilename) throws CustomVideoStoreException {
         try {
             FFmpeg ffmpeg = new FFmpeg("/opt/homebrew/Cellar/ffmpeg/5.0.1/bin/ffmpeg");
             FFprobe ffprobe = new FFprobe("/opt/homebrew/Cellar/ffmpeg/5.0.1/bin/ffprobe");

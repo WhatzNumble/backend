@@ -26,4 +26,16 @@ public class CrudMemberService {
         Optional<Member> member = memberRepository.findBySnsId(snsId);
         return member.isPresent();
     }
+
+    @Transactional
+    public void delete(String snsId) {
+        memberRepository.deleteBySnsId(snsId);
+    }
+
+    public MemberDto getProfile(String snsId) {
+        Member member = memberRepository.findBySnsId(snsId)
+                .orElseThrow(RuntimeException::new);
+
+        return new MemberDto(member.getEmail(), member.getNickName(), member.getThumbnailUrl());
+    }
 }

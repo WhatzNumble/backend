@@ -68,7 +68,8 @@ public class JwtTokenProvider {
     public Authentication getAuthentication(String token) {
         Claims claims = (Claims) Jwts.parser()
                 .setSigningKey(key)
-                .parseClaimsJws(token);
+                .parseClaimsJws(token)
+                .getBody();
 
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get("role").toString().split(","))

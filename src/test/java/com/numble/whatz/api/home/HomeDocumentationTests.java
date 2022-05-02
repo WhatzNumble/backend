@@ -113,10 +113,12 @@ public class HomeDocumentationTests {
                                 fieldWithPath("videos[].profile").description("프로필 사진 경로"),
                                 fieldWithPath("videos[].likes").description("좋아요 수"),
                                 fieldWithPath("videos[].title").description("영상 제목"),
+                                fieldWithPath("videos[].content").description("영상 내용"),
                                 fieldWithPath("videos[].videoDate").description("게시날짜"),
                                 fieldWithPath("videos[].views").description("조회수"),
-                                fieldWithPath("videos[].videoThumbnail").description("썸네일 사진 경로"),
-                                fieldWithPath("likeList[]").description("ddd")
+                                fieldWithPath("videos[].directDir").description("직접 업로드 경로").optional(),
+                                fieldWithPath("videos[].embedLink").description("임베드 링크").optional(),
+                                fieldWithPath("likeList[]").description("로그인 회원의 관심 리스트")
                         )
                 ));
     }

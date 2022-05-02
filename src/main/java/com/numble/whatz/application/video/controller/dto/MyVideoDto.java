@@ -8,11 +8,9 @@ public class MyVideoDto {
 
     private Long videoId;
     private String videoThumbnail;
-    private long views;
 
-    public MyVideoDto(Long videoId, String videoThumbnail, long views) {
+    public MyVideoDto(Long videoId, String videoThumbnail) {
         this.videoId = videoId;
         this.videoThumbnail = videoThumbnail;
-        this.views = views;
     }
 }

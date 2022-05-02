@@ -1,16 +1,15 @@
 package com.numble.whatz.application.video.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.numble.whatz.core.advice.VideoStoreExceptionMessage;
+import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.nio.file.Files;
 
 @Slf4j
 @Component
@@ -22,22 +21,26 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
-    public String upload(File uploadFile, String dirName) throws IOException {
+    public String upload(File uploadFile, String dirName) throws CustomVideoStoreException {
         String uploadImageUrl = putS3(uploadFile, dirName); // s3로 업로드
         removeNewFile(uploadFile);
         return uploadImageUrl;
     }
 
     // S3로 업로드
-    private String putS3(File uploadFile, String dirName) throws IOException {
-        ObjectMetadata objectMetadata = getObjectMetadata(uploadFile);
-        InputStream inputStream = new FileInputStream(uploadFile);
+    private String putS3(File uploadFile, String dirName) throws CustomVideoStoreException {
+        try {
+            ObjectMetadata objectMetadata = getObjectMetadata(uploadFile);
+            InputStream inputStream = new FileInputStream(uploadFile);
 
-        amazonS3Client.putObject(bucket + dirName, uploadFile.getName(), inputStream, objectMetadata);
-        return amazonS3Client.getUrl(bucket + dirName, uploadFile.getName()).toString();
+            amazonS3Client.putObject(bucket + dirName, uploadFile.getName(), inputStream, objectMetadata);
+            return amazonS3Client.getUrl(bucket + dirName, uploadFile.getName()).toString();
+        } catch (IOException e) {
+            throw new CustomVideoStoreException(VideoStoreExceptionMessage.S3_UPLOAD_EX, e);
+        }
     }
 
-    private ObjectMetadata getObjectMetadata(File uploadFile) throws IOException {
+    private ObjectMetadata getObjectMetadata(File uploadFile) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         int pos = uploadFile.getName().lastIndexOf(".");
         String ext = uploadFile.getName().substring(pos + 1);

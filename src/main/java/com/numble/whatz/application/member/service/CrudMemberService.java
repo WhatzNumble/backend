@@ -26,4 +26,9 @@ public class CrudMemberService {
         Optional<Member> member = memberRepository.findBySnsId(snsId);
         return member.isPresent();
     }
+
+    @Transactional
+    public void delete(String snsId) {
+        memberRepository.deleteBySnsId(snsId);
+    }
 }

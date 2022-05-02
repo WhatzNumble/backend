@@ -16,4 +16,4 @@ spring:
             client-name: kakao
             client-secret: iOd2amcCr2X3VyEdU6I51STUQsBopuMg
             redirect-uri: http://localhost:8080/login/oauth2/code/kakao
-            scope: account_email
+            scope: account_email, profile_image, profile_nickname

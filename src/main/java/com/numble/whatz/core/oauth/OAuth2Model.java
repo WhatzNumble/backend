@@ -8,18 +8,21 @@ import lombok.Getter;
 public class OAuth2Model {
     private String id;
     private String email;
-    private Sns snsType;
+    private String nickName;
+    private String thumbnailUrl;
 
-    public OAuth2Model(String id, String email, Sns snsType) {
+    public OAuth2Model(String id, String email, String nickName, String thumbnailUrl) {
         this.id = id;
         this.email = email;
-        this.snsType = snsType;
+        this.nickName = nickName;
+        this.thumbnailUrl = thumbnailUrl;
     }
 
     public Member toEntity() {
         return Member.builder()
                 .email(email)
-                .nickName(null)
+                .nickName(nickName)
+                .thumbnailUrl(thumbnailUrl)
                 .snsId(id)
                 .role(Role.ROLE_MEMBER)
                 .build();

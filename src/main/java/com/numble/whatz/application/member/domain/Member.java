@@ -23,17 +23,17 @@ public class Member {
     private Long id;
     private String email;
     private String nickName;
-    private String profilePath;
+    private String thumbnailUrl;
     private String snsId;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public Member(String email, String nickName, String profilePath, String snsId, Role role) {
+    public Member(String email, String nickName, String thumbnailUrl, String snsId, Role role) {
         this.email = email;
         this.nickName = nickName;
-        this.profilePath = profilePath;
+        this.thumbnailUrl = thumbnailUrl;
         this.snsId = snsId;
         this.role = role;
     }

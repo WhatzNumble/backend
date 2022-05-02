@@ -1,7 +1,7 @@
 package com.numble.whatz.core.oauth;
 
 import com.numble.whatz.application.Role;
-import com.numble.whatz.application.member.service.CrudMemberService;
+import com.numble.whatz.application.member.service.CrudMemberServiceImpl;
 import com.numble.whatz.core.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private final CrudMemberService crudMemberService;
+    private final CrudMemberServiceImpl crudMemberService;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override

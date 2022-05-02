@@ -1,13 +1,15 @@
 package com.numble.whatz.application.thumbnail.domain;
 
-import com.numble.whatz.application.video.domain.Video;
+import com.numble.whatz.application.video.domain.Videos;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Thumbnail {
 
@@ -19,7 +21,7 @@ public class Thumbnail {
     private String executeFile;
 
     @OneToOne(mappedBy = "thumbnail",fetch = FetchType.LAZY)
-    private Video video;
+    private Videos video;
 
     @Builder
     public Thumbnail(String originalFile, String executeFile) {

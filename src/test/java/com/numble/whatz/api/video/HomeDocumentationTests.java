@@ -1,4 +1,4 @@
-package com.numble.whatz.api.home;
+package com.numble.whatz.api.video;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

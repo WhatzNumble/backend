@@ -3,12 +3,8 @@ package com.numble.whatz.application.video.service;
 import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
-import com.numble.whatz.application.member.service.MemberService;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
-import com.numble.whatz.application.video.controller.dto.DirectDto;
-import com.numble.whatz.application.video.controller.dto.EmbedDto;
-import com.numble.whatz.application.video.controller.dto.HomeDto;
-import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
+import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.domain.DirectVideo;
 import com.numble.whatz.application.video.domain.EmbedVideo;
 import com.numble.whatz.application.video.domain.Videos;
@@ -32,15 +28,14 @@ public class VideoServiceImpl implements VideoService{
 
     private final VideoRepository videoRepository;
     private final VideoStore videoStore;
-    private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @Override
     @Transactional
     public void saveDirect(DirectDto video, Principal principal) throws IOException {
         String executeFileName = videoStore.storeVideo(video.getFile());
 
-        // 나중에 MemberService 로 교체
-        Member findMember = memberService.getMemberBySnsId(principal.getName());
+        Member member = getMember(principal);
         // ==== 썸네일 관련 ===== //
         Thumbnail thumbnail = Thumbnail.builder()
                 .executeFile("execute")
@@ -52,7 +47,7 @@ public class VideoServiceImpl implements VideoService{
                 .thumbnail(thumbnail)
                 .content(video.getContent())
                 .title(video.getTitle())
-                .member(findMember)
+                .member(member)
                 .directDir(executeFileName)
                 .build();
 
@@ -62,7 +57,7 @@ public class VideoServiceImpl implements VideoService{
     @Override
     @Transactional
     public void saveEmbed(EmbedDto video, Principal principal) {
-        Member findMember = memberService.getMemberBySnsId(principal.getName());
+        Member member = getMember(principal);
         // ==== 썸네일 관련 ===== //
         Thumbnail thumbnail = Thumbnail.builder()
                 .executeFile("execute")
@@ -73,7 +68,7 @@ public class VideoServiceImpl implements VideoService{
         EmbedVideo embed = EmbedVideo.builder()
                 .content(video.getContent())
                 .thumbnail(thumbnail)
-                .member(findMember)
+                .member(member)
                 .title(video.getTitle())
                 .link(video.getLink())
                 .build();
@@ -84,19 +79,10 @@ public class VideoServiceImpl implements VideoService{
     @Override
     public void removeVideo(String id, Principal principal) {
         long parseId = Long.parseLong(id);
-        Optional<Videos> findVideo = videoRepository.findById(parseId);
-        if (findVideo.isEmpty()) throw new IllegalStateException("해당 비디오가 존재하지 않습니다.");
-        Videos video = findVideo.get();
-        Member member = memberService.getMemberBySnsId(principal.getName());
-        if (!video.getMember().getId().equals(member.getId())) throw new IllegalStateException("회원이 영상 주인이 아닙니다.");
+        Videos video = getVideos(parseId);
+        Member member = getMember(principal);
+        checkOwner(video, member);
         videoRepository.delete(video);
-    }
-
-    @Override
-    public Videos getVideoById(Long id) {
-        Optional<Videos> findVideo = videoRepository.findById(id);
-        if (findVideo.isEmpty()) throw new IllegalStateException("해당 영상이 존재하지 않습니다.");
-        return findVideo.get();
     }
 
     @Override
@@ -105,23 +91,13 @@ public class VideoServiceImpl implements VideoService{
         List<VideoInfoDto> videos = new ArrayList<>();
 
         for (Videos findVideo : findVideos) {
-            VideoInfoDto videoInfoDto = VideoInfoDto.builder()
-                    .content(findVideo.getVideoContent())
-                    .title(findVideo.getVideoTitle())
-                    .views(findVideo.getVideoViews())
-                    .videoDate(findVideo.getVideoCreationDate())
-                    .nickname(findVideo.getMember().getNickName())
-                    .likes(findVideo.getVideoLike())
-                    .profile(findVideo.getMember().getProfilePath())
-                    .build();
-            if (findVideo instanceof DirectVideo) videoInfoDto.setDirectDir(((DirectVideo) findVideo).getDirectDir());
-            else videoInfoDto.setEmbedLink(((EmbedVideo) findVideo).getLink());
+            VideoInfoDto videoInfoDto = getVideoInfoDto(findVideo);
             videos.add(videoInfoDto);
         }
         HomeDto homeDto = new HomeDto(videos, null);
         if (principal != null) {
-            Member findMember = memberService.getMemberBySnsId(principal.getName());
-            List<Favorite> favorites = findMember.getFavorites();
+            Member member = getMember(principal);
+            List<Favorite> favorites = member.getFavorites();
             List<Long> likeList = new ArrayList<>();
             for (Favorite favorite : favorites) {
                 likeList.add(favorite.getVideo().getId());
@@ -129,5 +105,54 @@ public class VideoServiceImpl implements VideoService{
             homeDto.setLikeList(likeList);
         }
         return homeDto;
+    }
+
+    @Override
+    public MyVideosDto getMyVideos(Pageable pageable, Principal principal) {
+        Member member = getMember(principal);
+        Page<Videos> page = videoRepository.findByMember(member, pageable);
+        List<MyVideoDto> content =
+                page.map(videos -> new MyVideoDto(videos.getId(), videos.getThumbnail().getExecuteFile())).getContent();
+        return new MyVideosDto(content);
+    }
+
+    @Override
+    public VideoInfoDto getOneVideo(Long id) {
+        Videos videos = getVideos(id);
+        VideoInfoDto videoInfoDto = getVideoInfoDto(videos);
+        return videoInfoDto;
+    }
+
+    private VideoInfoDto getVideoInfoDto(Videos videos) {
+        VideoInfoDto videoInfoDto = VideoInfoDto.builder()
+                .content(videos.getVideoContent())
+                .title(videos.getVideoTitle())
+                .views(videos.getVideoViews())
+                .videoDate(videos.getVideoCreationDate())
+                .nickname(videos.getMember().getNickName())
+                .likes(videos.getVideoLike())
+                .profile(videos.getMember().getThumbnailUrl())
+                .build();
+        if (videos instanceof DirectVideo) videoInfoDto.setDirectDir(((DirectVideo) videos).getDirectDir());
+        else videoInfoDto.setEmbedLink(((EmbedVideo) videos).getLink());
+        return videoInfoDto;
+    }
+
+    private Videos getVideos(long parseId) {
+        Optional<Videos> findVideo = videoRepository.findById(parseId);
+        if (findVideo.isEmpty()) throw new IllegalStateException("해당 비디오가 존재하지 않습니다.");
+        Videos video = findVideo.get();
+        return video;
+    }
+
+    private Member getMember(Principal principal) {
+        Optional<Member> findMember = memberRepository.findBySnsId(principal.getName());
+        if (findMember.isEmpty()) throw new IllegalStateException("해당 영상이 존재하지 않습니다.");
+        Member member = findMember.get();
+        return member;
+    }
+
+    private void checkOwner(Videos video, Member member) {
+        if (!video.getMember().getId().equals(member.getId())) throw new IllegalStateException("회원이 영상 주인이 아닙니다.");
     }
 }

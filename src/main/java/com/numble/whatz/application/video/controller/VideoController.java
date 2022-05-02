@@ -26,35 +26,7 @@ public class VideoController {
 
     @GetMapping("api/home")
     public HomeDto home(@PageableDefault(size = 5) Pageable pageable, Principal principal) {
-
         HomeDto homeDto = videoService.findAll(pageable, principal);
-
-        /*
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-        List<Long> likeList = new ArrayList<>();
-        likeList.add(1L);
-        likeList.add(5L);
-
-        VideoInfoDto homeDto1 = new VideoInfoDto("user1", "profile1", 5, "title1", "content1",
-                LocalDateTime.now(), 20L, "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8", null);
-        VideoInfoDto homeDto2 = new VideoInfoDto("user2", "profile2", 10, "title2", "content2",
-                LocalDateTime.now(), 30L, "93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8", null);
-        VideoInfoDto homeDto3 = new VideoInfoDto("user1", "profile1", 15, "title3", "content3",
-                LocalDateTime.now(), 40L, "5dc04aa2-6297-4cce-aab6-a43ab761da65.m3u8", null);
-        VideoInfoDto homeDto4 = new VideoInfoDto("user3", "profile3", 5, "title4", "content4",
-                LocalDateTime.now(), 50L, null, "https://youtube.com/shorts/E4BR0sAM3-8?feature=share");
-
-        List<VideoInfoDto> videoInfoDtos = new ArrayList<>();
-        videoInfoDtos.add(homeDto1);
-        videoInfoDtos.add(homeDto2);
-        videoInfoDtos.add(homeDto3);
-        videoInfoDtos.add(homeDto4);
-
-        HomeDto homeDto = new HomeDto(videoInfoDtos, likeList);
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-
-         */
-
         return homeDto;
     }
 
@@ -72,43 +44,14 @@ public class VideoController {
 
     @GetMapping("api/video")
     public MyVideosDto myVideos(@PageableDefault(size = 5)Pageable pageable, Principal principal) {
-
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-        List<MyVideoDto> videos = new ArrayList<>();
-
-        MyVideoDto video1 = new MyVideoDto(1L, "VideoThumbnail1");
-        MyVideoDto video2 = new MyVideoDto(2L, "VideoThumbnail1");
-        MyVideoDto video3 = new MyVideoDto(3L, "VideoThumbnail1");
-        MyVideoDto video4 = new MyVideoDto(4L, "VideoThumbnail1");
-
-        videos.add(video1);
-        videos.add(video2);
-        videos.add(video3);
-        videos.add(video4);
-
-        MyVideosDto myVideosDto = new MyVideosDto(videos);
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-
+        MyVideosDto myVideosDto = videoService.getMyVideos(pageable, principal);
         return myVideosDto;
     }
 
     @GetMapping("api/video/{id}")
     public VideoInfoDto myVideo(@PathVariable Long id) {
-
-        log.info("id={}", id);
-
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-        if (id.equals(1L)) return new VideoInfoDto("user1", "profile1", 5, "title1", "content1",
-                LocalDateTime.now(), 20L, "38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8", null);
-        if (id.equals(2L)) return new VideoInfoDto("user2", "profile2", 10, "title2", "content2",
-                LocalDateTime.now(), 30L, "93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8", null);
-        if (id.equals(3L)) return new VideoInfoDto("user1", "profile1", 15, "title3", "content3",
-                LocalDateTime.now(), 40L, "5dc04aa2-6297-4cce-aab6-a43ab761da65.m3u8", null);
-        if (id.equals(4L)) return new VideoInfoDto("user3", "profile3", 5, "title4", "content4",
-                LocalDateTime.now(), 50L, null, "https://youtube.com/shorts/E4BR0sAM3-8?feature=share");
-        // ======== 서비스가 생기면 여기는 지우는 부분 ========
-
-        return null;
+        VideoInfoDto videoInfoDto = videoService.getOneVideo(id);
+        return videoInfoDto;
     }
 
     //-------------No Test yet--------------
@@ -124,12 +67,11 @@ public class VideoController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    //-----------------------------------
+
     @PostMapping("api/video/delete")
     public ResponseEntity deleteVideo(String id, Principal principal) {
         videoService.removeVideo(id, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-    //-----------------------------------
-
 }

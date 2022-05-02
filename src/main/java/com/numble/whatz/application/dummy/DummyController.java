@@ -28,7 +28,7 @@ public class DummyController {
         Member member1 = Member.builder()
                 .email("email1")
                 .nickName("user1")
-                .profilePath("profile1")
+                .thumbnailUrl("profile1")
                 .role(Role.ROLE_MEMBER)
                 .snsId("snsId1")
                 .build();
@@ -36,7 +36,7 @@ public class DummyController {
         Member member2 = Member.builder()
                 .email("email2")
                 .nickName("user2")
-                .profilePath("profile2")
+                .thumbnailUrl("profile2")
                 .role(Role.ROLE_MEMBER)
                 .snsId("snsId2")
                 .build();
@@ -44,7 +44,7 @@ public class DummyController {
         Member member3 = Member.builder()
                 .email("email3")
                 .nickName("user3")
-                .profilePath("profile3")
+                .thumbnailUrl("profile3")
                 .role(Role.ROLE_MEMBER)
                 .snsId("snsId3")
                 .build();

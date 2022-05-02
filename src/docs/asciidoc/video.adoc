@@ -11,19 +11,38 @@ endif::[]
 
 Pageable에 맞게 값이 나오지는 않습니다.
 
-
 == 비디오 API
 
+=== 홈 비디오
+처음 홈 화면입니다. 회원이 아니여도 접근 가능합니다.
+
+==== EndPoint
+/api/home
+
+==== Request
+include::{snippets}/home/http-request.adoc[]
+
+==== Request Parameters
+include::{snippets}/home/request-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/home/response-fields.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/home/response-body.adoc[]
+---
+
 === 직접 영상 업로드
+직접 영상 업로드를 했을 경우입니다. POST
 
 ==== EndPoint
 /api/video/add/direct
 
 ==== Request
 include::{snippets}/video-upload-direct/http-request.adoc[]
-==== Request Fields
+==== Request Fields - MultipartFile
 include::{snippets}/video-upload-direct/request-parameters.adoc[]
-
+==== Request Fields - else
 include::{snippets}/video-upload-direct/request-parts.adoc[]
 
 
@@ -40,9 +59,8 @@ include::{snippets}/video-upload-direct-s3/response-body.adoc[]
 include::{snippets}/video-upload-direct-multi/response-body.adoc[]
 에러 코드는 임시로 넣어놓았습니다. 프론트와 추후 상의하고 변경 할 것
 
-==== Response HTTP Excample
-
 === 임베드 영상 업로드
+임베드 영상 업로드를 했을 경우입니다. POST
 
 ==== EndPoint
 /api/video/add/embed
@@ -53,10 +71,9 @@ include::{snippets}/video-upload-embed/http-request.adoc[]
 ==== Request Fields
 include::{snippets}/video-upload-embed/request-fields.adoc[]
 
-==== Response HTTP Excample
-include::{snippets}/video-upload-embed/response-body.adoc[]
 ---
-=== 마이 비디오
+=== 마이 비디오(다수)
+내가 올린 비디오 리스트를 조회하는 API 입니다.
 
 ==== EndPoint
 /api/video
@@ -70,10 +87,9 @@ include::{snippets}/video-myvideo/request-parameters.adoc[]
 ==== Response Fields
 include::{snippets}/video-myvideo/response-fields.adoc[]
 
-==== Response HTTP Excample
-include::{snippets}/video-myvideo/response-body.adoc[]
 ---
-=== 마이 비디오
+=== 비디오 상세정보(단일)
+비디오 하나의 상세정보를 조회합니다.
 
 ==== EndPoint
 /api/video/{id}
@@ -92,6 +108,8 @@ include::{snippets}/video-oneVideo/response-fields.adoc[]
 
 ---
 === 비디오 삭제
+비디오를 삭제하는 API 입니다.
+비디오 주인인지 확인합니다.
 
 ==== EndPoint
 /api/video/delete
@@ -101,30 +119,6 @@ include::{snippets}/video-deleteVideo/http-request.adoc[]
 
 ==== Request Parameters
 include::{snippets}/video-deleteVideo/request-parameters.adoc[]
-
-
-==== Response HTTP Excample
-include::{snippets}/video-deleteVideo/response-body.adoc[]
-
----
-
-=== 관심 비디오
-
-==== EndPoint
-/api/favorite
-
-==== Request
-include::{snippets}/video-favorite/http-request.adoc[]
-
-==== Request Parameters
-include::{snippets}/video-favorite/request-parameters.adoc[]
-
-
-==== Response HTTP Excample
-include::{snippets}/video-favorite/response-body.adoc[]
-
-==== Response Fields
-include::{snippets}/video-favorite/response-fields.adoc[]
 
 ---
 

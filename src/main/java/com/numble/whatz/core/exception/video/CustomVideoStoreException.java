@@ -1,6 +1,6 @@
 package com.numble.whatz.core.exception.video;
 
-import com.numble.whatz.core.advice.VideoStoreExceptionMessage;
+import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
 import lombok.Getter;
 
 import java.io.IOException;

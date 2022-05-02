@@ -2,7 +2,7 @@ package com.numble.whatz.application.video.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.numble.whatz.core.advice.VideoStoreExceptionMessage;
+import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
 import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -46,6 +46,7 @@ public class VideoDocumentationTest {
     @MockBean
     private VideoStore videoStore;
 
+    /*
     @Test
     public void videoUploadDirect() throws Exception {
         //given
@@ -78,7 +79,9 @@ public class VideoDocumentationTest {
                         )
                 ));
     }
-
+    
+     */
+/*
     @Test
     public void videoUploadDirectMultipartException() throws Exception {
         //given
@@ -103,13 +106,7 @@ public class VideoDocumentationTest {
         result.andExpect(status().isForbidden())
                 .andDo(document("video-upload-direct-multi", // (4)
                         getDocumentRequest(),
-                        getDocumentResponse(),
-                        requestParts(partWithName("file").optional().description("영상")),
-                        requestParameters(
-                                parameterWithName("videoThumbnail").description("영상 썸네일"),
-                                parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
-                        )
+                        getDocumentResponse()
                 ));
     }
 
@@ -181,6 +178,8 @@ public class VideoDocumentationTest {
                 ));
     }
 
+ */
+/*
     @Test
     public void videoUploadEmbed() throws Exception {
         //given
@@ -207,6 +206,7 @@ public class VideoDocumentationTest {
                         )
                 ));
     }
+ */
 
     @Test
     public void myVideo() throws Exception {

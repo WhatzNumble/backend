@@ -2,10 +2,14 @@ package com.numble.whatz.api.video;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.numble.whatz.api.video.dto.EmbedDto;
+import com.numble.whatz.application.video.controller.dto.HomeDto;
+import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
+import com.numble.whatz.application.video.service.VideoService;
 import com.numble.whatz.application.video.service.VideoStore;
 import com.numble.whatz.core.advice.VideoStoreExceptionMessage;
 import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,6 +22,10 @@ import org.springframework.test.web.servlet.ResultActions;
 
 
 import java.io.IOException;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentRequest;
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentResponse;
@@ -45,6 +53,94 @@ public class VideoDocumentationTest {
 
     @MockBean
     private VideoStore videoStore;
+
+    @MockBean
+    private VideoService videoService;
+
+    @Test
+    public void homeApi() throws Exception {
+        List<Long> likeList = new ArrayList<>();
+        likeList.add(1L);
+        likeList.add(5L);
+
+        VideoInfoDto homeDto1 = VideoInfoDto.builder()
+                .nickname("user1")
+                .profile("profile1")
+                .likes(5)
+                .title("title1")
+                .content("content1")
+                .videoDate(LocalDateTime.now())
+                .views(20L)
+                .directDir("38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8")
+                .embedLink(null)
+                .build();
+        VideoInfoDto homeDto2 = VideoInfoDto.builder()
+                .nickname("user2")
+                .profile("profile2")
+                .likes(5)
+                .title("title2")
+                .content("content2")
+                .videoDate(LocalDateTime.now())
+                .views(20L)
+                .directDir("93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8")
+                .embedLink(null)
+                .build();
+        VideoInfoDto homeDto3 = VideoInfoDto.builder()
+                .nickname("user1")
+                .profile("profile1")
+                .likes(5)
+                .title("title1")
+                .content("content1")
+                .videoDate(LocalDateTime.now())
+                .views(20L)
+                .directDir(null)
+                .embedLink("https://youtube.com/shorts/E4BR0sAM3-8?feature=share")
+                .build();
+        List<VideoInfoDto> videoInfoDtos = new ArrayList<>();
+        videoInfoDtos.add(homeDto1);
+        videoInfoDtos.add(homeDto2);
+        videoInfoDtos.add(homeDto3);
+
+        HomeDto homeDto = new HomeDto(videoInfoDtos, likeList);
+
+        doReturn(
+                homeDto
+        ).when(videoService).findAll(any(), any());
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Mockito.when(mockPrincipal.getName()).thenReturn("me");
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                get("/api/home")
+                        .principal(mockPrincipal)
+                        .param("page", "1")
+                        .param("size", "3")
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isOk())
+                .andDo(document("home", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParameters(
+                                parameterWithName("page").description("페이지 번호"),
+                                parameterWithName("size").description("가져올 크기")
+                        ),
+                        responseFields(
+                                fieldWithPath("videos[].nickname").description("닉네임"),
+                                fieldWithPath("videos[].profile").description("프로필 사진 경로"),
+                                fieldWithPath("videos[].videoLike").description("좋아요 수"),
+                                fieldWithPath("videos[].videoTitle").description("영상 제목"),
+                                fieldWithPath("videos[].videoContent").description("영상 내용"),
+                                fieldWithPath("videos[].videoCreationDate").description("게시날짜"),
+                                fieldWithPath("videos[].videoViews").description("조회수"),
+                                fieldWithPath("videos[].directDir").description("직접 업로드 경로").optional(),
+                                fieldWithPath("videos[].embedLink").description("임베드 링크").optional(),
+                                fieldWithPath("likeList[]").description("로그인 회원의 관심 리스트")
+                        )
+                ));
+    }
 
     @Test
     public void videoUploadDirect() throws Exception {

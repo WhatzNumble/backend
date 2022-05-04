@@ -1,4 +1,4 @@
-package com.numble.whatz.core.advice;
+package com.numble.whatz.core.advice.dto;
 
 import lombok.Getter;
 

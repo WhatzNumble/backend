@@ -1,6 +1,6 @@
 package com.numble.whatz.application.video.service;
 
-import com.numble.whatz.core.advice.VideoStoreExceptionMessage;
+import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
 import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;

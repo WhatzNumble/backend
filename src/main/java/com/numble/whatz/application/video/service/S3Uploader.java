@@ -1,7 +1,7 @@
 package com.numble.whatz.application.video.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.*;
 import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
 import com.numble.whatz.core.exception.video.CustomVideoStoreException;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.ListIterator;
 
 @Slf4j
 @Component
@@ -27,6 +28,12 @@ public class S3Uploader {
         return uploadImageUrl;
     }
 
+    // S3 파일 수정
+    public String modify(File uploadFile, String dirName, String beforeName) throws CustomVideoStoreException {
+//        deleteFolderS3("/WhatzDev/" + beforeName);
+        return upload(uploadFile, dirName);
+    }
+
     // S3로 업로드
     private String putS3(File uploadFile, String dirName) throws CustomVideoStoreException {
         try {
@@ -37,6 +44,20 @@ public class S3Uploader {
             return amazonS3Client.getUrl(bucket + dirName, uploadFile.getName()).toString();
         } catch (IOException e) {
             throw new CustomVideoStoreException(VideoStoreExceptionMessage.S3_UPLOAD_EX, e);
+        }
+    }
+
+    // S3 폴더 삭제
+    public void deleteFolderS3(String folderName) throws CustomVideoStoreException {
+
+        ListObjectsV2Request listObjectsV2Request = new ListObjectsV2Request().withBucketName(bucket).withPrefix("WhatzDev/" + folderName + "/");
+        ListObjectsV2Result listObjectsV2Result = amazonS3Client.listObjectsV2(listObjectsV2Request);
+        ListIterator<S3ObjectSummary> listIterator = listObjectsV2Result.getObjectSummaries().listIterator();
+
+        while (listIterator.hasNext()) {
+            S3ObjectSummary objectSummary = listIterator.next();
+            DeleteObjectRequest request = new DeleteObjectRequest(bucket, objectSummary.getKey());
+            amazonS3Client.deleteObject(request);
         }
     }
 
@@ -51,7 +72,7 @@ public class S3Uploader {
         return objectMetadata;
     }
 
-    // 로컬에 저장된 이미지 지우기
+    // 로컬에 저장된 파일 지우기
     private void removeNewFile(File targetFile) {
         if (targetFile.delete()) {
             return;

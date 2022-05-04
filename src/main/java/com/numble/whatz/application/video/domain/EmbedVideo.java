@@ -22,4 +22,9 @@ public class EmbedVideo extends Videos {
         super(title, content, member, thumbnail);
         this.link = link;
     }
+
+    public void modify(String link, String title, String content, Thumbnail thumbnail) {
+        this.link = link;
+        modify(title, content, thumbnail);
+    }
 }

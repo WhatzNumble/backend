@@ -49,22 +49,31 @@ public class VideoStoreImpl implements VideoStore{
         }
         fFmpegConverter.convert(storeFilename, executeFilename);
 
-        s3Processor(mp4uuidFile);
+        s3Processor(mp4uuidFile, uuid);
 
-        return executeFilename;
+        return uuid + "/" + executeFilename;
     }
 
     @Override
-    public String modifyVideo(MultipartFile multipartFile) throws IOException {
-        return "modifyFilename";
+    public String modifyVideo(MultipartFile multipartFile, String beforeFile) throws IOException {
+        deleteVideo(beforeFile);
+        String createFile = storeVideo(multipartFile);
+        return createFile;
     }
 
-    private void s3Processor(File mp4uuidFile) throws CustomVideoStoreException {
+    @Override
+    public void deleteVideo(String fileName) throws IOException {
+        String folderName = fileName.substring(0, fileName.lastIndexOf("/"));
+        System.out.println("folderName = " + folderName);
+        s3Uploader.deleteFolderS3(folderName);
+    }
+
+    private void s3Processor(File mp4uuidFile, String uuid) throws CustomVideoStoreException {
         File executeFile = new File(fileDir + "executeFile/");
         File[] executeFiles = executeFile.listFiles();
 
         for (File file : executeFiles) {
-            s3Uploader.upload(file, "/WhatzDev");
+            s3Uploader.upload(file, "/WhatzDev" + "/" + uuid);
         }
         deleteMp4File(mp4uuidFile);
     }

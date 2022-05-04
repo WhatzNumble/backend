@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -36,7 +37,10 @@ public class VideoServiceImpl implements VideoService{
         String executeFileName = videoStore.storeVideo(video.getFile());
 
         Member member = getMember(principal);
+
         // ==== 썸네일 관련 ===== //
+        MultipartFile videoThumbnail = video.getVideoThumbnail();
+
         Thumbnail thumbnail = Thumbnail.builder()
                 .executeFile("execute")
                 .originalFile("original")
@@ -121,6 +125,40 @@ public class VideoServiceImpl implements VideoService{
         Videos videos = getVideos(id);
         VideoInfoDto videoInfoDto = getVideoInfoDto(videos);
         return videoInfoDto;
+    }
+
+    @Override
+    @Transactional
+    public void modifyDirect(ModifyDirectDto video, Principal principal) throws IOException {
+        Member member = getMember(principal);
+        Videos videos = getVideos(video.getId());
+        checkOwner(videos, member);
+        String modifyVideo = videoStore.modifyVideo(video.getFile(), ((DirectVideo) videos).getDirectDir());
+
+        // ==== 썸네일 관련 ===== //
+        Thumbnail thumbnail = Thumbnail.builder()
+                .executeFile("execute")
+                .originalFile("original")
+                .build();
+        // ==== 썸네일 관련 ==== //
+
+        ((DirectVideo) videos).modify(modifyVideo, video.getTitle(), video.getContent(), thumbnail);
+    }
+
+    @Override
+    @Transactional
+    public void modifyEmbed(ModifyEmbedDto video, Principal principal) {
+        Member member = getMember(principal);
+        Videos videos = getVideos(video.getId());
+        checkOwner(videos, member);
+        // ==== 썸네일 관련 ===== //
+        Thumbnail thumbnail = Thumbnail.builder()
+                .executeFile("execute")
+                .originalFile("original")
+                .build();
+        // ==== 썸네일 관련 ==== //
+
+        ((EmbedVideo) videos).modify(video.getLink(), video.getTitle(), video.getContent(), thumbnail);
     }
 
     private VideoInfoDto getVideoInfoDto(Videos videos) {

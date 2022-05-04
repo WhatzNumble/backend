@@ -23,4 +23,9 @@ public class DirectVideo extends Videos {
         super(title, content, member, thumbnail);
         this.directDir = directDir;
     }
+
+    public void modify(String modifyVideo, String title, String content, Thumbnail thumbnail) {
+        this.directDir = modifyVideo;
+        modify(title, content, thumbnail);
+    }
 }

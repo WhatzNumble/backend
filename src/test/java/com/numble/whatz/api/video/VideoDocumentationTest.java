@@ -248,15 +248,18 @@ public class VideoDocumentationTest {
     @Test
     public void videoUploadEmbed() throws Exception {
         //given
-        EmbedDto embedDto = new EmbedDto("임베드 링크", "영상 썸네일", "영상 제목", "영상 내용");
+        MockMultipartFile videoThumbnail = getVideoThumbnail();
         doNothing().when(videoService).saveEmbed(any(), any());
 
         //when
         ResultActions result = this.mockMvc.perform(
-                post("/api/video/add/embed")
-                        .content(objectMapper.writeValueAsString(embedDto))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                multipart("/api/video/add/embed")
+                        .file(videoThumbnail)
+                        .param("link", "임베드 링크")
+                        .param("title", "영상 제목")
+                        .param("content", "영상 내용")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON)
         );
 
         //then
@@ -264,11 +267,13 @@ public class VideoDocumentationTest {
                 .andDo(document("video-upload-embed", // (4)
                         getDocumentRequest(),
                         getDocumentResponse(),
-                        requestFields(
-                                fieldWithPath("link").description("임베드 링크"),
-                                fieldWithPath("videoThumbnail").description("영상 썸네일"),
-                                fieldWithPath("title").description("영상 제목"),
-                                fieldWithPath("content").description("영상 내용")
+                        requestParts(
+                                partWithName("videoThumbnail").optional().description("영상 썸네일")
+                        ),
+                        requestParameters(
+                                parameterWithName("link").description("임베드 링크"),
+                                parameterWithName("title").description("영상 제목"),
+                                parameterWithName("content").description("영상 내용")
                         )
                 ));
     }
@@ -337,7 +342,74 @@ public class VideoDocumentationTest {
     }
 
     @Test
-    public void modifyVideo() throws Exception {
+    public void modifyDirect() throws Exception {
+        //given
+        MockMultipartFile file = getVideoFile();
+        MockMultipartFile videoThumbnail = getVideoThumbnail();
+        doNothing().when(videoService).modifyDirect(any(), any());
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                multipart("/api/video/modify/direct")
+                        .file(file)
+                        .file(videoThumbnail)
+                        .param("id", "1")
+                        .param("title", "This is title")
+                        .param("content", "This is content")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isOk())
+                .andDo(document("video-modify-direct", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParts(
+                                partWithName("file").optional().description("영상"),
+                                partWithName("videoThumbnail").optional().description("영상 썸네일")
+                        ),
+                        requestParameters(
+                                parameterWithName("id").description("수정할 영상 번호"),
+                                parameterWithName("title").description("영상 제목"),
+                                parameterWithName("content").description("영상 내용")
+                        )
+                ));
+    }
+
+    @Test
+    public void modifyEmbed() throws Exception {
+        //given
+        MockMultipartFile videoThumbnail = getVideoThumbnail();
+        doNothing().when(videoService).modifyEmbed(any(), any());
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                multipart("/api/video/modify/embed")
+                        .file(videoThumbnail)
+                        .param("id", "1")
+                        .param("title", "This is title")
+                        .param("content", "This is content")
+                        .param("link", "This is link")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isOk())
+                .andDo(document("video-modify-embed", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParts(
+                                partWithName("videoThumbnail").optional().description("영상 썸네일")
+                        ),
+                        requestParameters(
+                                parameterWithName("id").description("수정할 영상 번호"),
+                                parameterWithName("title").description("수정할 영상 제목"),
+                                parameterWithName("content").description("수정할 영상 내용"),
+                                parameterWithName("link").description("수정할 임베드 링크")
+                        )
+                ));
     }
 
     @Test

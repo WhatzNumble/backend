@@ -4,6 +4,7 @@ import com.numble.whatz.application.video.controller.dto.HomeDto;
 import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
 import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.service.VideoService;
+import com.numble.whatz.application.video.service.VideoStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -13,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -54,24 +52,32 @@ public class VideoController {
         return videoInfoDto;
     }
 
-    //-------------No Test yet--------------
-
     @PostMapping("api/video/modify/direct")
-    public String modifyDirectVideo(ModifyDirectDto video) {
-
-        return "success";
-    }
-
-    @PostMapping("api/video/modify/embed")
-    public ResponseEntity modifyEmbedVideo(EmbedDto video) {
+    public ResponseEntity modifyDirectVideo(ModifyDirectDto video, Principal principal) throws Exception {
+        videoService.modifyDirect(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //-----------------------------------
+    @PostMapping("api/video/modify/embed")
+    public ResponseEntity modifyEmbedVideo(ModifyEmbedDto video, Principal principal) {
+        videoService.modifyEmbed(video, principal);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
     @PostMapping("api/video/delete")
     public ResponseEntity deleteVideo(String id, Principal principal) {
         videoService.removeVideo(id, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    /*
+    private final VideoStore videoStore;
+
+    @PostMapping("api/testVideo")
+    public String test(ModifyDirectDto video) throws Exception {
+        videoStore.modifyVideo(video.getFile(), "074d590f-f354-4e08-9725-6f5d9bb67451/074d590f-f354-4e08-9725-6f5d9bb67451.m3u8");
+        return "ok";
+    }
+
+     */
 }

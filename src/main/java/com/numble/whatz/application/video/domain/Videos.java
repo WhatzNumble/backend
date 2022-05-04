@@ -45,4 +45,10 @@ public abstract class Videos {
         this.thumbnail = thumbnail;
         member.addVideo(this);
     }
+
+    public void modify(String title, String content, Thumbnail thumbnail) {
+        this.videoTitle = title;
+        this.videoContent = content;
+        this.thumbnail = thumbnail;
+    }
 }

@@ -1,7 +1,6 @@
 package com.numble.whatz.application.video.service;
 
 import com.numble.whatz.application.video.controller.dto.*;
-import com.numble.whatz.application.video.domain.Videos;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
@@ -14,4 +13,6 @@ public interface VideoService {
     HomeDto findAll(Pageable pageable, Principal principal);
     MyVideosDto getMyVideos(Pageable pageable, Principal principal);
     VideoInfoDto getOneVideo(Long id);
+    void modifyDirect(ModifyDirectDto video, Principal principal) throws IOException;
+    void modifyEmbed(ModifyEmbedDto video, Principal principal);
 }

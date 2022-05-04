@@ -5,17 +5,16 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter @Setter
-public class ModifyDirectDto {
+public class ModifyEmbedDto {
 
     private Long id;
-    private MultipartFile file;
+    private String link;
     private MultipartFile videoThumbnail;
     private String title;
     private String content;
 
-    public ModifyDirectDto(Long id, MultipartFile file, MultipartFile videoThumbnail, String title, String content) {
-        this.id = id;
-        this.file = file;
+    public ModifyEmbedDto(String link, MultipartFile videoThumbnail, String title, String content) {
+        this.link = link;
         this.videoThumbnail = videoThumbnail;
         this.title = title;
         this.content = content;

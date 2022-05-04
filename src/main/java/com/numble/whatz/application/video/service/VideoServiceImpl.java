@@ -4,6 +4,9 @@ import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
+import com.numble.whatz.application.thumbnail.repository.ThumbnailRepository;
+import com.numble.whatz.application.thumbnail.service.ThumbnailStore;
+import com.numble.whatz.application.thumbnail.service.ThumbnailStoreDto;
 import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.domain.DirectVideo;
 import com.numble.whatz.application.video.domain.EmbedVideo;
@@ -14,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -30,62 +32,46 @@ public class VideoServiceImpl implements VideoService{
     private final VideoRepository videoRepository;
     private final VideoStore videoStore;
     private final MemberRepository memberRepository;
+    private final ThumbnailStore thumbnailStore;
+    private final ThumbnailRepository thumbnailRepository;
 
     @Override
     @Transactional
     public void saveDirect(DirectDto video, Principal principal) throws IOException {
-        String executeFileName = videoStore.storeVideo(video.getFile());
-
         Member member = getMember(principal);
 
-        // ==== 썸네일 관련 ===== //
-        MultipartFile videoThumbnail = video.getVideoThumbnail();
+        String executeFileName = videoStore.storeVideo(video.getFile());
 
-        Thumbnail thumbnail = Thumbnail.builder()
-                .executeFile("execute")
-                .originalFile("original")
-                .build();
-        // ==== 썸네일 관련 ==== //
+        ThumbnailStoreDto storeThumbnail = thumbnailStore.storeThumbnail(video.getVideoThumbnail());
 
-        DirectVideo direct = DirectVideo.builder()
-                .thumbnail(thumbnail)
-                .content(video.getContent())
-                .title(video.getTitle())
-                .member(member)
-                .directDir(executeFileName)
-                .build();
+        DirectVideo direct = getDirectVideo(video, executeFileName, member, storeThumbnail);
 
         videoRepository.save(direct);
     }
 
     @Override
     @Transactional
-    public void saveEmbed(EmbedDto video, Principal principal) {
+    public void saveEmbed(EmbedDto video, Principal principal) throws IOException {
         Member member = getMember(principal);
-        // ==== 썸네일 관련 ===== //
-        Thumbnail thumbnail = Thumbnail.builder()
-                .executeFile("execute")
-                .originalFile("original")
-                .build();
-        // ==== 썸네일 관련 ==== //
 
-        EmbedVideo embed = EmbedVideo.builder()
-                .content(video.getContent())
-                .thumbnail(thumbnail)
-                .member(member)
-                .title(video.getTitle())
-                .link(video.getLink())
-                .build();
+        ThumbnailStoreDto storeThumbnail = thumbnailStore.storeThumbnail(video.getVideoThumbnail());
+
+        EmbedVideo embed = getEmbedVideo(video, member, storeThumbnail);
 
         videoRepository.save(embed);
     }
 
     @Override
-    public void removeVideo(String id, Principal principal) {
+    @Transactional
+    public void removeVideo(String id, Principal principal) throws IOException {
         long parseId = Long.parseLong(id);
         Videos video = getVideos(parseId);
         Member member = getMember(principal);
         checkOwner(video, member);
+
+        if (video instanceof DirectVideo) videoStore.deleteVideo(((DirectVideo)video).getDirectDir());
+        thumbnailStore.removeThumbnail(video.getThumbnail());
+
         videoRepository.delete(video);
     }
 
@@ -135,30 +121,23 @@ public class VideoServiceImpl implements VideoService{
         checkOwner(videos, member);
         String modifyVideo = videoStore.modifyVideo(video.getFile(), ((DirectVideo) videos).getDirectDir());
 
-        // ==== 썸네일 관련 ===== //
-        Thumbnail thumbnail = Thumbnail.builder()
-                .executeFile("execute")
-                .originalFile("original")
-                .build();
-        // ==== 썸네일 관련 ==== //
+        ThumbnailStoreDto thumbnail = thumbnailStore.modifyThumbnail(video.getVideoThumbnail(), videos.getThumbnail());
 
-        ((DirectVideo) videos).modify(modifyVideo, video.getTitle(), video.getContent(), thumbnail);
+        ((DirectVideo) videos).modify(modifyVideo, video.getTitle(),
+                video.getContent(), thumbnail.getCutName(), thumbnail.getExecuteName());
     }
 
     @Override
     @Transactional
-    public void modifyEmbed(ModifyEmbedDto video, Principal principal) {
+    public void modifyEmbed(ModifyEmbedDto video, Principal principal) throws IOException {
         Member member = getMember(principal);
         Videos videos = getVideos(video.getId());
         checkOwner(videos, member);
-        // ==== 썸네일 관련 ===== //
-        Thumbnail thumbnail = Thumbnail.builder()
-                .executeFile("execute")
-                .originalFile("original")
-                .build();
-        // ==== 썸네일 관련 ==== //
 
-        ((EmbedVideo) videos).modify(video.getLink(), video.getTitle(), video.getContent(), thumbnail);
+        ThumbnailStoreDto thumbnail = thumbnailStore.modifyThumbnail(video.getVideoThumbnail(), videos.getThumbnail());
+
+        ((EmbedVideo) videos).modify(video.getLink(), video.getTitle(),
+                video.getContent(), thumbnail.getCutName(), thumbnail.getExecuteName());
     }
 
     private VideoInfoDto getVideoInfoDto(Videos videos) {
@@ -176,6 +155,38 @@ public class VideoServiceImpl implements VideoService{
         return videoInfoDto;
     }
 
+    private DirectVideo getDirectVideo(DirectDto video, String executeFileName, Member member, ThumbnailStoreDto storeThumbnail) {
+        Thumbnail thumbnail = Thumbnail.builder()
+                .cutFile(storeThumbnail.getCutName())
+                .executeFile(storeThumbnail.getExecuteName())
+                .build();
+
+        DirectVideo direct = DirectVideo.builder()
+                .thumbnail(thumbnail)
+                .content(video.getContent())
+                .title(video.getTitle())
+                .member(member)
+                .directDir(executeFileName)
+                .build();
+        return direct;
+    }
+
+    private EmbedVideo getEmbedVideo(EmbedDto video, Member member, ThumbnailStoreDto storeThumbnail) {
+        Thumbnail thumbnail = Thumbnail.builder()
+                .cutFile(storeThumbnail.getCutName())
+                .executeFile(storeThumbnail.getExecuteName())
+                .build();
+
+        EmbedVideo embed = EmbedVideo.builder()
+                .content(video.getContent())
+                .thumbnail(thumbnail)
+                .member(member)
+                .title(video.getTitle())
+                .link(video.getLink())
+                .build();
+        return embed;
+    }
+
     private Videos getVideos(long parseId) {
         Optional<Videos> findVideo = videoRepository.findById(parseId);
         if (findVideo.isEmpty()) throw new IllegalStateException("해당 비디오가 존재하지 않습니다.");
@@ -185,7 +196,7 @@ public class VideoServiceImpl implements VideoService{
 
     private Member getMember(Principal principal) {
         Optional<Member> findMember = memberRepository.findBySnsId(principal.getName());
-        if (findMember.isEmpty()) throw new IllegalStateException("해당 영상이 존재하지 않습니다.");
+        if (findMember.isEmpty()) throw new IllegalStateException("해당 회원 존재하지 않습니다.");
         Member member = findMember.get();
         return member;
     }

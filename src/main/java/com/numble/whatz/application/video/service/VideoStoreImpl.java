@@ -25,6 +25,8 @@ public class VideoStoreImpl implements VideoStore{
     @Value("${file.dir}")
     private String fileDir;
 
+    private String s3dir = "/WhatzDev/";
+
     @Override
     public String storeVideo(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
@@ -36,12 +38,8 @@ public class VideoStoreImpl implements VideoStore{
         String storeFilename = createStoreFilename(uuid, originalFilename); //UUID.mp4
         String executeFilename = createStoreExecuteFilename(uuid); // UUID.m3u8
 
-        System.out.println("executeFilename = " + executeFilename);
-        System.out.println("storeFilename = " + storeFilename);
-
-
         File mp4uuidFile = new File(getFullPathMp4File(storeFilename));
-        System.out.println("mp4uuidFile = " + mp4uuidFile.getAbsolutePath());
+
         try {
             multipartFile.transferTo(mp4uuidFile);
         } catch (IOException e) {
@@ -51,7 +49,8 @@ public class VideoStoreImpl implements VideoStore{
 
         s3Processor(mp4uuidFile, uuid);
 
-        return uuid + "/" + executeFilename;
+        return s3dir + uuid + "/" + executeFilename;
+        // /WhatzDev/uuid/uuid.m3u8
     }
 
     @Override
@@ -64,7 +63,6 @@ public class VideoStoreImpl implements VideoStore{
     @Override
     public void deleteVideo(String fileName) throws IOException {
         String folderName = fileName.substring(0, fileName.lastIndexOf("/"));
-        System.out.println("folderName = " + folderName);
         s3Uploader.deleteFolderS3(folderName);
     }
 
@@ -73,7 +71,7 @@ public class VideoStoreImpl implements VideoStore{
         File[] executeFiles = executeFile.listFiles();
 
         for (File file : executeFiles) {
-            s3Uploader.upload(file, "/WhatzDev" + "/" + uuid);
+            s3Uploader.upload(file, s3dir + uuid);
         }
         deleteMp4File(mp4uuidFile);
     }

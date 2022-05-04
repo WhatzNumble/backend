@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ListIterator;
@@ -28,9 +29,9 @@ public class S3Uploader {
         return uploadImageUrl;
     }
 
-    // S3 파일 수정
+    // S3 파일 수정 - 사용 안함
     public String modify(File uploadFile, String dirName, String beforeName) throws CustomVideoStoreException {
-//        deleteFolderS3("/WhatzDev/" + beforeName);
+        deleteFolderS3("/WhatzDev/" + beforeName);
         return upload(uploadFile, dirName);
     }
 
@@ -48,9 +49,9 @@ public class S3Uploader {
     }
 
     // S3 폴더 삭제
-    public void deleteFolderS3(String folderName) throws CustomVideoStoreException {
-
-        ListObjectsV2Request listObjectsV2Request = new ListObjectsV2Request().withBucketName(bucket).withPrefix("WhatzDev/" + folderName + "/");
+    public void deleteFolderS3(String folderName) {
+        ListObjectsV2Request listObjectsV2Request = new ListObjectsV2Request()
+                .withBucketName(bucket).withPrefix(folderName.substring(1));
         ListObjectsV2Result listObjectsV2Result = amazonS3Client.listObjectsV2(listObjectsV2Request);
         ListIterator<S3ObjectSummary> listIterator = listObjectsV2Result.getObjectSummaries().listIterator();
 
@@ -78,5 +79,22 @@ public class S3Uploader {
             return;
         }
         log.info("File delete fail");
+    }
+
+    public void uploadThumbnail(MultipartFile file, String dir, String contentType) throws CustomVideoStoreException {
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(contentType);
+
+        System.out.println("file.getName() = " + file.getName());
+        System.out.println("bucket + dir = " + bucket + dir);
+
+        try {
+            InputStream inputStream = file.getInputStream();
+            amazonS3Client.putObject(bucket + dir, file.getName(), inputStream, objectMetadata);
+        } catch (IOException e) {
+            throw new CustomVideoStoreException(VideoStoreExceptionMessage.S3_UPLOAD_EX, e);
+        }
+
     }
 }

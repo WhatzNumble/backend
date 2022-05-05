@@ -1,15 +1,15 @@
 package com.numble.whatz.api.video;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.numble.whatz.api.video.dto.EmbedDto;
 import com.numble.whatz.application.video.controller.dto.HomeDto;
 import com.numble.whatz.application.video.controller.dto.MyVideoDto;
 import com.numble.whatz.application.video.controller.dto.MyVideosDto;
 import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
 import com.numble.whatz.application.video.service.VideoService;
-import com.numble.whatz.application.video.service.VideoStore;
+import com.numble.whatz.core.advice.dto.ThumbnailStoreExceptionMessage;
 import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
-import com.numble.whatz.core.exception.video.CustomVideoStoreException;
+import com.numble.whatz.core.exception.thumbnail.ThumbnailStoreException;
+import com.numble.whatz.core.exception.video.VideoStoreException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,12 +135,86 @@ public class VideoDocumentationTest {
     }
 
     @Test
+    public void videoUploadDirectThumbnailException() throws Exception {
+        //given
+        MockMultipartFile file = getVideoFile();
+        MockMultipartFile videoThumbnail = getVideoThumbnail();
+        doThrow(
+                new ThumbnailStoreException(
+                        ThumbnailStoreExceptionMessage.IMAGE_CONVERT_EXCEPTION, new IOException())
+        ).when(videoService).saveDirect(any(), any());
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                multipart("/api/video/add/direct")
+                        .file(file)
+                        .file(videoThumbnail)
+                        .param("title", "This is title")
+                        .param("content", "This is content")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isInternalServerError())
+                .andDo(document("video-upload-direct-ioEx", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParts(
+                                partWithName("file").optional().description("영상"),
+                                partWithName("videoThumbnail").optional().description("영상 썸네일")
+                        ),
+                        requestParameters(
+                                parameterWithName("title").description("영상 제목"),
+                                parameterWithName("content").description("영상 내용")
+                        )
+                ));
+    }
+
+    @Test
+    public void videoUploadDirectLocalDeleteException() throws Exception {
+        //given
+        MockMultipartFile file = getVideoFile();
+        MockMultipartFile videoThumbnail = getVideoThumbnail();
+        doThrow(
+                new VideoStoreException(
+                        VideoStoreExceptionMessage.LOCAL_DELETE_EX, new IOException())
+        ).when(videoService).saveDirect(any(), any());
+
+        //when
+        ResultActions result = this.mockMvc.perform(
+                multipart("/api/video/add/direct")
+                        .file(file)
+                        .file(videoThumbnail)
+                        .param("title", "This is title")
+                        .param("content", "This is content")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        result.andExpect(status().isForbidden())
+                .andDo(document("video-upload-direct-localex", // (4)
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParts(
+                                partWithName("file").optional().description("영상"),
+                                partWithName("videoThumbnail").optional().description("영상 썸네일")
+                        ),
+                        requestParameters(
+                                parameterWithName("title").description("영상 제목"),
+                                parameterWithName("content").description("영상 내용")
+                        )
+                ));
+    }
+
+    @Test
     public void videoUploadDirectMultipartException() throws Exception {
         //given
         MockMultipartFile file = getVideoFile();
         MockMultipartFile videoThumbnail = getVideoThumbnail();
         doThrow(
-                new CustomVideoStoreException(
+                new VideoStoreException(
                         VideoStoreExceptionMessage.MULTIPART_EX, new IOException())
         ).when(videoService).saveDirect(any(), any());
 
@@ -177,7 +251,7 @@ public class VideoDocumentationTest {
         MockMultipartFile file = getVideoFile();
         MockMultipartFile videoThumbnail = getVideoThumbnail();
         doThrow(
-                new CustomVideoStoreException(
+                new VideoStoreException(
                         VideoStoreExceptionMessage.FFMPEG_EX, new IOException())
         ).when(videoService).saveDirect(any(), any());
 
@@ -214,7 +288,7 @@ public class VideoDocumentationTest {
         MockMultipartFile file = getVideoFile();
         MockMultipartFile videoThumbnail = getVideoThumbnail();
         doThrow(
-                new CustomVideoStoreException(
+                new VideoStoreException(
                         VideoStoreExceptionMessage.S3_UPLOAD_EX, new IOException())
         ).when(videoService).saveDirect(any(), any());
 

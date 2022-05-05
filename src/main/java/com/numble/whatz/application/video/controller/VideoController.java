@@ -8,6 +8,8 @@ import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
 import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.service.VideoService;
 import com.numble.whatz.application.video.service.VideoStore;
+import com.numble.whatz.core.exception.thumbnail.ThumbnailStoreException;
+import com.numble.whatz.core.exception.video.VideoStoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +36,13 @@ public class VideoController {
     }
 
     @PostMapping("api/video/add/direct")
-    public ResponseEntity uploadVideoDirect(DirectDto video, Principal principal) throws Exception {
+    public ResponseEntity uploadVideoDirect(DirectDto video, Principal principal) throws ThumbnailStoreException, VideoStoreException {
         videoService.saveDirect(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("api/video/add/embed")
-    public ResponseEntity uploadVideoEmbed(EmbedDto video, Principal principal) throws IOException {
+    public ResponseEntity uploadVideoEmbed(EmbedDto video, Principal principal) throws ThumbnailStoreException {
         videoService.saveEmbed(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -70,7 +72,7 @@ public class VideoController {
     }
 
     @PostMapping("api/video/delete")
-    public ResponseEntity deleteVideo(String id, Principal principal) throws IOException {
+    public ResponseEntity deleteVideo(String id, Principal principal) {
         videoService.removeVideo(id, principal);
         return new ResponseEntity(HttpStatus.OK);
     }

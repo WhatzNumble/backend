@@ -3,7 +3,7 @@ package com.numble.whatz.application.video.service;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
 import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
-import com.numble.whatz.core.exception.video.CustomVideoStoreException;
+import com.numble.whatz.core.exception.video.VideoStoreException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,20 +23,20 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
-    public String upload(File uploadFile, String dirName) throws CustomVideoStoreException {
+    public String upload(File uploadFile, String dirName) throws VideoStoreException {
         String uploadImageUrl = putS3(uploadFile, dirName); // s3로 업로드
         removeNewFile(uploadFile);
         return uploadImageUrl;
     }
 
     // S3 파일 수정 - 사용 안함
-    public String modify(File uploadFile, String dirName, String beforeName) throws CustomVideoStoreException {
+    public String modify(File uploadFile, String dirName, String beforeName) throws VideoStoreException {
         deleteFolderS3("/WhatzDev/" + beforeName);
         return upload(uploadFile, dirName);
     }
 
     // S3로 업로드
-    private String putS3(File uploadFile, String dirName) throws CustomVideoStoreException {
+    private String putS3(File uploadFile, String dirName) throws VideoStoreException {
         try {
             ObjectMetadata objectMetadata = getObjectMetadata(uploadFile);
             InputStream inputStream = new FileInputStream(uploadFile);
@@ -44,7 +44,7 @@ public class S3Uploader {
             amazonS3Client.putObject(bucket + dirName, uploadFile.getName(), inputStream, objectMetadata);
             return amazonS3Client.getUrl(bucket + dirName, uploadFile.getName()).toString();
         } catch (IOException e) {
-            throw new CustomVideoStoreException(VideoStoreExceptionMessage.S3_UPLOAD_EX, e);
+            throw new VideoStoreException(VideoStoreExceptionMessage.S3_UPLOAD_EX, e);
         }
     }
 
@@ -81,7 +81,7 @@ public class S3Uploader {
         log.info("File delete fail");
     }
 
-    public void uploadThumbnail(MultipartFile file, String dir, String contentType) throws CustomVideoStoreException {
+    public void uploadThumbnail(MultipartFile file, String dir, String contentType) throws VideoStoreException {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(contentType);
@@ -93,7 +93,7 @@ public class S3Uploader {
             InputStream inputStream = file.getInputStream();
             amazonS3Client.putObject(bucket + dir, file.getName(), inputStream, objectMetadata);
         } catch (IOException e) {
-            throw new CustomVideoStoreException(VideoStoreExceptionMessage.S3_UPLOAD_EX, e);
+            throw new VideoStoreException(VideoStoreExceptionMessage.S3_UPLOAD_EX, e);
         }
 
     }

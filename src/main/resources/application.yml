@@ -2,8 +2,8 @@ spring:
   profiles:
     include:
     - oauth
-#    - local
-    - aws
+    - local
+#    - aws
   servlet:
     multipart:
       max-file-size: 20MB # 추후 변경
@@ -15,4 +15,11 @@ JWT:
 
 file:
   dir: /Users/seungjulee/study/demo/file/
+
+cloud:
+  aws:
+    accessKey: DUMMYID
+    secretKey: DUMMYSECERET
+    s3:
+      bucket: whatz-s3
 

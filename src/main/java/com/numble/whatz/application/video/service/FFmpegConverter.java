@@ -1,7 +1,7 @@
 package com.numble.whatz.application.video.service;
 
 import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
-import com.numble.whatz.core.exception.video.CustomVideoStoreException;
+import com.numble.whatz.core.exception.video.VideoStoreException;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
@@ -17,7 +17,7 @@ import static com.numble.whatz.application.video.service.PathUtil.getFullPathMp4
 public class FFmpegConverter {
 
     // brew 설치했을시 경로
-    public void convert(String storeFilename, String executeFilename) throws CustomVideoStoreException {
+    public void convert(String storeFilename, String executeFilename) throws VideoStoreException {
         try {
             FFmpeg ffmpeg = new FFmpeg("/opt/homebrew/Cellar/ffmpeg/5.0.1/bin/ffmpeg");
             FFprobe ffprobe = new FFprobe("/opt/homebrew/Cellar/ffmpeg/5.0.1/bin/ffprobe");
@@ -46,7 +46,7 @@ public class FFmpegConverter {
 
             executor.createJob(builder).run();
         } catch (IOException e) {
-            new CustomVideoStoreException(VideoStoreExceptionMessage.FFMPEG_EX, e);
+            new VideoStoreException(VideoStoreExceptionMessage.FFMPEG_EX, e);
         }
     }
 }

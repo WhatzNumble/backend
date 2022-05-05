@@ -17,15 +17,20 @@ public class Thumbnail {
     @GeneratedValue
     @Column(name = "thumbnail_id")
     private Long id;
-    private String originalFile;
+    private String cutFile;
     private String executeFile;
 
     @OneToOne(mappedBy = "thumbnail",fetch = FetchType.LAZY)
     private Videos video;
 
     @Builder
-    public Thumbnail(String originalFile, String executeFile) {
-        this.originalFile = originalFile;
+    public Thumbnail(String cutFile, String executeFile) {
+        this.cutFile = cutFile;
         this.executeFile = executeFile;
+    }
+
+    public void modify(String cutName, String executeName) {
+        this.cutFile = cutName;
+        this.executeFile = executeName;
     }
 }

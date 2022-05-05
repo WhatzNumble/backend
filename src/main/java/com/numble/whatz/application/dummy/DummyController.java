@@ -55,7 +55,7 @@ public class DummyController {
 
         DirectVideo direct1 = DirectVideo.builder()
                 .thumbnail(Thumbnail.builder()
-                        .originalFile("original1")
+                        .cutFile("original1")
                         .executeFile("execute1")
                         .build())
                 .content("content1")
@@ -66,7 +66,7 @@ public class DummyController {
 
         DirectVideo direct2 = DirectVideo.builder()
                 .thumbnail(Thumbnail.builder()
-                        .originalFile("original2")
+                        .cutFile("original2")
                         .executeFile("execute2")
                         .build())
                 .content("content2")
@@ -77,7 +77,7 @@ public class DummyController {
 
         DirectVideo direct3 = DirectVideo.builder()
                 .thumbnail(Thumbnail.builder()
-                        .originalFile("original3")
+                        .cutFile("original3")
                         .executeFile("execute3")
                         .build())
                 .content("content3")
@@ -88,7 +88,7 @@ public class DummyController {
 
         EmbedVideo embed1 = EmbedVideo.builder()
                 .thumbnail(Thumbnail.builder()
-                        .originalFile("original4")
+                        .cutFile("original4")
                         .executeFile("execute4")
                         .build())
                 .title("title4")

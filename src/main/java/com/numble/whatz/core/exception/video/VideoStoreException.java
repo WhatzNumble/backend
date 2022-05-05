@@ -6,15 +6,14 @@ import lombok.Getter;
 import java.io.IOException;
 
 @Getter
-public class CustomVideoStoreException extends IOException {
+public class VideoStoreException extends IOException {
 
     private Exception e;
     private VideoStoreExceptionMessage videoStoreExceptionMessage;
 
-    public CustomVideoStoreException(VideoStoreExceptionMessage videoStoreExceptionMessage, Exception e) {
+    public VideoStoreException(VideoStoreExceptionMessage videoStoreExceptionMessage, Exception e) {
         this.videoStoreExceptionMessage = videoStoreExceptionMessage;
         this.e = e;
     }
-
 
 }

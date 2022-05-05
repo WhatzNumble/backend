@@ -2,6 +2,7 @@ package com.numble.whatz.application.video.domain;
 
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
+import com.numble.whatz.application.thumbnail.service.ThumbnailStoreDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,9 +47,9 @@ public abstract class Videos {
         member.addVideo(this);
     }
 
-    public void modify(String title, String content, Thumbnail thumbnail) {
+    public void modify(String title, String content, String cutName, String executeName) {
         this.videoTitle = title;
         this.videoContent = content;
-        this.thumbnail = thumbnail;
+        this.thumbnail.modify(cutName, executeName);
     }
 }

@@ -2,6 +2,7 @@ package com.numble.whatz.application.video.domain;
 
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
+import com.numble.whatz.application.thumbnail.service.ThumbnailStoreDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,8 +25,8 @@ public class DirectVideo extends Videos {
         this.directDir = directDir;
     }
 
-    public void modify(String modifyVideo, String title, String content, Thumbnail thumbnail) {
+    public void modify(String modifyVideo, String title, String content, String cutName, String executeName) {
         this.directDir = modifyVideo;
-        modify(title, content, thumbnail);
+        modify(title, content, cutName, executeName);
     }
 }

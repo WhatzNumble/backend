@@ -57,8 +57,14 @@ include::{snippets}/video-upload-direct-ffmpeg/response-body.adoc[]
 include::{snippets}/video-upload-direct-s3/response-body.adoc[]
 
 include::{snippets}/video-upload-direct-multi/response-body.adoc[]
+
+include::{snippets}/video-upload-direct-localex/response-body.adoc[]
+
+===== HTTPStatus - 500
+include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
+
+
 에러 코드는 임시로 넣어놓았습니다. 프론트와 추후 상의하고 변경 할 것
-직접(Direct) 영상 수정에서도 동일한 에러를 가지고 있습니다.
 
 === 임베드 영상 업로드
 임베드 영상 업로드를 했을 경우입니다. POST
@@ -73,6 +79,15 @@ include::{snippets}/video-upload-embed/http-request.adoc[]
 include::{snippets}/video-upload-embed/request-parameters.adoc[]
 ==== Request Fields - else
 include::{snippets}/video-upload-embed/request-parts.adoc[]
+
+==== Response HTTP Excample
+===== HTTPStatus - 200
+
+include::{snippets}/video-upload-direct/response-body.adoc[]
+
+===== HTTPStatus - 500
+include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
+
 
 ---
 
@@ -89,6 +104,24 @@ include::{snippets}/video-modify-direct/http-request.adoc[]
 include::{snippets}/video-modify-direct/request-parameters.adoc[]
 ==== Request Fields - else
 include::{snippets}/video-modify-direct/request-parts.adoc[]
+
+==== Response HTTP Excample
+===== HTTPStatus - 200
+
+include::{snippets}/video-upload-direct/response-body.adoc[]
+
+===== HTTPStatus - 403
+include::{snippets}/video-upload-direct-ffmpeg/response-body.adoc[]
+
+include::{snippets}/video-upload-direct-s3/response-body.adoc[]
+
+include::{snippets}/video-upload-direct-multi/response-body.adoc[]
+
+include::{snippets}/video-upload-direct-localex/response-body.adoc[]
+
+===== HTTPStatus - 500
+include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
+
 ---
 
 === 임베드 영상 수정
@@ -101,6 +134,14 @@ include::{snippets}/video-modify-direct/request-parts.adoc[]
 include::{snippets}/video-modify-embed/request-parameters.adoc[]
 ==== Request Fields - else
 include::{snippets}/video-modify-embed/request-parts.adoc[]
+==== Response HTTP Excample
+===== HTTPStatus - 200
+
+include::{snippets}/video-upload-direct/response-body.adoc[]
+===== HTTPStatus - 500
+include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
+
+
 ---
 
 === 마이 비디오(다수)

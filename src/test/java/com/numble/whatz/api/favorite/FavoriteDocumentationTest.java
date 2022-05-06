@@ -104,9 +104,9 @@ public class FavoriteDocumentationTest {
 
     private List<FavoritesDto> getFavoritesDtos() {
         List<FavoritesDto> favoritesDtos = new ArrayList<>();
-        FavoritesDto favoritesDto1 = new FavoritesDto(1L, "thumbnail1");
-        FavoritesDto favoritesDto2 = new FavoritesDto(2L, "thumbnail2");
-        FavoritesDto favoritesDto3 = new FavoritesDto(3L, "thumbnail3");
+        FavoritesDto favoritesDto1 = new FavoritesDto(1L, "/WhatzDev/thumbnail/c95d7879-0f99-44c6-9ad3-acd6251db537/c95d7879-0f99-44c6-9ad3-acd6251db537_CUT.jpeg");
+        FavoritesDto favoritesDto2 = new FavoritesDto(2L, "/WhatzDev/thumbnail/1eb39e24-d7f2-4794-950d-2e9cec5361ef/1eb39e24-d7f2-4794-950d-2e9cec5361ef_CUT.jpg");
+        FavoritesDto favoritesDto3 = new FavoritesDto(3L, "/WhatzDev/thumbnail/6b85d54c-3391-4393-b074-1ecafacd969b/6b85d54c-3391-4393-b074-1ecafacd969b_CUT.png");
         favoritesDtos.add(favoritesDto1);
         favoritesDtos.add(favoritesDto2);
         favoritesDtos.add(favoritesDto3);

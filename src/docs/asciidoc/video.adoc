@@ -157,6 +157,9 @@ include::{snippets}/video-myvideo/request-parameters.adoc[]
 ==== Response Fields
 include::{snippets}/video-myvideo/response-fields.adoc[]
 
+==== Response HTTP Excample
+include::{snippets}/video-myvideo/response-body.adoc[]
+
 ---
 === 비디오 상세정보(단일)
 비디오 하나의 상세정보를 조회합니다.

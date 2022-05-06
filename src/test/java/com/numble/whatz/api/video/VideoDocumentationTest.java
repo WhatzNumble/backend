@@ -530,7 +530,7 @@ public class VideoDocumentationTest {
                 .content("content1")
                 .videoDate(LocalDateTime.now())
                 .views(20L)
-                .directDir("38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8")
+                .directDir("/WhatzDev/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4.m3u8")
                 .embedLink(null)
                 .build();
         VideoInfoDto homeDto2 = VideoInfoDto.builder()
@@ -541,10 +541,21 @@ public class VideoDocumentationTest {
                 .content("content2")
                 .videoDate(LocalDateTime.now())
                 .views(20L)
-                .directDir("93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8")
+                .directDir("/WhatzDev/ffaf8b8e-7df5-468c-80b2-fe4cba007be4/ffaf8b8e-7df5-468c-80b2-fe4cba007be4.m3u8")
                 .embedLink(null)
                 .build();
         VideoInfoDto homeDto3 = VideoInfoDto.builder()
+                .nickname("user2")
+                .profile("profile2")
+                .likes(5)
+                .title("title2")
+                .content("content2")
+                .videoDate(LocalDateTime.now())
+                .views(20L)
+                .directDir("/WhatzDev/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516.m3u8")
+                .embedLink(null)
+                .build();
+        VideoInfoDto homeDto4 = VideoInfoDto.builder()
                 .nickname("user1")
                 .profile("profile1")
                 .likes(5)
@@ -553,12 +564,13 @@ public class VideoDocumentationTest {
                 .videoDate(LocalDateTime.now())
                 .views(20L)
                 .directDir(null)
-                .embedLink("https://youtube.com/shorts/E4BR0sAM3-8?feature=share")
+                .embedLink("https://www.youtube.com/watch?v=_whaAD__3vI")
                 .build();
         List<VideoInfoDto> videoInfoDtos = new ArrayList<>();
         videoInfoDtos.add(homeDto1);
         videoInfoDtos.add(homeDto2);
         videoInfoDtos.add(homeDto3);
+        videoInfoDtos.add(homeDto4);
 
         HomeDto homeDto = new HomeDto(videoInfoDtos, likeList);
         return homeDto;
@@ -567,10 +579,10 @@ public class VideoDocumentationTest {
     private MyVideosDto getMyVideosDto() {
         List<MyVideoDto> videos = new ArrayList<>();
 
-        MyVideoDto video1 = new MyVideoDto(1L, "VideoThumbnail1");
-        MyVideoDto video2 = new MyVideoDto(2L, "VideoThumbnail1");
-        MyVideoDto video3 = new MyVideoDto(3L, "VideoThumbnail1");
-        MyVideoDto video4 = new MyVideoDto(4L, "VideoThumbnail1");
+        MyVideoDto video1 = new MyVideoDto(1L, "/WhatzDev/thumbnail/c95d7879-0f99-44c6-9ad3-acd6251db537/c95d7879-0f99-44c6-9ad3-acd6251db537_CUT.jpeg");
+        MyVideoDto video2 = new MyVideoDto(2L, "/WhatzDev/thumbnail/1eb39e24-d7f2-4794-950d-2e9cec5361ef/1eb39e24-d7f2-4794-950d-2e9cec5361ef_CUT.jpg");
+        MyVideoDto video3 = new MyVideoDto(3L, "/WhatzDev/thumbnail/6b85d54c-3391-4393-b074-1ecafacd969b/6b85d54c-3391-4393-b074-1ecafacd969b_CUT.png");
+        MyVideoDto video4 = new MyVideoDto(4L, "/WhatzDev/thumbnail/2d1f1d9e-7fb0-4189-ae03-79a07494dc73/2d1f1d9e-7fb0-4189-ae03-79a07494dc73_CUT.jpeg");
 
         videos.add(video1);
         videos.add(video2);
@@ -590,7 +602,7 @@ public class VideoDocumentationTest {
                 .nickname("user1")
                 .likes(3)
                 .profile("profile1")
-                .directDir("38b571b8-c9e3-4b8e-b9a7-7f48dfd7dd5b.m3u8")
+                .directDir("/WhatzDev/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4.m3u8")
                 .build();
         return videoInfoDto;
     }

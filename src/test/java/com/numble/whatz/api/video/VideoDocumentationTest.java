@@ -603,6 +603,7 @@ public class VideoDocumentationTest {
                 .likes(3)
                 .profile("profile1")
                 .directDir("/WhatzDev/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4.m3u8")
+                .embedLink("if directDir is null, embedLink has link")
                 .build();
         return videoInfoDto;
     }

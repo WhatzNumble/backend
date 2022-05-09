@@ -16,10 +16,3 @@ JWT:
 file:
   dir: /Users/seungjulee/study/demo/file/
 
-cloud:
-  aws:
-    accessKey: DUMMYID
-    secretKey: DUMMYSECERET
-    s3:
-      bucket: whatz-s3
-

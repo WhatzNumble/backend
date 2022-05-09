@@ -1,0 +1,6 @@
+cloud:
+  aws:
+    accessKey: DUMMYID
+    secretKey: DUMMYSECERET
+    s3:
+      bucket: whatz-s3

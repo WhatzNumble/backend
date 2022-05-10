@@ -21,6 +21,7 @@ public class AuthController {
     public ResponseEntity logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("access-token", null);
         cookie.setMaxAge(0);
+        cookie.setPath("/");
         response.addCookie(cookie);
 
         return ResponseEntity.noContent().build();

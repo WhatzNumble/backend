@@ -5,7 +5,8 @@ import com.numble.whatz.application.video.controller.dto.HomeDto;
 import com.numble.whatz.application.video.controller.dto.MyVideoDto;
 import com.numble.whatz.application.video.controller.dto.MyVideosDto;
 import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
-import com.numble.whatz.application.video.service.VideoService;
+import com.numble.whatz.application.video.service.VideoFileService;
+import com.numble.whatz.application.video.service.VideoViewService;
 import com.numble.whatz.core.advice.dto.ThumbnailStoreExceptionMessage;
 import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
 import com.numble.whatz.core.exception.thumbnail.ThumbnailStoreException;
@@ -55,7 +56,10 @@ public class VideoDocumentationTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private VideoService videoService;
+    private VideoFileService videoService;
+
+    @MockBean
+    private VideoViewService videoViewService;
 
     @Test
     public void homeApi() throws Exception {
@@ -63,7 +67,7 @@ public class VideoDocumentationTest {
 
         doReturn(
                 homeDto
-        ).when(videoService).findAll(any(), any());
+        ).when(videoViewService).findAll(any(), any());
         Principal mockPrincipal = Mockito.mock(Principal.class);
         Mockito.when(mockPrincipal.getName()).thenReturn("me");
 
@@ -355,7 +359,7 @@ public class VideoDocumentationTest {
     @Test
     public void myVideo() throws Exception {
         //given
-        doReturn(getMyVideosDto()).when(videoService).getMyVideos(any(), any());
+        doReturn(getMyVideosDto()).when(videoViewService).getMyVideos(any(), any());
 
         //when
         ResultActions result = this.mockMvc.perform(
@@ -385,7 +389,7 @@ public class VideoDocumentationTest {
     public void oneVideo() throws Exception {
         //given
         VideoInfoDto videoInfoDto = getVideoInfoDto();
-        doReturn(videoInfoDto).when(videoService).getOneVideo(any());
+        doReturn(videoInfoDto).when(videoViewService).getOneVideo(any());
 
         //when
         ResultActions result = this.mockMvc.perform(

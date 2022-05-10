@@ -1,6 +1,5 @@
 package com.numble.whatz.application.video.service;
 
-import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
@@ -14,20 +13,16 @@ import com.numble.whatz.application.video.repository.VideoRepository;
 import com.numble.whatz.core.exception.thumbnail.ThumbnailStoreException;
 import com.numble.whatz.core.exception.video.VideoStoreException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class VideoService {
+public class VideoFileService {
 
     private final VideoRepository videoRepository;
     private final VideoStore videoStore;
@@ -71,41 +66,6 @@ public class VideoService {
         videoRepository.delete(video);
     }
 
-    public HomeDto findAll(Pageable pageable, Principal principal) {
-        Page<Videos> findVideos = videoRepository.findAll(pageable);
-        List<VideoInfoDto> videos = new ArrayList<>();
-
-        for (Videos findVideo : findVideos) {
-            VideoInfoDto videoInfoDto = getVideoInfoDto(findVideo);
-            videos.add(videoInfoDto);
-        }
-        HomeDto homeDto = new HomeDto(videos, null);
-        if (principal != null) {
-            Member member = getMember(principal);
-            List<Favorite> favorites = member.getFavorites();
-            List<Long> likeList = new ArrayList<>();
-            for (Favorite favorite : favorites) {
-                likeList.add(favorite.getVideo().getId());
-            }
-            homeDto.setLikeList(likeList);
-        }
-        return homeDto;
-    }
-
-    public MyVideosDto getMyVideos(Pageable pageable, Principal principal) {
-        Member member = getMember(principal);
-        Page<Videos> page = videoRepository.findByMember(member, pageable);
-        List<MyVideoDto> content =
-                page.map(videos -> new MyVideoDto(videos.getId(), videos.getThumbnail().getExecuteFile())).getContent();
-        return new MyVideosDto(content);
-    }
-
-    public VideoInfoDto getOneVideo(Long id) {
-        Videos videos = getVideos(id);
-        VideoInfoDto videoInfoDto = getVideoInfoDto(videos);
-        return videoInfoDto;
-    }
-
     @Transactional
     public void modifyDirect(ModifyDirectDto video, Principal principal) throws VideoStoreException, ThumbnailStoreException {
         Member member = getMember(principal);
@@ -129,21 +89,6 @@ public class VideoService {
 
         ((EmbedVideo) videos).modify(video.getLink(), video.getTitle(),
                 video.getContent(), thumbnail.getCutName(), thumbnail.getExecuteName());
-    }
-
-    private VideoInfoDto getVideoInfoDto(Videos videos) {
-        VideoInfoDto videoInfoDto = VideoInfoDto.builder()
-                .content(videos.getVideoContent())
-                .title(videos.getVideoTitle())
-                .views(videos.getVideoViews())
-                .videoDate(videos.getVideoCreationDate())
-                .nickname(videos.getMember().getNickName())
-                .likes(videos.getVideoLike())
-                .profile(videos.getMember().getThumbnailUrl())
-                .build();
-        if (videos instanceof DirectVideo) videoInfoDto.setDirectDir(((DirectVideo) videos).getDirectDir());
-        else videoInfoDto.setEmbedLink(((EmbedVideo) videos).getLink());
-        return videoInfoDto;
     }
 
     private DirectVideo getDirectVideo(DirectDto video, String executeFileName, Member member, ThumbnailStoreDto storeThumbnail) {

@@ -27,9 +27,11 @@ public class ThumbnailStore {
     private String s3dir = "/WhatzDev/thumbnail/";
 
     public ThumbnailStoreDto storeThumbnail(MultipartFile videoThumbnail) throws IOException {
+        if (videoThumbnail == null) throw new IOException("썸네일이 비어있습니다.");
+
         BufferedImage image = ImageIO.read(videoThumbnail.getInputStream());
 
-        if (image == null) throw new IOException();
+        if (image == null) throw new IOException("이미지가 비어있습니다.");
 
         // 16:9 -> 320:180
 

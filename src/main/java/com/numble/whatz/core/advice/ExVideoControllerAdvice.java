@@ -1,6 +1,6 @@
 package com.numble.whatz.core.advice;
 
-import com.numble.whatz.application.video.controller.VideoController;
+import com.numble.whatz.application.video.controller.VideoViewController;
 import com.numble.whatz.core.advice.dto.ErrorResult;
 import com.numble.whatz.core.exception.thumbnail.ThumbnailStoreException;
 import com.numble.whatz.core.exception.video.VideoStoreException;
@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.io.IOException;
-
 @Slf4j
-@RestControllerAdvice(basePackageClasses = VideoController.class)
+@RestControllerAdvice(basePackageClasses = VideoViewController.class)
 
 public class ExVideoControllerAdvice {
 

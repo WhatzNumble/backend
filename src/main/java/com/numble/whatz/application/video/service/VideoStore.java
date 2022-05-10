@@ -28,8 +28,9 @@ public class VideoStore {
     private String s3dir = "/WhatzDev/";
 
     public String storeVideo(MultipartFile multipartFile) throws VideoStoreException {
-        if (multipartFile.isEmpty()) {
-            return null;
+        if (multipartFile == null || multipartFile.isEmpty()) {
+            throw new VideoStoreException(VideoStoreExceptionMessage.MULTIPART_NULL
+                    , new NullPointerException());
         }
 
         String originalFilename = multipartFile.getOriginalFilename();

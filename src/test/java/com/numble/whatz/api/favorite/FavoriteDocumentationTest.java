@@ -3,10 +3,7 @@ package com.numble.whatz.api.favorite;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.numble.whatz.application.like.controller.dto.FavoritesDto;
 import com.numble.whatz.application.like.service.FavoriteService;
-import com.numble.whatz.application.video.service.VideoService;
-import com.numble.whatz.application.video.service.VideoStore;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +14,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 

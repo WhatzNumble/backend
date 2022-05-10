@@ -24,7 +24,7 @@ public class OAuth2Model {
                 .nickName(nickName)
                 .thumbnailUrl(thumbnailUrl)
                 .snsId(id)
-                .role(Role.ROLE_MEMBER)
+                .role(Role.MEMBER)
                 .build();
     }
 }

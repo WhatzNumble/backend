@@ -6,16 +6,15 @@ import com.numble.whatz.core.oauth.OAuth2SuccessHandler;
 import com.numble.whatz.core.exception.CustomAccessDeniedHandler;
 import com.numble.whatz.core.exception.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.numble.whatz.application.Role.ADMIN;
 
 @RequiredArgsConstructor
 @Configuration
@@ -37,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
+                .antMatchers("/member/admin", "/member/logout").permitAll()
+                .antMatchers("/admin/**").hasRole(ADMIN.toString())
                 .anyRequest().authenticated()
             .and()
                 .exceptionHandling()

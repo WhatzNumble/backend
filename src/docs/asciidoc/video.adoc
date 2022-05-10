@@ -17,9 +17,6 @@ endif::[]
 ==== EndPoint
 /api/home
 
-==== Request
-include::{snippets}/home/http-request.adoc[]
-
 ==== Request Parameters
 include::{snippets}/home/request-parameters.adoc[]
 
@@ -36,13 +33,10 @@ include::{snippets}/home/response-body.adoc[]
 ==== EndPoint
 /api/video/add/direct
 
-==== Request
-include::{snippets}/video-upload-direct/http-request.adoc[]
 ==== Request Fields - MultipartFile
-include::{snippets}/video-upload-direct/request-parameters.adoc[]
-==== Request Fields - else
 include::{snippets}/video-upload-direct/request-parts.adoc[]
-
+==== Request Fields - else
+include::{snippets}/video-upload-direct/request-parameters.adoc[]
 
 ==== Response HTTP Excample
 ===== HTTPStatus - 200
@@ -50,6 +44,13 @@ include::{snippets}/video-upload-direct/request-parts.adoc[]
 include::{snippets}/video-upload-direct/response-body.adoc[]
 
 ===== HTTPStatus - 403
+include::{snippets}/video-upload-direct-vNullex/response-body.adoc[]
+include::{snippets}/video-upload-direct-tNullex/response-body.adoc[]
+
+
+===== HTTPStatus - 500
+include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
+
 include::{snippets}/video-upload-direct-ffmpeg/response-body.adoc[]
 
 include::{snippets}/video-upload-direct-s3/response-body.adoc[]
@@ -57,9 +58,6 @@ include::{snippets}/video-upload-direct-s3/response-body.adoc[]
 include::{snippets}/video-upload-direct-multi/response-body.adoc[]
 
 include::{snippets}/video-upload-direct-localex/response-body.adoc[]
-
-===== HTTPStatus - 500
-include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
 
 
 에러 코드는 임시로 넣어놓았습니다. 프론트와 추후 상의하고 변경 할 것
@@ -70,18 +68,18 @@ include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
 ==== EndPoint
 /api/video/add/embed
 
-==== Request
-include::{snippets}/video-upload-embed/http-request.adoc[]
-
 ==== Request Fields - MultipartFile
-include::{snippets}/video-upload-embed/request-parameters.adoc[]
-==== Request Fields - else
 include::{snippets}/video-upload-embed/request-parts.adoc[]
+==== Request Fields - else
+include::{snippets}/video-upload-embed/request-parameters.adoc[]
 
 ==== Response HTTP Excample
 ===== HTTPStatus - 200
 
 include::{snippets}/video-upload-direct/response-body.adoc[]
+
+===== HTTPStatus - 403
+include::{snippets}/video-upload-direct-tNullex/response-body.adoc[]
 
 ===== HTTPStatus - 500
 include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
@@ -95,9 +93,6 @@ include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
 ==== EndPoint
 /api/video/modify/direct
 
-==== Request
-include::{snippets}/video-modify-direct/http-request.adoc[]
-
 ==== Request Fields - MultipartFile
 include::{snippets}/video-modify-direct/request-parameters.adoc[]
 ==== Request Fields - else
@@ -109,6 +104,12 @@ include::{snippets}/video-modify-direct/request-parts.adoc[]
 include::{snippets}/video-upload-direct/response-body.adoc[]
 
 ===== HTTPStatus - 403
+include::{snippets}/video-upload-direct-vNullex/response-body.adoc[]
+include::{snippets}/video-upload-direct-tNullex/response-body.adoc[]
+
+===== HTTPStatus - 500
+include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
+
 include::{snippets}/video-upload-direct-ffmpeg/response-body.adoc[]
 
 include::{snippets}/video-upload-direct-s3/response-body.adoc[]
@@ -116,9 +117,6 @@ include::{snippets}/video-upload-direct-s3/response-body.adoc[]
 include::{snippets}/video-upload-direct-multi/response-body.adoc[]
 
 include::{snippets}/video-upload-direct-localex/response-body.adoc[]
-
-===== HTTPStatus - 500
-include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
 
 ---
 
@@ -136,6 +134,9 @@ include::{snippets}/video-modify-embed/request-parts.adoc[]
 ===== HTTPStatus - 200
 
 include::{snippets}/video-upload-direct/response-body.adoc[]
+===== HTTPStatus - 403
+include::{snippets}/video-upload-direct-tNullex/response-body.adoc[]
+
 ===== HTTPStatus - 500
 include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
 
@@ -147,9 +148,6 @@ include::{snippets}/video-upload-direct-ioEx/response-body.adoc[]
 
 ==== EndPoint
 /api/video
-
-==== Request
-include::{snippets}/video-myvideo/http-request.adoc[]
 
 ==== Request Parameters
 include::{snippets}/video-myvideo/request-parameters.adoc[]
@@ -186,9 +184,6 @@ include::{snippets}/video-oneVideo/response-fields.adoc[]
 
 ==== EndPoint
 /api/video/delete
-
-==== Request
-include::{snippets}/video-deleteVideo/http-request.adoc[]
 
 ==== Request Parameters
 include::{snippets}/video-deleteVideo/request-parameters.adoc[]

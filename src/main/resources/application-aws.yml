@@ -6,3 +6,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+file:
+  dir: /home/ec2-user/file
+

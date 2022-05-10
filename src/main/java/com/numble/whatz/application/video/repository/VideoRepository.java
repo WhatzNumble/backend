@@ -18,5 +18,5 @@ public interface VideoRepository extends JpaRepository<Videos, Long> {
     Page<Videos> findByMemberWithPageable(@Param("member") Member member, Pageable pageable);
 
     @Query(value = "select m from Videos m where m.member = :member")
-    Page<Videos> findByMember(@Param("member") Member member);
+    List<Videos> findByMember(@Param("member") Member member);
 }

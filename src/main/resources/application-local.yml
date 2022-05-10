@@ -11,3 +11,6 @@ spring:
     hibernate:
       ddl-auto: create
     open-in-view: false
+
+file:
+  dir: /Users/seungjulee/study/demo/file/

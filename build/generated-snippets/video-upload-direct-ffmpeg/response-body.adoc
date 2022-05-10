@@ -1,7 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "errorCode" : "VideoDirectException",
-  "errorMessage" : ".mp4 -> .m3u8 변환에 실패하였습니다."
-}
-----

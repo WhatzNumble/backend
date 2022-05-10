@@ -1,5 +1,0 @@
-[source,bash]
-----
-$ curl 'https://www.whatz.ga/api/favorite/1' -i -X POST \
-    -H 'Accept: application/json'
-----

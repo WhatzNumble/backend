@@ -1,7 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "errorCode" : "VideoDirectException",
-  "errorMessage" : "로컬 파일 삭제를 실패하였습니다."
-}
-----

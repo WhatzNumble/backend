@@ -1,5 +1,0 @@
-[source,bash]
-----
-$ http GET 'https://www.whatz.ga/api/video?page=1&size=3' \
-    'Accept:application/json'
-----

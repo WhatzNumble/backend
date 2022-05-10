@@ -1,7 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "errorCode" : "VideoDirectException",
-  "errorMessage" : "파일 저장에 실패하였습니다."
-}
-----

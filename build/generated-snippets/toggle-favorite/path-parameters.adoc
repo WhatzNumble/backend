@@ -1,8 +1,0 @@
-.+/api/favorite/{id}+
-|===
-|Parameter|Description
-
-|`+id+`
-|비디오 번호
-
-|===

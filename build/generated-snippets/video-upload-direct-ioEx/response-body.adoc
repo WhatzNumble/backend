@@ -1,7 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "errorCode" : "ThumbnailStoreException",
-  "errorMessage" : "이미지 변환을 실패하였습니다."
-}
-----

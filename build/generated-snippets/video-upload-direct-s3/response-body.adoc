@@ -1,7 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "errorCode" : "VideoDirectException",
-  "errorMessage" : "s3 업로드에 실패하였습니다."
-}
-----

@@ -1,6 +1,0 @@
-[source,bash]
-----
-$ http --form POST 'https://www.whatz.ga/api/video/delete' \
-    'Accept:application/json' \
-    'id=1'
-----

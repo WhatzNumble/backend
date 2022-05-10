@@ -1,7 +1,0 @@
-|===
-|Part|Description
-
-|`+videoThumbnail+`
-|영상 썸네일
-
-|===

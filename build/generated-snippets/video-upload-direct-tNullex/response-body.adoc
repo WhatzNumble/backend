@@ -1,7 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "errorCode" : "ThumbnailStoreException",
-  "errorMessage" : "파일이 비어있습니다."
-}
-----

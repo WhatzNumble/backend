@@ -1,9 +1,0 @@
-[source,bash]
-----
-$ http --multipart POST 'https://www.whatz.ga/api/video/add/direct' \
-    'file'@'video.mp4' \
-    'videoThumbnail'@'thumbnail.png' \
-    'Accept:application/json' \
-    'title=This is title' \
-    'content=This is content'
-----

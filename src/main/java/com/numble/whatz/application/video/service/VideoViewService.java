@@ -53,7 +53,7 @@ public class VideoViewService {
 
     public MyVideosDto getMyVideos(Pageable pageable, Principal principal) {
         Member member = getMember(principal);
-        Page<Videos> page = videoRepository.findByMember(member, pageable);
+        Page<Videos> page = videoRepository.findByMemberWithPageable(member, pageable);
         List<MyVideoDto> content =
                 page.map(videos -> new MyVideoDto(videos.getId(), videos.getThumbnail().getExecuteFile())).getContent();
         return new MyVideosDto(content);

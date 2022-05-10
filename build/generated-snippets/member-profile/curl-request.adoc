@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'https://www.whatz.ga/api/profile' -i -X GET \
+    -H 'Accept: application/json'
+----

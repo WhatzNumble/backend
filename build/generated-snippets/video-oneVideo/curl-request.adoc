@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'https://www.whatz.ga/api/video/1' -i -X GET \
+    -H 'Accept: application/json'
+----

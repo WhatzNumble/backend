@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ http POST 'https://www.whatz.ga/api/favorite/1' \
+    'Accept:application/json'
+----

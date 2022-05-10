@@ -1,0 +1,31 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 633
+
+{
+  "videos" : [ {
+    "videoId" : 1,
+    "videoThumbnail" : "/WhatzDev/thumbnail/c95d7879-0f99-44c6-9ad3-acd6251db537/c95d7879-0f99-44c6-9ad3-acd6251db537_CUT.jpeg"
+  }, {
+    "videoId" : 2,
+    "videoThumbnail" : "/WhatzDev/thumbnail/1eb39e24-d7f2-4794-950d-2e9cec5361ef/1eb39e24-d7f2-4794-950d-2e9cec5361ef_CUT.jpg"
+  }, {
+    "videoId" : 3,
+    "videoThumbnail" : "/WhatzDev/thumbnail/6b85d54c-3391-4393-b074-1ecafacd969b/6b85d54c-3391-4393-b074-1ecafacd969b_CUT.png"
+  }, {
+    "videoId" : 4,
+    "videoThumbnail" : "/WhatzDev/thumbnail/2d1f1d9e-7fb0-4189-ae03-79a07494dc73/2d1f1d9e-7fb0-4189-ae03-79a07494dc73_CUT.jpeg"
+  } ]
+}
+----

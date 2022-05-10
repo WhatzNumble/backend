@@ -1,0 +1,10 @@
+|===
+|Part|Description
+
+|`+file+`
+|영상
+
+|`+videoThumbnail+`
+|영상 썸네일
+
+|===

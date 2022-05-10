@@ -1,0 +1,10 @@
+|===
+|Parameter|Description
+
+|`+title+`
+|영상 제목
+
+|`+content+`
+|영상 내용
+
+|===

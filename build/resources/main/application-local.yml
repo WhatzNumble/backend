@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/study/h2/makeHere/jpashop
+    username: sa
+    password: 123
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+
+file:
+  dir: /Users/seungjulee/study/demo/file/

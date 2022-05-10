@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ http --multipart POST 'https://www.whatz.ga/api/video/add/embed' \
+    'videoThumbnail'@'thumbnail.png' \
+    'Accept:application/json' \
+    'link=임베드 링크' \
+    'title=영상 제목' \
+    'content=영상 내용'
+----

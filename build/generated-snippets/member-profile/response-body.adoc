@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "email" : "email1",
+  "nickName" : "nickName1",
+  "thumbnailUrl" : "thumbnail1"
+}
+----

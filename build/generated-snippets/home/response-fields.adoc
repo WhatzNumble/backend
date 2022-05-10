@@ -1,0 +1,44 @@
+|===
+|Path|Type|Description
+
+|`+videos[].nickname+`
+|`+String+`
+|닉네임
+
+|`+videos[].profile+`
+|`+String+`
+|프로필 사진 경로
+
+|`+videos[].videoLike+`
+|`+Number+`
+|좋아요 수
+
+|`+videos[].videoTitle+`
+|`+String+`
+|영상 제목
+
+|`+videos[].videoContent+`
+|`+String+`
+|영상 내용
+
+|`+videos[].videoCreationDate+`
+|`+String+`
+|게시날짜
+
+|`+videos[].videoViews+`
+|`+Number+`
+|조회수
+
+|`+videos[].directDir+`
+|`+String+`
+|직접 업로드 경로
+
+|`+videos[].embedLink+`
+|`+String+`
+|임베드 링크
+
+|`+likeList[]+`
+|`+Array+`
+|로그인 회원의 관심 리스트
+
+|===

@@ -1,0 +1,27 @@
+[source,http,options="nowrap"]
+----
+POST /api/video/add/direct HTTP/1.1
+Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Accept: application/json
+Host: www.whatz.ga
+
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=title
+
+This is title
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=content
+
+This is content
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=file; filename=video.mp4
+Content-Type: video/mp4
+
+<<video data>>
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+Content-Disposition: form-data; name=videoThumbnail; filename=thumbnail.png
+Content-Type: image/png
+
+test
+--6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--
+----

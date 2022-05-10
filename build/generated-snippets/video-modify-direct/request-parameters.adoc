@@ -1,0 +1,13 @@
+|===
+|Parameter|Description
+
+|`+id+`
+|수정할 영상 번호
+
+|`+title+`
+|영상 제목
+
+|`+content+`
+|영상 내용
+
+|===

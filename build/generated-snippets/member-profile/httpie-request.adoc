@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ http GET 'https://www.whatz.ga/api/profile' \
+    'Accept:application/json'
+----

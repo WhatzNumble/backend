@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+[].videoId+`
+|`+Number+`
+|영상 번호
+
+|`+[].videoThumbnail+`
+|`+String+`
+|영상 썸네일
+
+|===

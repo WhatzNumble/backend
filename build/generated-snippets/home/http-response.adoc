@@ -1,0 +1,60 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 1420
+
+{
+  "videos" : [ {
+    "nickname" : "user1",
+    "profile" : "profile1",
+    "videoLike" : 5,
+    "videoTitle" : "title1",
+    "videoContent" : "content1",
+    "videoCreationDate" : "2022-05-10T20:17:43.3952",
+    "videoViews" : 20,
+    "directDir" : "/WhatzDev/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4.m3u8",
+    "embedLink" : null
+  }, {
+    "nickname" : "user2",
+    "profile" : "profile2",
+    "videoLike" : 5,
+    "videoTitle" : "title2",
+    "videoContent" : "content2",
+    "videoCreationDate" : "2022-05-10T20:17:43.395282",
+    "videoViews" : 20,
+    "directDir" : "/WhatzDev/ffaf8b8e-7df5-468c-80b2-fe4cba007be4/ffaf8b8e-7df5-468c-80b2-fe4cba007be4.m3u8",
+    "embedLink" : null
+  }, {
+    "nickname" : "user2",
+    "profile" : "profile2",
+    "videoLike" : 5,
+    "videoTitle" : "title2",
+    "videoContent" : "content2",
+    "videoCreationDate" : "2022-05-10T20:17:43.39529",
+    "videoViews" : 20,
+    "directDir" : "/WhatzDev/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516.m3u8",
+    "embedLink" : null
+  }, {
+    "nickname" : "user1",
+    "profile" : "profile1",
+    "videoLike" : 5,
+    "videoTitle" : "title1",
+    "videoContent" : "content1",
+    "videoCreationDate" : "2022-05-10T20:17:43.395295",
+    "videoViews" : 20,
+    "directDir" : null,
+    "embedLink" : "https://www.youtube.com/watch?v=_whaAD__3vI"
+  } ],
+  "likeList" : [ 1, 5 ]
+}
+----

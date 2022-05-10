@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{
+  "errorCode" : "VideoDirectException",
+  "errorMessage" : "multipartfile이 비어있습니다."
+}
+----

@@ -21,7 +21,6 @@ public class PathUtil {
 
 
     static public String getFullPathMp4File(String storeFilename) {
-        System.out.println("fileDir = " + fileDir);
         return fileDir + "mp4File/" + storeFilename;
     }
 }

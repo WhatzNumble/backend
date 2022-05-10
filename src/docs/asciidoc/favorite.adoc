@@ -1,0 +1,51 @@
+= API Documment
+:toc: left
+:toclevels: 2
+:sectlinks:
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 공통사항
+
+
+== 관심 비디오 API
+
+=== 비디오 관심 토글
+좋아요 true/false 토글
+
+==== EndPoint
+/api/favorite/{id}
+
+==== Request
+include::{snippets}/toggle-favorite/http-request.adoc[]
+
+==== Request Path Parameters
+include::{snippets}/toggle-favorite/path-parameters.adoc[]
+
+
+==== Response HTTP Excample
+include::{snippets}/toggle-favorite/response-body.adoc[]
+
+---
+
+=== 관심 비디오
+내가 관심있는 비디오를 조회합니다.
+
+==== EndPoint
+/api/favorite
+
+==== Request
+include::{snippets}/video-favorite/http-request.adoc[]
+
+==== Request Parameters
+include::{snippets}/video-favorite/request-parameters.adoc[]
+
+
+==== Response HTTP Excample
+include::{snippets}/video-favorite/response-body.adoc[]
+
+==== Response Fields
+include::{snippets}/video-favorite/response-fields.adoc[]
+
+---

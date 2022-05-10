@@ -1,0 +1,24 @@
+= API Documment
+:toc: left
+:toclevels: 2
+:sectlinks:
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 공통사항
+
+
+== 회원
+
+=== 회원 정보 가져오기
+회원의 정보를 가져오는 컨트롤러
+
+==== EndPoint
+/api/profile
+
+==== Request
+include::{snippets}/member-profile/http-request.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/member-profile/response-body.adoc[]

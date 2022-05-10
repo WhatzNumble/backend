@@ -1,12 +1,16 @@
 package com.numble.whatz.application.member.domain;
 
 import com.numble.whatz.application.Role;
+import com.numble.whatz.application.like.domain.Favorite;
+import com.numble.whatz.application.video.domain.Videos;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,5 +38,19 @@ public class Member {
         this.thumbnailUrl = thumbnailUrl;
         this.snsId = snsId;
         this.role = role;
+    }
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Videos> videos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Favorite> favorites = new ArrayList<>();
+
+    public void addVideo(Videos video) {
+        this.videos.add(video);
+    }
+
+    public void addFavorites(Favorite favorite) {
+        this.favorites.add(favorite);
     }
 }

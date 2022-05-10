@@ -1,4 +1,4 @@
-package com.numble.whatz.application.video.controller.dto;
+package com.numble.whatz.application.like.controller.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,11 +8,9 @@ public class FavoritesDto {
 
     private Long videoId;
     private String videoThumbnail;
-    private Long views;
 
-    public FavoritesDto(Long videoId, String videoThumbnail, Long views) {
+    public FavoritesDto(Long videoId, String videoThumbnail) {
         this.videoId = videoId;
         this.videoThumbnail = videoThumbnail;
-        this.views = views;
     }
 }

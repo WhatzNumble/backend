@@ -21,6 +21,7 @@ public class Member {
     @Column(name = "member_id")
     @GeneratedValue
     private Long id;
+    private String password;
     private String email;
     private String nickName;
     private String thumbnailUrl;
@@ -30,7 +31,8 @@ public class Member {
     private Role role;
 
     @Builder
-    public Member(String email, String nickName, String thumbnailUrl, String snsId, Role role) {
+    public Member(String password, String email, String nickName, String thumbnailUrl, String snsId, Role role) {
+        this.password = password;
         this.email = email;
         this.nickName = nickName;
         this.thumbnailUrl = thumbnailUrl;

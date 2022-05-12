@@ -35,7 +35,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void generateAccessToken(HttpServletResponse response, OAuth2Model oAuth2Model) throws IOException {
         String token = jwtTokenProvider.createToken(
-                new TokenDataModel(Long.parseLong(oAuth2Model.getId()), oAuth2Model.getEmail(), Role.ROLE_MEMBER));
+                new TokenDataModel(Long.parseLong(oAuth2Model.getId()), oAuth2Model.getEmail(), Role.MEMBER));
         Cookie cookie = new Cookie("access-token", token); // 쿠키 이름을 name으로 생성
         cookie.setPath("/");
         response.addCookie(cookie);

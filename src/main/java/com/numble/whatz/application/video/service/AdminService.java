@@ -2,6 +2,8 @@ package com.numble.whatz.application.video.service;
 
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
+import com.numble.whatz.application.video.controller.MainContentsDto;
+import com.numble.whatz.application.video.controller.dto.MainContentDto;
 import com.numble.whatz.application.video.controller.dto.UserVideoDto;
 import com.numble.whatz.application.video.controller.dto.UserVideosDto;
 import com.numble.whatz.application.video.domain.DirectVideo;
@@ -10,6 +12,7 @@ import com.numble.whatz.application.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,5 +54,14 @@ public class AdminService {
         if (findMember.isEmpty()) throw new IllegalStateException("해당 회원 존재하지 않습니다.");
         Member member = findMember.get();
         return member;
+    }
+
+    public MainContentsDto getMainContent(Pageable pageable) {
+        Page<Videos> page = videoRepository.findAll(pageable);
+        List<MainContentDto> list = page.map(videos ->
+                new MainContentDto(videos.getId(),
+                        videos.getThumbnail().getCutFile(),
+                        videos.getVideoTitle(), videos.getMember().getNickName())).toList();
+        
     }
 }

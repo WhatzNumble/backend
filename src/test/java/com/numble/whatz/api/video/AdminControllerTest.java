@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @SpringBootTest
-@WithMockUser
+@WithMockUser(roles = {"MEMBER", "ADMIN"})
 public class AdminControllerTest {
 
     @Autowired

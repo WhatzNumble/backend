@@ -22,31 +22,31 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @GetMapping("api/admin/user/{id}")
+    @GetMapping("admin/user/{id}")
     public UserVideosDto userVideoList(@PathVariable Long id, Pageable pageable) {
         UserVideosDto userVideoDto = adminService.getUserVideos(id, pageable);
         return userVideoDto;
     }
 
-    @GetMapping("api/admin/main")
+    @GetMapping("admin/main")
     public MainContentsDto mainContent(@PageableDefault(size = 10) Pageable pageable) {
         MainContentsDto mainContentDto = adminService.getMainContent(pageable);
         return mainContentDto;
     }
 
-    @GetMapping("api/admin/main/{videoId}")
+    @GetMapping("admin/main/{videoId}")
     public MainContentDetailDto mainContentDetail(@PathVariable Long videoId) {
         MainContentDetailDto mainContentDetailDto = adminService.getDetail(videoId);
         return mainContentDetailDto;
     }
 
-    @PostMapping("api/admin/main/delete/{videoId}")
+    @PostMapping("admin/main/delete/{videoId}")
     public ResponseEntity deleteVideo(@PathVariable Long videoId) {
         adminService.removeVideo(videoId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("api/admin/main/modify/{videoId}")
+    @PostMapping("admin/main/modify/{videoId}")
     public ResponseEntity modifyVideoId(@PathVariable Long videoId, String showId) {
         adminService.modifyVideoId(videoId, showId);
         return new ResponseEntity(HttpStatus.OK);

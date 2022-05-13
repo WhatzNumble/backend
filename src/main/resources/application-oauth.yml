@@ -15,5 +15,5 @@ spring:
             client-id: ${CLIENT_ID}
             client-name: kakao
             client-secret: ${CLIENT_SECRET}
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: https://whatz.kro.kr/login/oauth2/code/kakao
             scope: account_email, profile_image, profile_nickname

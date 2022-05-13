@@ -39,7 +39,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Cookie cookie = new Cookie("access-token", token); // 쿠키 이름을 name으로 생성
         cookie.setPath("/");
         response.addCookie(cookie);
-        response.sendRedirect("http://localhost:3000/oauth/redirect");
+        response.sendRedirect("https://whatz.kro.kr/oauth/redirect");
     }
 
     private OAuth2Model toOAuth2Model(OAuth2User principal) {

@@ -2,11 +2,10 @@ package com.numble.whatz.application.video.service;
 
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
-import com.numble.whatz.application.video.controller.MainContentsDto;
+import com.numble.whatz.application.video.controller.dto.MainContentsDto;
 import com.numble.whatz.application.video.controller.dto.MainContentDto;
 import com.numble.whatz.application.video.controller.dto.UserVideoDto;
 import com.numble.whatz.application.video.controller.dto.UserVideosDto;
-import com.numble.whatz.application.video.domain.DirectVideo;
 import com.numble.whatz.application.video.domain.Videos;
 import com.numble.whatz.application.video.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +61,6 @@ public class AdminService {
                 new MainContentDto(videos.getId(),
                         videos.getThumbnail().getCutFile(),
                         videos.getVideoTitle(), videos.getMember().getNickName())).toList();
-        
+        return new MainContentsDto(list);
     }
 }

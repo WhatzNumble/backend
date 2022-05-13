@@ -1,5 +1,8 @@
 package com.numble.whatz.application.video.controller.dto;
 
+import com.numble.whatz.application.video.domain.DirectVideo;
+import com.numble.whatz.application.video.domain.EmbedVideo;
+import com.numble.whatz.application.video.domain.Videos;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class VideoInfoDto {
 
+    private Long videoId;
     private String nickname;
     private String profile;
     private Integer videoLike;
@@ -20,7 +24,8 @@ public class VideoInfoDto {
     private String embedLink;
 
     @Builder
-    public VideoInfoDto(String nickname, String profile, int likes, String title, String content, LocalDateTime videoDate, long views, String directDir, String embedLink) {
+    public VideoInfoDto(Long videoId, String nickname, String profile, int likes, String title, String content, LocalDateTime videoDate, long views, String directDir, String embedLink) {
+        this.videoId = videoId;
         this.nickname = nickname;
         this.profile = profile;
         this.videoLike = likes;
@@ -30,5 +35,18 @@ public class VideoInfoDto {
         this.videoViews = views;
         this.directDir = directDir;
         this.embedLink = embedLink;
+    }
+
+    public VideoInfoDto(Long videoId, String nickname, String profile, Integer videoLike, String videoTitle, String videoContent, LocalDateTime videoCreationDate, Long videoViews, Videos DorE) {
+        this.videoId = videoId;
+        this.nickname = nickname;
+        this.profile = profile;
+        this.videoLike = videoLike;
+        this.videoTitle = videoTitle;
+        this.videoContent = videoContent;
+        this.videoCreationDate = videoCreationDate;
+        this.videoViews = videoViews;
+        if (DorE instanceof DirectVideo) this.directDir = ((DirectVideo) DorE).getDirectDir();
+        else this.embedLink = ((EmbedVideo) DorE).getLink();
     }
 }

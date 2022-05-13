@@ -1,5 +1,6 @@
 package com.numble.whatz.application.video.controller;
 
+import com.numble.whatz.application.video.controller.dto.MainContentsDto;
 import com.numble.whatz.application.video.controller.dto.UserVideosDto;
 import com.numble.whatz.application.video.service.AdminService;
 import lombok.RequiredArgsConstructor;

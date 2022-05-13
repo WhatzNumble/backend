@@ -1,12 +1,10 @@
 package com.numble.whatz.application.video.service;
 
 import com.numble.whatz.application.like.domain.Favorite;
+import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
-import com.numble.whatz.application.video.controller.dto.HomeDto;
-import com.numble.whatz.application.video.controller.dto.MyVideoDto;
-import com.numble.whatz.application.video.controller.dto.MyVideosDto;
-import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
+import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.domain.DirectVideo;
 import com.numble.whatz.application.video.domain.EmbedVideo;
 import com.numble.whatz.application.video.domain.Videos;
@@ -21,6 +19,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,18 +50,50 @@ public class VideoViewService {
         return homeDto;
     }
 
-    public MyVideosDto getMyVideos(Pageable pageable, Principal principal) {
+    public HomeDto getMyVideos(Pageable pageable, Principal principal) {
         Member member = getMember(principal);
         Page<Videos> page = videoRepository.findByMemberWithPageable(member, pageable);
-        List<MyVideoDto> content =
-                page.map(videos -> new MyVideoDto(videos.getId(), videos.getThumbnail().getExecuteFile())).getContent();
-        return new MyVideosDto(content);
+        List<VideoInfoDto> videoInfoDtos = page.map(videos -> new VideoInfoDto(
+                videos.getId(),
+                member.getNickName(),
+                member.getThumbnailUrl(),
+                videos.getVideoLike(),
+                videos.getVideoTitle(),
+                videos.getVideoContent(),
+                videos.getVideoCreationDate(),
+                videos.getVideoViews(),
+                videos)).toList();
+        List<Long> likeList = member.getFavorites()
+                .stream().map(Favorite::getVideo).collect(Collectors.toList())
+                .stream().map(Videos::getId).collect(Collectors.toList());
+
+        System.out.println("likeList = " + likeList);
+
+
+        return new HomeDto(videoInfoDtos, likeList);
     }
 
-    public VideoInfoDto getOneVideo(Long id) {
+    public VideoDetailDto getOneVideo(Long id) {
         Videos videos = getVideos(id);
-        VideoInfoDto videoInfoDto = getVideoInfoDto(videos);
-        return videoInfoDto;
+        VideoDetailDto videoDetailDto = getVideoDetailDto(videos);
+        return videoDetailDto;
+    }
+
+    private VideoDetailDto getVideoDetailDto(Videos videos) {
+        VideoDetailDto videoDetailDto = VideoDetailDto.builder()
+                .videoId(videos.getId())
+                .videoContent(videos.getVideoContent())
+                .videoTitle(videos.getVideoTitle())
+                .videoViews(videos.getVideoViews())
+                .videoCreationDate(videos.getVideoCreationDate())
+                .nickname(videos.getMember().getNickName())
+                .videoLike(videos.getVideoLike())
+                .profile(videos.getMember().getThumbnailUrl())
+                .videoThumbnail(videos.getThumbnail().getCutFile())
+                .build();
+        if (videos instanceof DirectVideo) videoDetailDto.setDirectDir(((DirectVideo) videos).getDirectDir());
+        else videoDetailDto.setEmbedLink(((EmbedVideo) videos).getLink());
+        return videoDetailDto;
     }
 
     private Videos getVideos(long parseId) {
@@ -81,6 +112,7 @@ public class VideoViewService {
 
     private VideoInfoDto getVideoInfoDto(Videos videos) {
         VideoInfoDto videoInfoDto = VideoInfoDto.builder()
+                .videoId(videos.getId())
                 .content(videos.getVideoContent())
                 .title(videos.getVideoTitle())
                 .views(videos.getVideoViews())

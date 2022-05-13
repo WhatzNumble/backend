@@ -32,5 +32,6 @@ public class Favorite {
         this.video = video;
         this.member = member;
         member.addFavorites(this);
+        video.addFavorites(this);
     }
 }

@@ -31,15 +31,15 @@ public class VideoViewController {
     }
 
     @GetMapping("api/video")
-    public MyVideosDto myVideos(@PageableDefault(size = 5)Pageable pageable, Principal principal) {
-        MyVideosDto myVideosDto = videoService.getMyVideos(pageable, principal);
-        return myVideosDto;
+    public HomeDto myVideos(@PageableDefault(size = 5)Pageable pageable, Principal principal) {
+        HomeDto homeDto = videoService.getMyVideos(pageable, principal);
+        return homeDto;
     }
 
     @GetMapping("api/video/{id}")
-    public VideoInfoDto myVideo(@PathVariable Long id) {
-        VideoInfoDto videoInfoDto = videoService.getOneVideo(id);
-        return videoInfoDto;
+    public VideoDetailDto myVideo(@PathVariable Long id) {
+        VideoDetailDto videoDetailDto = videoService.getOneVideo(id);
+        return videoDetailDto;
     }
 
     private final VideoStore videoStore;

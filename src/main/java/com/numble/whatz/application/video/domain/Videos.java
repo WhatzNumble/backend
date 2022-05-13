@@ -1,5 +1,6 @@
 package com.numble.whatz.application.video.domain;
 
+import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
 import com.numble.whatz.application.thumbnail.service.ThumbnailStoreDto;
@@ -10,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,6 +39,9 @@ public abstract class Videos {
     @JoinColumn(name = "thumbnail_id")
     private Thumbnail thumbnail;
 
+    @OneToMany(mappedBy = "video")
+    private List<Favorite> favorites = new ArrayList<>();
+
     public Videos(String title, String content, Member member, Thumbnail thumbnail) {
         this.videoLike = 0;
         this.videoViews = 0L;
@@ -51,5 +57,9 @@ public abstract class Videos {
         this.videoTitle = title;
         this.videoContent = content;
         this.thumbnail.modify(cutName, executeName);
+    }
+
+    public void addFavorites(Favorite favorite) {
+        this.favorites.add(favorite);
     }
 }

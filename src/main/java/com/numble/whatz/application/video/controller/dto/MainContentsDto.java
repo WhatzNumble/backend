@@ -1,4 +1,4 @@
-package com.numble.whatz.application.video.controller;
+package com.numble.whatz.application.video.controller.dto;
 
 import com.numble.whatz.application.video.controller.dto.MainContentDto;
 import lombok.Getter;

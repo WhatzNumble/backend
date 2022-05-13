@@ -2,8 +2,6 @@ package com.numble.whatz.api.video;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.numble.whatz.application.video.controller.dto.HomeDto;
-import com.numble.whatz.application.video.controller.dto.MyVideoDto;
-import com.numble.whatz.application.video.controller.dto.MyVideosDto;
 import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
 import com.numble.whatz.application.video.service.VideoFileService;
 import com.numble.whatz.application.video.service.VideoViewService;

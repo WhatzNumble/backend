@@ -1,9 +1,6 @@
 package com.numble.whatz.api.video;
 
-import com.numble.whatz.application.video.controller.dto.HomeDto;
-import com.numble.whatz.application.video.controller.dto.MyVideoDto;
-import com.numble.whatz.application.video.controller.dto.MyVideosDto;
-import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
+import com.numble.whatz.application.video.controller.dto.*;
 import com.numble.whatz.application.video.service.VideoFileService;
 import com.numble.whatz.application.video.service.VideoViewService;
 import org.junit.jupiter.api.Test;
@@ -75,6 +72,7 @@ public class VideoViewControllerTest {
                                 parameterWithName("size").description("가져올 크기")
                         ),
                         responseFields(
+                                fieldWithPath("videos[].videoId").description("비디오 번호"),
                                 fieldWithPath("videos[].nickname").description("닉네임"),
                                 fieldWithPath("videos[].profile").description("프로필 사진 경로"),
                                 fieldWithPath("videos[].videoLike").description("좋아요 수"),
@@ -92,7 +90,7 @@ public class VideoViewControllerTest {
     @Test
     public void myVideo() throws Exception {
         //given
-        doReturn(getMyVideosDto()).when(videoViewService).getMyVideos(any(), any());
+        doReturn(getHomeDto()).when(videoViewService).getMyVideos(any(), any());
 
         //when
         ResultActions result = this.mockMvc.perform(
@@ -113,7 +111,16 @@ public class VideoViewControllerTest {
                         ),
                         responseFields(
                                 fieldWithPath("videos[].videoId").description("비디오 번호"),
-                                fieldWithPath("videos[].videoThumbnail").description("비디오 썸네일")
+                                fieldWithPath("videos[].nickname").description("닉네임"),
+                                fieldWithPath("videos[].profile").description("프로필 사진 경로"),
+                                fieldWithPath("videos[].videoLike").description("좋아요 수"),
+                                fieldWithPath("videos[].videoTitle").description("영상 제목"),
+                                fieldWithPath("videos[].videoContent").description("영상 내용"),
+                                fieldWithPath("videos[].videoCreationDate").description("게시날짜"),
+                                fieldWithPath("videos[].videoViews").description("조회수"),
+                                fieldWithPath("videos[].directDir").description("직접 업로드 경로").optional(),
+                                fieldWithPath("videos[].embedLink").description("임베드 링크").optional(),
+                                fieldWithPath("likeList[]").description("로그인 회원의 관심 리스트")
                         )
                 ));
     }
@@ -121,8 +128,8 @@ public class VideoViewControllerTest {
     @Test
     public void oneVideo() throws Exception {
         //given
-        VideoInfoDto videoInfoDto = getVideoInfoDto();
-        doReturn(videoInfoDto).when(videoViewService).getOneVideo(any());
+        VideoDetailDto videoDetailDto = getVideoInfoDto();
+        doReturn(videoDetailDto).when(videoViewService).getOneVideo(any());
 
         //when
         ResultActions result = this.mockMvc.perform(
@@ -139,6 +146,7 @@ public class VideoViewControllerTest {
                                 parameterWithName("id").description("비디오 번호")
                         ),
                         responseFields(
+                                fieldWithPath("videoId").description("비디오 번호"),
                                 fieldWithPath("nickname").description("닉네임"),
                                 fieldWithPath("profile").description("프로필 사진 경로"),
                                 fieldWithPath("videoLike").description("좋아요 수"),
@@ -147,7 +155,8 @@ public class VideoViewControllerTest {
                                 fieldWithPath("videoCreationDate").description("게시날짜"),
                                 fieldWithPath("videoViews").description("조회수"),
                                 fieldWithPath("directDir").description("직접 업로드 경로").optional(),
-                                fieldWithPath("embedLink").description("임베드 링크").optional()
+                                fieldWithPath("embedLink").description("임베드 링크").optional(),
+                                fieldWithPath("videoThumbnail").description("영상 썸네일")
                         )
                 ));
     }
@@ -158,6 +167,7 @@ public class VideoViewControllerTest {
         likeList.add(5L);
 
         VideoInfoDto homeDto1 = VideoInfoDto.builder()
+                .videoId(1L)
                 .nickname("user1")
                 .profile("profile1")
                 .likes(5)
@@ -169,6 +179,7 @@ public class VideoViewControllerTest {
                 .embedLink(null)
                 .build();
         VideoInfoDto homeDto2 = VideoInfoDto.builder()
+                .videoId(2L)
                 .nickname("user2")
                 .profile("profile2")
                 .likes(5)
@@ -180,6 +191,7 @@ public class VideoViewControllerTest {
                 .embedLink(null)
                 .build();
         VideoInfoDto homeDto3 = VideoInfoDto.builder()
+                .videoId(3L)
                 .nickname("user2")
                 .profile("profile2")
                 .likes(5)
@@ -191,6 +203,7 @@ public class VideoViewControllerTest {
                 .embedLink(null)
                 .build();
         VideoInfoDto homeDto4 = VideoInfoDto.builder()
+                .videoId(4L)
                 .nickname("user1")
                 .profile("profile1")
                 .likes(5)
@@ -211,34 +224,19 @@ public class VideoViewControllerTest {
         return homeDto;
     }
 
-    private MyVideosDto getMyVideosDto() {
-        List<MyVideoDto> videos = new ArrayList<>();
-
-        MyVideoDto video1 = new MyVideoDto(1L, "/WhatzDev/thumbnail/c95d7879-0f99-44c6-9ad3-acd6251db537/c95d7879-0f99-44c6-9ad3-acd6251db537_CUT.jpeg");
-        MyVideoDto video2 = new MyVideoDto(2L, "/WhatzDev/thumbnail/1eb39e24-d7f2-4794-950d-2e9cec5361ef/1eb39e24-d7f2-4794-950d-2e9cec5361ef_CUT.jpg");
-        MyVideoDto video3 = new MyVideoDto(3L, "/WhatzDev/thumbnail/6b85d54c-3391-4393-b074-1ecafacd969b/6b85d54c-3391-4393-b074-1ecafacd969b_CUT.png");
-        MyVideoDto video4 = new MyVideoDto(4L, "/WhatzDev/thumbnail/2d1f1d9e-7fb0-4189-ae03-79a07494dc73/2d1f1d9e-7fb0-4189-ae03-79a07494dc73_CUT.jpeg");
-
-        videos.add(video1);
-        videos.add(video2);
-        videos.add(video3);
-        videos.add(video4);
-
-        MyVideosDto myVideosDto = new MyVideosDto(videos);
-        return myVideosDto;
-    }
-
-    private VideoInfoDto getVideoInfoDto() {
-        VideoInfoDto videoInfoDto = VideoInfoDto.builder()
-                .content("content1")
-                .title("title1")
-                .views(20L)
-                .videoDate(LocalDateTime.now())
+    private VideoDetailDto getVideoInfoDto() {
+        VideoDetailDto videoInfoDto = VideoDetailDto.builder()
+                .videoId(1L)
+                .videoContent("content1")
+                .videoTitle("title1")
+                .videoViews(20L)
+                .videoCreationDate(LocalDateTime.now())
                 .nickname("user1")
-                .likes(3)
+                .videoLike(3)
                 .profile("profile1")
                 .directDir("/WhatzDev/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4.m3u8")
                 .embedLink("if directDir is null, embedLink has link")
+                .videoThumbnail("videoThumbnail1")
                 .build();
         return videoInfoDto;
     }

@@ -43,7 +43,7 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Videos> videos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     private List<Favorite> favorites = new ArrayList<>();
 
     public void addVideo(Videos video) {

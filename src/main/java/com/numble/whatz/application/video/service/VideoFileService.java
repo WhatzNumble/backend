@@ -1,5 +1,7 @@
 package com.numble.whatz.application.video.service;
 
+import com.numble.whatz.application.like.domain.Favorite;
+import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +31,7 @@ public class VideoFileService {
     private final VideoStore videoStore;
     private final MemberRepository memberRepository;
     private final ThumbnailStoreExUtil thumbnailStore;
+    private final FavoriteRepository favoriteRepository;
 
     @Transactional
     public void saveDirect(DirectDto video, Principal principal) throws VideoStoreException, ThumbnailStoreException {
@@ -63,6 +67,10 @@ public class VideoFileService {
         if (video instanceof DirectVideo) videoStore.deleteVideo(((DirectVideo)video).getDirectDir());
         thumbnailStore.removeThumbnail(video.getThumbnail());
 
+        List<Favorite> favorites = video.getFavorites();
+        for (Favorite favorite : favorites) {
+            favoriteRepository.delete(favorite);
+        }
         videoRepository.delete(video);
     }
 

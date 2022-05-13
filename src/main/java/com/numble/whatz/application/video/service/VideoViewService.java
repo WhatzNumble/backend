@@ -67,9 +67,6 @@ public class VideoViewService {
                 .stream().map(Favorite::getVideo).collect(Collectors.toList())
                 .stream().map(Videos::getId).collect(Collectors.toList());
 
-        System.out.println("likeList = " + likeList);
-
-
         return new HomeDto(videoInfoDtos, likeList);
     }
 

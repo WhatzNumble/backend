@@ -4,11 +4,9 @@ import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
-import com.numble.whatz.application.member.service.CrudMemberService;
 import com.numble.whatz.application.like.controller.dto.FavoritesDto;
 import com.numble.whatz.application.video.domain.Videos;
 import com.numble.whatz.application.video.repository.VideoRepository;
-import com.numble.whatz.application.video.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -86,9 +86,6 @@ public class S3Uploader {
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(contentType);
 
-        System.out.println("file.getName() = " + file.getName());
-        System.out.println("bucket + dir = " + bucket + dir);
-
         try {
             InputStream inputStream = file.getInputStream();
             amazonS3Client.putObject(bucket + dir, file.getName(), inputStream, objectMetadata);

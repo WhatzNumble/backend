@@ -38,3 +38,6 @@ out/
 
 ### oauth ###
 /main/resources/application-oauth.properties
+
+### aws-key ###
+application-awskey.yml

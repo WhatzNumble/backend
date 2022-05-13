@@ -22,6 +22,8 @@ public class ThumbnailStoreExUtil {
             return thumbnailStore.storeThumbnail(videoThumbnail);
         } catch (IOException e) {
             throw new ThumbnailStoreException(ThumbnailStoreExceptionMessage.IMAGE_CONVERT_EXCEPTION, e);
+        } catch (NullPointerException e) {
+            throw new ThumbnailStoreException(ThumbnailStoreExceptionMessage.MULTIPART_NULL, e);
         }
     }
 
@@ -30,6 +32,8 @@ public class ThumbnailStoreExUtil {
             return thumbnailStore.modifyThumbnail(videoThumbnail, thumbnail);
         } catch (IOException e) {
             throw new ThumbnailStoreException(ThumbnailStoreExceptionMessage.IMAGE_CONVERT_EXCEPTION, e);
+        } catch (NullPointerException e) {
+            throw new ThumbnailStoreException(ThumbnailStoreExceptionMessage.MULTIPART_NULL, e);
         }
     }
 

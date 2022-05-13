@@ -17,9 +17,6 @@ endif::[]
 ==== EndPoint
 /api/favorite/{id}
 
-==== Request
-include::{snippets}/toggle-favorite/http-request.adoc[]
-
 ==== Request Path Parameters
 include::{snippets}/toggle-favorite/path-parameters.adoc[]
 
@@ -34,9 +31,6 @@ include::{snippets}/toggle-favorite/response-body.adoc[]
 
 ==== EndPoint
 /api/favorite
-
-==== Request
-include::{snippets}/video-favorite/http-request.adoc[]
 
 ==== Request Parameters
 include::{snippets}/video-favorite/request-parameters.adoc[]

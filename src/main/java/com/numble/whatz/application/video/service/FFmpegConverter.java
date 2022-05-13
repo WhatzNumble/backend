@@ -46,7 +46,7 @@ public class FFmpegConverter {
 
             executor.createJob(builder).run();
         } catch (IOException e) {
-            new VideoStoreException(VideoStoreExceptionMessage.FFMPEG_EX, e);
+            throw new VideoStoreException(VideoStoreExceptionMessage.FFMPEG_EX, e);
         }
     }
 }

@@ -1,16 +1,11 @@
 package com.numble.whatz.api.video;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.numble.whatz.application.video.controller.dto.HomeDto;
-import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
 import com.numble.whatz.application.video.service.VideoFileService;
-import com.numble.whatz.application.video.service.VideoViewService;
 import com.numble.whatz.core.advice.dto.ThumbnailStoreExceptionMessage;
 import com.numble.whatz.core.advice.dto.VideoStoreExceptionMessage;
 import com.numble.whatz.core.exception.thumbnail.ThumbnailStoreException;
 import com.numble.whatz.core.exception.video.VideoStoreException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,10 +19,6 @@ import org.springframework.test.web.servlet.ResultActions;
 
 
 import java.io.IOException;
-import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentRequest;
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentResponse;
@@ -36,8 +27,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,6 +56,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -82,7 +72,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -104,6 +95,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -119,7 +111,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -141,6 +134,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -156,7 +150,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -178,6 +173,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -193,7 +189,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -215,6 +212,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -230,7 +228,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -252,6 +251,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -267,7 +267,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -289,6 +290,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -304,7 +306,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -326,6 +329,7 @@ public class VideoFileControllerTest {
                         .file(videoThumbnail)
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "This is category")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -341,7 +345,8 @@ public class VideoFileControllerTest {
                         ),
                         requestParameters(
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -359,6 +364,7 @@ public class VideoFileControllerTest {
                         .param("link", "임베드 링크")
                         .param("title", "영상 제목")
                         .param("content", "영상 내용")
+                        .param("category", "카테고리")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -374,7 +380,8 @@ public class VideoFileControllerTest {
                         requestParameters(
                                 parameterWithName("link").description("임베드 링크"),
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -394,6 +401,7 @@ public class VideoFileControllerTest {
                         .param("id", "1")
                         .param("title", "This is title")
                         .param("content", "This is content")
+                        .param("category", "카테고리")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -410,7 +418,8 @@ public class VideoFileControllerTest {
                         requestParameters(
                                 parameterWithName("id").description("수정할 영상 번호"),
                                 parameterWithName("title").description("영상 제목"),
-                                parameterWithName("content").description("영상 내용")
+                                parameterWithName("content").description("영상 내용"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }
@@ -429,6 +438,7 @@ public class VideoFileControllerTest {
                         .param("title", "This is title")
                         .param("content", "This is content")
                         .param("link", "This is link")
+                        .param("category", "카테고리")
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -445,7 +455,8 @@ public class VideoFileControllerTest {
                                 parameterWithName("id").description("수정할 영상 번호"),
                                 parameterWithName("title").description("수정할 영상 제목"),
                                 parameterWithName("content").description("수정할 영상 내용"),
-                                parameterWithName("link").description("수정할 임베드 링크")
+                                parameterWithName("link").description("수정할 임베드 링크"),
+                                parameterWithName("category").description("영상 카테고리")
                         )
                 ));
     }

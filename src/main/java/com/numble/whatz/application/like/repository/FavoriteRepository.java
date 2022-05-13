@@ -17,6 +17,6 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     @Query("select m from Favorite m left join m.member")
     Page<Favorite> findByMemberId(Long memberId, Pageable pageable);
 
-    @Query("select f from Favorite f where f.video = :video")
-    List<Favorite> findByVideo(@Param("video")Videos video);
+    @Query("select f from Favorite f where f.videos = :videos")
+    List<Favorite> findByVideo(@Param("videos")Videos videos);
 }

@@ -88,6 +88,7 @@ public class VideoViewService {
                 .videoLike(videos.getVideoLike())
                 .profile(videos.getMember().getThumbnailUrl())
                 .videoThumbnail(videos.getThumbnail().getCutFile())
+                .category(videos.getSubCategory().getCategory().getName())
                 .build();
         if (videos instanceof DirectVideo) videoDetailDto.setDirectDir(((DirectVideo) videos).getDirectDir());
         else videoDetailDto.setEmbedLink(((EmbedVideo) videos).getLink());

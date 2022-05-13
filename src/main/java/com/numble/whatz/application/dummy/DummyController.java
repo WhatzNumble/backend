@@ -29,7 +29,7 @@ public class DummyController {
                 .email("email1")
                 .nickName("user1")
                 .thumbnailUrl("profile1")
-                .role(Role.ROLE_MEMBER)
+                .role(Role.MEMBER)
                 .snsId("snsId1")
                 .build();
 
@@ -37,7 +37,7 @@ public class DummyController {
                 .email("email2")
                 .nickName("user2")
                 .thumbnailUrl("profile2")
-                .role(Role.ROLE_MEMBER)
+                .role(Role.MEMBER)
                 .snsId("snsId2")
                 .build();
 
@@ -45,7 +45,7 @@ public class DummyController {
                 .email("email3")
                 .nickName("user3")
                 .thumbnailUrl("profile3")
-                .role(Role.ROLE_MEMBER)
+                .role(Role.MEMBER)
                 .snsId("snsId3")
                 .build();
 

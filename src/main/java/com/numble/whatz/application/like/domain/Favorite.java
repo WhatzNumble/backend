@@ -21,17 +21,17 @@ public class Favorite {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_id")
-    private Videos video;
+    private Videos videos;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder
-    public Favorite(Videos video, Member member) {
-        this.video = video;
+    public Favorite(Videos videos, Member member) {
+        this.videos = videos;
         this.member = member;
         member.addFavorites(this);
-        video.addFavorites(this);
+        videos.addFavorites(this);
     }
 }

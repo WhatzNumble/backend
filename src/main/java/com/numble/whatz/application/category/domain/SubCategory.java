@@ -10,7 +10,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SubCategory {
 
     @Id
@@ -26,7 +25,24 @@ public class SubCategory {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "video_id")
+    @OneToOne(mappedBy = "subCategory", fetch = FetchType.LAZY)
     private Videos videos;
+
+    public SubCategory() {
+    }
+
+    public SubCategory(Category category, Member member) {
+        this.category = category;
+        this.member = member;
+        this.member.getCategories().add(this);
+    }
+
+    public SubCategory(Category category, Videos videos) {
+        this.category = category;
+        this.videos = videos;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

@@ -1,5 +1,6 @@
 package com.numble.whatz.application.video.domain;
 
+import com.numble.whatz.application.category.domain.SubCategory;
 import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
@@ -40,8 +41,12 @@ public abstract class Videos {
     @JoinColumn(name = "thumbnail_id")
     private Thumbnail thumbnail;
 
-    @OneToMany(mappedBy = "video")
+    @OneToMany(mappedBy = "videos")
     private List<Favorite> favorites = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sub_category_id")
+    private SubCategory subCategory;
 
     public Videos(String title, String content, Member member, Thumbnail thumbnail, Long showId) {
         this.videoLike = 0;

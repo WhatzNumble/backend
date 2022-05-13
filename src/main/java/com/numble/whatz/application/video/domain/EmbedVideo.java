@@ -18,8 +18,8 @@ public class EmbedVideo extends Videos {
     private String link;
 
     @Builder
-    public EmbedVideo(String title, String content, Member member, String link, Thumbnail thumbnail) {
-        super(title, content, member, thumbnail);
+    public EmbedVideo(String title, String content, Member member, String link, Thumbnail thumbnail, Long showId) {
+        super(title, content, member, thumbnail, showId);
         this.link = link;
     }
 

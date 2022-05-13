@@ -33,6 +33,8 @@ public class VideoFileService {
     private final ThumbnailStoreExUtil thumbnailStore;
     private final FavoriteRepository favoriteRepository;
 
+    private static long sequence = 0L;
+
     @Transactional
     public void saveDirect(DirectDto video, Principal principal) throws VideoStoreException, ThumbnailStoreException {
         Member member = getMember(principal);
@@ -111,6 +113,7 @@ public class VideoFileService {
                 .title(video.getTitle())
                 .member(member)
                 .directDir(executeFileName)
+                .showId(sequence++)
                 .build();
 
         return direct;
@@ -128,6 +131,7 @@ public class VideoFileService {
                 .member(member)
                 .title(video.getTitle())
                 .link(video.getLink())
+                .showId(sequence++)
                 .build();
         return embed;
     }

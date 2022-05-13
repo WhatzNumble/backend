@@ -3,10 +3,10 @@ package com.numble.whatz.application.video.controller.dto;
 import com.numble.whatz.application.video.domain.DirectVideo;
 import com.numble.whatz.application.video.domain.EmbedVideo;
 import com.numble.whatz.application.video.domain.Videos;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserVideoDto {
 
     private Long id;
@@ -16,11 +16,22 @@ public class UserVideoDto {
     private String thumbnail;
     private String videoUri;
 
-    public UserVideoDto(Long id, String title, String description, String thumbnail) {
+    @Builder
+    public UserVideoDto(Videos videos) {
+        this.id = videos.getId();
+        this.title = videos.getVideoTitle();
+        this.description = videos.getVideoContent();
+        this.thumbnail = videos.getThumbnail().getCutFile();
+        setType(videos);
+    }
+
+    public UserVideoDto(Long id, String type, String title, String description, String thumbnail, String videoUri) {
         this.id = id;
+        this.type = type;
         this.title = title;
         this.description = description;
         this.thumbnail = thumbnail;
+        this.videoUri = videoUri;
     }
 
     public void setType(Videos videos) {

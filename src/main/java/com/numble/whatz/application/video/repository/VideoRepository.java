@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface VideoRepository extends JpaRepository<Videos, Long> {
@@ -19,4 +20,7 @@ public interface VideoRepository extends JpaRepository<Videos, Long> {
 
     @Query(value = "select m from Videos m where m.member = :member")
     List<Videos> findByMember(@Param("member") Member member);
+
+    @Query(value = "select m from Videos m where m.showId = :showId")
+    Optional<Videos> findByShowId(@Param("showId") String showId);
 }

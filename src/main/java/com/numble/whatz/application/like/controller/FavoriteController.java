@@ -19,12 +19,12 @@ public class FavoriteController {
 
     private final FavoriteService favoriteService;
 
-    @PostMapping("api/favorite/{id}")
+    @PostMapping("favorite/{id}")
     public boolean favorite(@PathVariable Long id, Principal principal) {
         return favoriteService.toggleFavorite(id, principal);
     }
 
-    @GetMapping("api/favorite")
+    @GetMapping("favorite")
     public List<FavoritesDto> favoriteVideo(@PageableDefault(size = 5) Pageable pageable, Principal principal) {
         List<FavoritesDto> favoritesDtos = favoriteService.getFavoriteVideos(pageable, principal);
         return favoritesDtos;

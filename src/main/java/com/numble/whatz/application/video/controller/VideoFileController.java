@@ -24,31 +24,31 @@ public class VideoFileController {
 
     private final VideoFileService videoService;
     
-    @PostMapping("api/video/add/direct")
+    @PostMapping("video/add/direct")
     public ResponseEntity uploadVideoDirect(DirectDto video, Principal principal) throws ThumbnailStoreException, VideoStoreException {
         videoService.saveDirect(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("api/video/add/embed")
+    @PostMapping("video/add/embed")
     public ResponseEntity uploadVideoEmbed(EmbedDto video, Principal principal) throws ThumbnailStoreException {
         videoService.saveEmbed(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("api/video/modify/direct")
+    @PostMapping("video/modify/direct")
     public ResponseEntity modifyDirectVideo(ModifyDirectDto video, Principal principal) throws Exception {
         videoService.modifyDirect(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("api/video/modify/embed")
+    @PostMapping("video/modify/embed")
     public ResponseEntity modifyEmbedVideo(ModifyEmbedDto video, Principal principal) throws IOException {
         videoService.modifyEmbed(video, principal);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("api/video/delete")
+    @PostMapping("video/delete")
     public ResponseEntity deleteVideo(String id, Principal principal) {
         videoService.removeVideo(id, principal);
         return new ResponseEntity(HttpStatus.OK);

@@ -2,6 +2,7 @@ package com.numble.whatz.application.like.controller;
 
 import com.numble.whatz.application.like.controller.dto.FavoritesDto;
 import com.numble.whatz.application.like.service.FavoriteService;
+import com.numble.whatz.application.video.controller.dto.HomeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -25,8 +26,8 @@ public class FavoriteController {
     }
 
     @GetMapping("favorite")
-    public List<FavoritesDto> favoriteVideo(@PageableDefault(size = 5) Pageable pageable, Principal principal) {
-        List<FavoritesDto> favoritesDtos = favoriteService.getFavoriteVideos(pageable, principal);
+    public HomeDto favoriteVideo(@PageableDefault(size = 5) Pageable pageable, Principal principal) {
+        HomeDto favoritesDtos = favoriteService.getFavoriteVideos(pageable, principal);
         return favoritesDtos;
     }
 }

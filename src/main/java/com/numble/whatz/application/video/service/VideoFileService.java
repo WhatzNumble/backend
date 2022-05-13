@@ -84,7 +84,7 @@ public class VideoFileService {
             favoriteRepository.delete(favorite);
         }
         SubCategory subCategory = video.getSubCategory();
-        subCategoryRepository.delete(subCategory);
+        if (subCategory != null) subCategoryRepository.delete(subCategory);
         videoRepository.delete(video);
     }
 

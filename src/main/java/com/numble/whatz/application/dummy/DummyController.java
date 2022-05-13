@@ -61,6 +61,7 @@ public class DummyController {
                 .content("content1")
                 .member(member1)
                 .title("title1")
+                .showId(0L)
                 .directDir("/WhatzDev/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4.m3u8")
                 .build();
 
@@ -72,6 +73,7 @@ public class DummyController {
                 .content("content2")
                 .member(member1)
                 .title("title2")
+                .showId(1L)
                 .directDir("/WhatzDev/ffaf8b8e-7df5-468c-80b2-fe4cba007be4/ffaf8b8e-7df5-468c-80b2-fe4cba007be4.m3u8")
                 .build();
 
@@ -83,6 +85,7 @@ public class DummyController {
                 .content("content3")
                 .member(member2)
                 .title("title3")
+                .showId(2L)
                 .directDir("/WhatzDev/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516.m3u8")
                 .build();
 
@@ -94,6 +97,7 @@ public class DummyController {
                 .title("title4")
                 .link("https://www.youtube.com/watch?v=_whaAD__3vI")
                 .member(member2)
+                .showId(3L)
                 .content("content4")
                 .build();
 

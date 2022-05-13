@@ -20,8 +20,8 @@ public class DirectVideo extends Videos {
     private String directDir;
 
     @Builder
-    public DirectVideo(String title, String content, Member member, String directDir, Thumbnail thumbnail) {
-        super(title, content, member, thumbnail);
+    public DirectVideo(String title, String content, Member member, String directDir, Thumbnail thumbnail, Long showId) {
+        super(title, content, member, thumbnail, showId);
         this.directDir = directDir;
     }
 

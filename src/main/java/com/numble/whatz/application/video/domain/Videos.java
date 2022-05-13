@@ -30,6 +30,7 @@ public abstract class Videos {
     private Long videoViews;
     private String videoTitle;
     private String videoContent;
+    private Long showId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -42,7 +43,7 @@ public abstract class Videos {
     @OneToMany(mappedBy = "video")
     private List<Favorite> favorites = new ArrayList<>();
 
-    public Videos(String title, String content, Member member, Thumbnail thumbnail) {
+    public Videos(String title, String content, Member member, Thumbnail thumbnail, Long showId) {
         this.videoLike = 0;
         this.videoViews = 0L;
         this.videoCreationDate = LocalDateTime.now();
@@ -50,6 +51,7 @@ public abstract class Videos {
         this.videoContent = content;
         this.member = member;
         this.thumbnail = thumbnail;
+        this.showId = showId;
         member.addVideo(this);
     }
 
@@ -61,5 +63,9 @@ public abstract class Videos {
 
     public void addFavorites(Favorite favorite) {
         this.favorites.add(favorite);
+    }
+
+    public void changeShowId(Long showId) {
+        this.showId = showId;
     }
 }

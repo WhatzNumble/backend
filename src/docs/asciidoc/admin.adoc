@@ -1,0 +1,98 @@
+= API Documment
+:toc: left
+:toclevels: 2
+:sectlinks:
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== 공통사항
+현재 맨 처음 유저 전체 조회 API는 아직 완성되지 않았습니다.
+
+== Admin API
+Admin 관리 페이지 API 입니다.
+
+=== 유저 > dashboard
+회원이 올린 영상의 정보를 확인하는 곳입니다.
+
+==== EndPoint
+admin/user/{id}
+
+==== Path Parameters
+include::{snippets}/admin-user-videos/path-parameters.adoc[]
+
+==== Request Parameters
+include::{snippets}/admin-user-videos/request-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/admin-user-videos/response-fields.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/admin-user-videos/response-body.adoc[]
+---
+
+=== 메인콘텐츠
+메인 콘텐츠 페이지를 조회하는 API 입니다. GET
+
+==== EndPoint
+admin/main
+
+==== Request Parameters
+include::{snippets}/admin-main/request-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/admin-main/response-fields.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/admin-main/response-body.adoc[]
+---
+
+=== 메인콘텐츠 > 수정 - 조회
+메인콘텐츠에서 수정 페이지를 들어갈때,
+영상 하나의 정보를 조회하는 API 입니다. GET
+
+==== EndPoint
+admin/main/{videoId}
+
+==== Path Parameters
+include::{snippets}/admin-main-video/path-parameters.adoc[]
+
+==== Response Fields
+include::{snippets}/admin-main-video/response-fields.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/admin-main-video/response-body.adoc[]
+---
+
+=== 메인콘텐츠 > 수정 - 수정
+show_id 값을 수정한 후
+수정 버튼 눌렀을때 이동할 API 입니다.
+POST 입니다.
+
+==== EndPoint
+admin/main/modify/{videoId}
+
+==== Path Parameters
+include::{snippets}/admin-main-modify/path-parameters.adoc[]
+
+==== Request Parameters
+include::{snippets}/admin-main-modify/request-parameters.adoc[]
+
+
+==== Response HTTP Excample
+include::{snippets}/admin-main-modify/response-body.adoc[]
+---
+
+=== 영상 삭제
+영상을 삭제하는 API 입니다.
+POST 입니다.
+
+==== EndPoint
+admin/main/delete/{videoId}
+
+==== Path Parameters
+include::{snippets}/admin-main-delete/path-parameters.adoc[]
+
+==== Response HTTP Excample
+include::{snippets}/admin-main-delete/response-body.adoc[]
+---

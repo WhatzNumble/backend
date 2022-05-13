@@ -15,7 +15,7 @@ endif::[]
 회원의 정보를 가져오는 컨트롤러
 
 ==== EndPoint
-/api/profile
+/profile
 
 ==== Request
 include::{snippets}/member-profile/http-request.adoc[]

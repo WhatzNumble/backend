@@ -55,7 +55,7 @@ public class MemberDocumentationTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/api/profile")
+                get("/profile")
                         .principal(mockPrincipal)
                         .accept(MediaType.APPLICATION_JSON)
         );

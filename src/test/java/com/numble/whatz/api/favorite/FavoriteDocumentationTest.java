@@ -53,7 +53,7 @@ public class FavoriteDocumentationTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                post("/api/favorite/{id}", 1L)
+                post("/favorite/{id}", 1L)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -76,7 +76,7 @@ public class FavoriteDocumentationTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/api/favorite")
+                get("/favorite")
                         .param("page", "1")
                         .param("size", "3")
                         .accept(MediaType.APPLICATION_JSON)

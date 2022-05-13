@@ -24,19 +24,19 @@ public class VideoViewController {
 
     private final VideoViewService videoService;
 
-    @GetMapping("api/home")
+    @GetMapping("home")
     public HomeDto home(@PageableDefault(size = 5) Pageable pageable, Principal principal) {
         HomeDto homeDto = videoService.findAll(pageable, principal);
         return homeDto;
     }
 
-    @GetMapping("api/video")
+    @GetMapping("video")
     public HomeDto myVideos(@PageableDefault(size = 5)Pageable pageable, Principal principal) {
         HomeDto homeDto = videoService.getMyVideos(pageable, principal);
         return homeDto;
     }
 
-    @GetMapping("api/video/{id}")
+    @GetMapping("video/{id}")
     public VideoDetailDto myVideo(@PathVariable Long id) {
         VideoDetailDto videoDetailDto = videoService.getOneVideo(id);
         return videoDetailDto;
@@ -45,7 +45,7 @@ public class VideoViewController {
     private final VideoStore videoStore;
     private final ThumbnailStore thumbnailStore;
 
-    @PostMapping("api/testVideo")
+    @PostMapping("testVideo")
     public String test(MultipartFile image) throws Exception {
 //        ThumbnailStoreDto save = thumbnailStore.storeThumbnail(image);
 //        System.out.println("save.getCutName() = " + save.getCutName());

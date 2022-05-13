@@ -17,7 +17,7 @@ public class MemberController {
 
     private final CrudMemberService crudMemberService;
 
-    @GetMapping("/api/profile")
+    @GetMapping("/profile")
     public ResponseEntity<MemberDto> getMemberInfo(Principal principal) {
         MemberDto memberDto = crudMemberService.getProfile(principal.getName());
 

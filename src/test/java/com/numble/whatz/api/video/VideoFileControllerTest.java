@@ -62,7 +62,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -99,7 +99,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -136,7 +136,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -173,7 +173,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -210,7 +210,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -247,7 +247,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -284,7 +284,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -321,7 +321,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/direct")
+                multipart("/video/add/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("title", "This is title")
@@ -354,7 +354,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/add/embed")
+                multipart("/video/add/embed")
                         .file(videoThumbnail)
                         .param("link", "임베드 링크")
                         .param("title", "영상 제목")
@@ -388,7 +388,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/modify/direct")
+                multipart("/video/modify/direct")
                         .file(file)
                         .file(videoThumbnail)
                         .param("id", "1")
@@ -423,7 +423,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                multipart("/api/video/modify/embed")
+                multipart("/video/modify/embed")
                         .file(videoThumbnail)
                         .param("id", "1")
                         .param("title", "This is title")
@@ -457,7 +457,7 @@ public class VideoFileControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                post("/api/video/delete")
+                post("/video/delete")
                         .param("id", "1")
                         .accept(MediaType.APPLICATION_JSON)
         );

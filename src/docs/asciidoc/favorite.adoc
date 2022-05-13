@@ -15,7 +15,7 @@ endif::[]
 좋아요 true/false 토글
 
 ==== EndPoint
-/api/favorite/{id}
+/favorite/{id}
 
 ==== Request Path Parameters
 include::{snippets}/toggle-favorite/path-parameters.adoc[]
@@ -30,7 +30,7 @@ include::{snippets}/toggle-favorite/response-body.adoc[]
 내가 관심있는 비디오를 조회합니다.
 
 ==== EndPoint
-/api/favorite
+/favorite
 
 ==== Request Parameters
 include::{snippets}/video-favorite/request-parameters.adoc[]

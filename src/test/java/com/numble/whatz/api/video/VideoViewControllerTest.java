@@ -55,7 +55,7 @@ public class VideoViewControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/api/home")
+                get("/home")
                         .principal(mockPrincipal)
                         .param("page", "1")
                         .param("size", "3")
@@ -94,7 +94,7 @@ public class VideoViewControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/api/video")
+                get("/video")
                         .param("page", "1")
                         .param("size", "3")
                         .accept(MediaType.APPLICATION_JSON)
@@ -133,7 +133,7 @@ public class VideoViewControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/api/video/{id}", 1L)
+                get("/video/{id}", 1L)
                         .accept(MediaType.APPLICATION_JSON)
         );
 

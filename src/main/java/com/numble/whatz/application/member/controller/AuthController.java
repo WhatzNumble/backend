@@ -32,7 +32,7 @@ public class AuthController {
                 new TokenDataModel(Long.parseLong(oAuth2Model.getId()), oAuth2Model.getEmail(), Role.ADMIN))); // 쿠키 이름을 name으로 생성
         cookie.setPath("/");
         response.addCookie(cookie);
-        response.sendRedirect("http://localhost:3000/oauth/redirect");
+        response.sendRedirect("https://whatz.kro.kr/oauth/redirect");
     }
 
     @PostMapping("/member/logout")

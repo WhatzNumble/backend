@@ -19,7 +19,7 @@ import static com.numble.whatz.application.Role.ADMIN;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
@@ -36,9 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
-                .antMatchers("/member/admin", "/member/logout", "/health-check").permitAll()
+                .antMatchers("/api/member/admin", "/api/member/logout", "/api/health-check").permitAll()
                 .antMatchers("/api/admin/**").hasRole(ADMIN.toString())
-                .antMatchers("/docs/**").permitAll()
+                .antMatchers("/api/docs/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .exceptionHandling()

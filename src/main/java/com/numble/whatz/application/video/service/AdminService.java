@@ -4,7 +4,7 @@ import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
-import com.numble.whatz.application.video.controller.MainContentDetailDto;
+import com.numble.whatz.application.video.controller.dto.MainContentDetailDto;
 import com.numble.whatz.application.video.controller.dto.MainContentsDto;
 import com.numble.whatz.application.video.controller.dto.MainContentDto;
 import com.numble.whatz.application.video.controller.dto.UserVideoDto;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

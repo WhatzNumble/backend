@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ${DEPLOY}
+    active: local
     include:
     - oauth
   servlet:
@@ -17,8 +17,8 @@ file:
 
 cloud:
   aws:
-    accessKey: ${AWS_ACCESS_KEY}
-    secretKey: ${AWS_SECRET_KEY}
+    accessKey: DUMMY
+    secretKey: DUMMY
     s3:
       bucket: whatz-s3
 

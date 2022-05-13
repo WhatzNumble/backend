@@ -1,12 +1,11 @@
 package com.numble.whatz.application.video.controller;
 
+import com.numble.whatz.application.video.controller.dto.MainContentDetailDto;
 import com.numble.whatz.application.video.controller.dto.MainContentsDto;
 import com.numble.whatz.application.video.controller.dto.UserVideosDto;
-import com.numble.whatz.application.video.controller.dto.VideoDetailDto;
 import com.numble.whatz.application.video.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -23,31 +22,31 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @GetMapping("admin/user/{id}")
+    @GetMapping("api/admin/user/{id}")
     public UserVideosDto userVideoList(@PathVariable Long id, Pageable pageable) {
         UserVideosDto userVideoDto = adminService.getUserVideos(id, pageable);
         return userVideoDto;
     }
 
-    @GetMapping("admin/main")
+    @GetMapping("api/admin/main")
     public MainContentsDto mainContent(@PageableDefault(size = 10) Pageable pageable) {
         MainContentsDto mainContentDto = adminService.getMainContent(pageable);
         return mainContentDto;
     }
 
-    @GetMapping("admin/main/{videoId}")
+    @GetMapping("api/admin/main/{videoId}")
     public MainContentDetailDto mainContentDetail(@PathVariable Long videoId) {
         MainContentDetailDto mainContentDetailDto = adminService.getDetail(videoId);
         return mainContentDetailDto;
     }
 
-    @PostMapping("admin/main/delete/{videoId}")
+    @PostMapping("api/admin/main/delete/{videoId}")
     public ResponseEntity deleteVideo(@PathVariable Long videoId) {
         adminService.removeVideo(videoId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("admin/main/modify/{videoId}")
+    @PostMapping("api/admin/main/modify/{videoId}")
     public ResponseEntity modifyVideoId(@PathVariable Long videoId, String showId) {
         adminService.modifyVideoId(videoId, showId);
         return new ResponseEntity(HttpStatus.OK);

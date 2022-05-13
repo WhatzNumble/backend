@@ -1,14 +1,11 @@
 package com.numble.whatz.api.video;
 
-import com.numble.whatz.application.thumbnail.domain.Thumbnail;
-import com.numble.whatz.application.video.controller.MainContentDetailDto;
+import com.numble.whatz.application.video.controller.dto.MainContentDetailDto;
 import com.numble.whatz.application.video.controller.dto.MainContentDto;
 import com.numble.whatz.application.video.controller.dto.MainContentsDto;
 import com.numble.whatz.application.video.controller.dto.UserVideoDto;
 import com.numble.whatz.application.video.controller.dto.UserVideosDto;
-import com.numble.whatz.application.video.domain.DirectVideo;
 import com.numble.whatz.application.video.service.AdminService;
-import com.numble.whatz.application.video.service.VideoFileService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -16,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -59,7 +55,7 @@ public class AdminControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/admin/user/{id}", 1L)
+                get("/api/admin/user/{id}", 1L)
                         .param("page", "1")
                         .param("size", "3")
                         .accept(MediaType.APPLICATION_JSON)
@@ -99,7 +95,7 @@ public class AdminControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/admin/main")
+                get("/api/admin/main")
                         .param("page", "1")
                         .param("size", "3")
                         .accept(MediaType.APPLICATION_JSON)
@@ -131,7 +127,7 @@ public class AdminControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/admin/main/{videoId}", 1L)
+                get("/api/admin/main/{videoId}", 1L)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -167,7 +163,7 @@ public class AdminControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                post("/admin/main/delete/{videoId}", 1L)
+                post("/api/admin/main/delete/{videoId}", 1L)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -188,7 +184,7 @@ public class AdminControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                post("/admin/main/modify/{videoId}", 1L)
+                post("/api/admin/main/modify/{videoId}", 1L)
                         .param("showId", "2")
                         .accept(MediaType.APPLICATION_JSON)
         );

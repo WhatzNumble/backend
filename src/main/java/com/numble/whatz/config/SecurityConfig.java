@@ -36,7 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
-                .antMatchers("/api/member/admin", "/api/member/logout", "/api/health-check").permitAll()
+                .antMatchers("/api/member/admin",
+                        "/api/member/logout",
+                        "/api/health-check",
+                        "/api/member/admin")
+                .permitAll()
                 .antMatchers("/api/admin/**").hasRole(ADMIN.toString())
                 .antMatchers("/api/docs/**").permitAll()
                 .anyRequest().authenticated()
@@ -56,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers(
                 "/h2-console/*"
         );

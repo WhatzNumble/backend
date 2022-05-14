@@ -5,8 +5,11 @@ import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
 import com.numble.whatz.application.like.controller.dto.FavoritesDto;
+import com.numble.whatz.application.video.controller.dto.HomeDto;
+import com.numble.whatz.application.video.controller.dto.VideoInfoDto;
 import com.numble.whatz.application.video.domain.Videos;
 import com.numble.whatz.application.video.repository.VideoRepository;
+import com.numble.whatz.application.video.service.VideoViewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -34,7 +38,7 @@ public class FavoriteService {
         Videos videos = getVideos(id);
         List<Favorite> favorites = member.getFavorites();
         for (Favorite favorite : favorites) {
-            if (favorite.getVideo().equals(videos)) {
+            if (favorite.getVideos().equals(videos)) {
                 favoriteRepository.delete(favorite);
                 return false;
             }
@@ -42,21 +46,33 @@ public class FavoriteService {
 
         Favorite favorite = Favorite.builder()
                 .member(member)
-                .video(videos)
+                .videos(videos)
                 .build();
 
         favoriteRepository.save(favorite);
         return true;
     }
 
-    public List<FavoritesDto> getFavoriteVideos(Pageable pageable, Principal principal) {
+    public HomeDto getFavoriteVideos(Pageable pageable, Principal principal) {
         Member member = getMember(principal);
         Page<Favorite> favorites = favoriteRepository.findByMemberId(member.getId(), pageable);
-        List<FavoritesDto> favoritesDtos = favorites.map(favorite ->
-                        new FavoritesDto(favorite.getVideo().getId(), favorite.getVideo().getThumbnail().getExecuteFile()))
-                .getContent();
+        Page<Videos> page = favorites.map(favorite -> favorite.getVideos());
+        List<VideoInfoDto> videoInfoDtos = page.map(videos -> new VideoInfoDto(
+                videos.getSubCategory().getCategory().getName(),
+                videos.getId(),
+                member.getNickName(),
+                member.getThumbnailUrl(),
+                videos.getVideoLike(),
+                videos.getVideoTitle(),
+                videos.getVideoContent(),
+                videos.getVideoCreationDate(),
+                videos.getVideoViews(),
+                videos)).toList();
+        List<Long> likeList = member.getFavorites()
+                .stream().map(Favorite::getVideos).collect(Collectors.toList())
+                .stream().map(Videos::getId).collect(Collectors.toList());
 
-        return favoritesDtos;
+        return new HomeDto(videoInfoDtos, likeList);
     }
 
     private Videos getVideos(Long id) {

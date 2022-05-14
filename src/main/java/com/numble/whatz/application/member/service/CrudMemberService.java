@@ -1,5 +1,9 @@
 package com.numble.whatz.application.member.service;
 
+import com.numble.whatz.application.category.domain.SubCategory;
+import com.numble.whatz.application.category.repository.SubCategoryRepository;
+import com.numble.whatz.application.like.domain.Favorite;
+import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.controller.AdminDto;
 import com.numble.whatz.application.member.controller.MemberDto;
 import com.numble.whatz.application.member.domain.Member;
@@ -10,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -17,6 +22,8 @@ import java.util.Optional;
 public class CrudMemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final SubCategoryRepository subCategoryRepository;
+    private final FavoriteRepository favoriteRepository;
 
     @Transactional
     public void signUp(OAuth2Model oAuth2Model) {
@@ -31,6 +38,15 @@ public class CrudMemberService {
 
     @Transactional
     public void delete(String snsId) {
+        Optional<Member> findMember = memberRepository.findBySnsId(snsId);
+        List<SubCategory> categories = findMember.get().getCategories();
+        List<Favorite> favorites = findMember.get().getFavorites();
+        for (SubCategory category : categories) {
+            subCategoryRepository.delete(category);
+        }
+        for (Favorite favorite : favorites) {
+            favoriteRepository.delete(favorite);
+        }
         memberRepository.deleteBySnsId(snsId);
     }
 

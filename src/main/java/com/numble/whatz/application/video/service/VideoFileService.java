@@ -1,5 +1,9 @@
 package com.numble.whatz.application.video.service;
 
+import com.numble.whatz.application.category.domain.Category;
+import com.numble.whatz.application.category.domain.SubCategory;
+import com.numble.whatz.application.category.repository.CategoryRepository;
+import com.numble.whatz.application.category.repository.SubCategoryRepository;
 import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.domain.Member;
@@ -32,6 +36,8 @@ public class VideoFileService {
     private final MemberRepository memberRepository;
     private final ThumbnailStoreExUtil thumbnailStore;
     private final FavoriteRepository favoriteRepository;
+    private final SubCategoryRepository subCategoryRepository;
+    private final CategoryRepository categoryRepository;
 
     private static long sequence = 0L;
 
@@ -45,6 +51,8 @@ public class VideoFileService {
 
         DirectVideo direct = getDirectVideo(video, executeFileName, member, storeThumbnail);
 
+        saveCategory(video.getCategory(), direct);
+
         videoRepository.save(direct);
     }
 
@@ -55,6 +63,8 @@ public class VideoFileService {
         ThumbnailStoreDto storeThumbnail = thumbnailStore.storeThumbnail(video.getVideoThumbnail());
 
         EmbedVideo embed = getEmbedVideo(video, member, storeThumbnail);
+
+        saveCategory(video.getCategory(), embed);
 
         videoRepository.save(embed);
     }
@@ -73,6 +83,8 @@ public class VideoFileService {
         for (Favorite favorite : favorites) {
             favoriteRepository.delete(favorite);
         }
+        SubCategory subCategory = video.getSubCategory();
+        if (subCategory != null) subCategoryRepository.delete(subCategory);
         videoRepository.delete(video);
     }
 
@@ -81,12 +93,15 @@ public class VideoFileService {
         Member member = getMember(principal);
         Videos videos = getVideos(video.getId());
         checkOwner(videos, member);
+
         String modifyVideo = videoStore.modifyVideo(video.getFile(), ((DirectVideo) videos).getDirectDir());
 
         ThumbnailStoreDto thumbnail = thumbnailStore.modifyThumbnail(video.getVideoThumbnail(), videos.getThumbnail());
 
         ((DirectVideo) videos).modify(modifyVideo, video.getTitle(),
                 video.getContent(), thumbnail.getCutName(), thumbnail.getExecuteName());
+
+        modifyCategory(video.getCategory(), videos);
     }
 
     @Transactional
@@ -99,6 +114,30 @@ public class VideoFileService {
 
         ((EmbedVideo) videos).modify(video.getLink(), video.getTitle(),
                 video.getContent(), thumbnail.getCutName(), thumbnail.getExecuteName());
+
+        modifyCategory(video.getCategory(), videos);
+    }
+
+    private void saveCategory(String categoryName, Videos videos) {
+        Optional<Category> category = categoryRepository.findByName(categoryName);
+        if (!category.isEmpty()) {
+            SubCategory subCategory = new SubCategory(category.get(), videos);
+            subCategoryRepository.save(subCategory);
+            videos.setSubCategory(subCategory);
+        }
+    }
+
+    private void modifyCategory(String categoryName, Videos videos) {
+        SubCategory subCategory = videos.getSubCategory();
+        if (subCategory != null) {
+            Category category = subCategory.getCategory();
+            if (categoryName.isEmpty()) subCategoryRepository.delete(subCategory);
+            else if (!category.getName().equals(categoryName)) {
+                Optional<Category> findCategory = categoryRepository.findByName(categoryName);
+                if (findCategory.isEmpty()) subCategoryRepository.delete(subCategory);
+                else subCategory.setCategory(findCategory.get());
+            }
+        }
     }
 
     private DirectVideo getDirectVideo(DirectDto video, String executeFileName, Member member, ThumbnailStoreDto storeThumbnail) {

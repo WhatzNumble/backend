@@ -1,11 +1,8 @@
-package com.numble.whatz.api.member;
+package com.numble.whatz.api.category;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.numble.whatz.application.member.controller.MemberDto;
-import com.numble.whatz.application.member.service.CrudMemberService;
-import com.numble.whatz.application.video.controller.dto.HomeDto;
+import com.numble.whatz.application.category.service.CategoryService;
+import com.numble.whatz.application.video.service.VideoViewService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,7 +13,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentRequest;
 import static com.numble.whatz.api.utils.ApiDocumentUtils.getDocumentResponse;
@@ -24,7 +22,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -35,59 +32,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @WithMockUser
-public class MemberDocumentationTest {
+public class CategoryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @MockBean
-    private CrudMemberService crudMemberService;
+    private CategoryService categoryService;
 
     @Test
-    public void getMemberInfo() throws Exception {
-        MemberDto memberDto = new MemberDto("email1", "nickName1", "thumbnail1");
+    public void myVideo() throws Exception {
+        //given
+        List<String> list = new ArrayList<>();
+        list.add("취향1");
+        list.add("취향2");
+        list.add("취향3");
+        list.add("취향4");
+        list.add("취향5");
 
-        doReturn(memberDto).when(crudMemberService).getProfile(any());
-        Principal mockPrincipal = Mockito.mock(Principal.class);
-        Mockito.when(mockPrincipal.getName()).thenReturn("me");
+        doReturn(list).when(categoryService).findAll();
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/api/profile")
-                        .principal(mockPrincipal)
+                get("/api/cate/all")
                         .accept(MediaType.APPLICATION_JSON)
         );
 
         //then
         result.andExpect(status().isOk())
-                .andDo(document("member-profile", // (4)
+                .andDo(document("cate-all", // (4)
                         getDocumentRequest(),
                         getDocumentResponse(),
                         responseFields(
-                                fieldWithPath("email").description("이메일"),
-                                fieldWithPath("nickName").description("닉네임"),
-                                fieldWithPath("thumbnailUrl").description("썸네일 경로")
+                                fieldWithPath("[]").description("카테고리 이름")
                         )
-                ));
-    }
-
-    @Test
-    public void logoutTest() throws Exception {
-
-        //when
-        ResultActions result = this.mockMvc.perform(
-                post("/api/member/logout")
-                        .accept(MediaType.APPLICATION_JSON)
-        );
-
-        //then
-        result.andExpect(status().isNoContent())
-                .andDo(document("member-logout", // (4)
-                        getDocumentRequest(),
-                        getDocumentResponse()
                 ));
     }
 }

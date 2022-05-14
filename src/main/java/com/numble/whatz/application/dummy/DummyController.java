@@ -1,6 +1,8 @@
 package com.numble.whatz.application.dummy;
 
 import com.numble.whatz.application.Role;
+import com.numble.whatz.application.category.domain.Category;
+import com.numble.whatz.application.category.repository.CategoryRepository;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
 import com.numble.whatz.application.thumbnail.domain.Thumbnail;
@@ -21,10 +23,29 @@ public class DummyController {
     private final VideoRepository videoRepository;
     private final MemberRepository memberRepository;
     private final ThumbnailRepository thumbnailRepository;
+    private final CategoryRepository categoryRepository;
 
 
     @PostConstruct
     public void dummyData() {
+        Category category1 = new Category("취향1");
+        Category category2 = new Category("취향2");
+        Category category3 = new Category("취향3");
+        Category category4 = new Category("취향4");
+        Category category5 = new Category("취향5");
+        Category category6 = new Category("취향6");
+        Category category7 = new Category("취향7");
+        Category category8 = new Category("취향8");
+
+        categoryRepository.save(category1);
+        categoryRepository.save(category2);
+        categoryRepository.save(category3);
+        categoryRepository.save(category4);
+        categoryRepository.save(category5);
+        categoryRepository.save(category6);
+        categoryRepository.save(category7);
+        categoryRepository.save(category8);
+
         Member member1 = Member.builder()
                 .email("email1")
                 .nickName("user1")

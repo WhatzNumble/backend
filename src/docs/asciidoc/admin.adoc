@@ -16,7 +16,7 @@ Admin 관리 페이지 API 입니다.
 회원이 올린 영상의 정보를 확인하는 곳입니다.
 
 ==== EndPoint
-admin/user/{id}
+/api/admin/user/{id}
 
 ==== Path Parameters
 include::{snippets}/admin-user-videos/path-parameters.adoc[]
@@ -35,7 +35,7 @@ include::{snippets}/admin-user-videos/response-body.adoc[]
 메인 콘텐츠 페이지를 조회하는 API 입니다. GET
 
 ==== EndPoint
-admin/main
+/api/admin/main
 
 ==== Request Parameters
 include::{snippets}/admin-main/request-parameters.adoc[]
@@ -52,7 +52,7 @@ include::{snippets}/admin-main/response-body.adoc[]
 영상 하나의 정보를 조회하는 API 입니다. GET
 
 ==== EndPoint
-admin/main/{videoId}
+/api/admin/main/{videoId}
 
 ==== Path Parameters
 include::{snippets}/admin-main-video/path-parameters.adoc[]
@@ -70,7 +70,7 @@ show_id 값을 수정한 후
 POST 입니다.
 
 ==== EndPoint
-admin/main/modify/{videoId}
+/api/admin/main/modify/{videoId}
 
 ==== Path Parameters
 include::{snippets}/admin-main-modify/path-parameters.adoc[]
@@ -88,7 +88,7 @@ include::{snippets}/admin-main-modify/response-body.adoc[]
 POST 입니다.
 
 ==== EndPoint
-admin/main/delete/{videoId}
+/api/admin/main/delete/{videoId}
 
 ==== Path Parameters
 include::{snippets}/admin-main-delete/path-parameters.adoc[]

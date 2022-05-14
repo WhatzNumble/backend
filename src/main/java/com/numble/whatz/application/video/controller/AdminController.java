@@ -1,12 +1,11 @@
 package com.numble.whatz.application.video.controller;
 
+import com.numble.whatz.application.video.controller.dto.MainContentDetailDto;
 import com.numble.whatz.application.video.controller.dto.MainContentsDto;
 import com.numble.whatz.application.video.controller.dto.UserVideosDto;
-import com.numble.whatz.application.video.controller.dto.VideoDetailDto;
 import com.numble.whatz.application.video.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;

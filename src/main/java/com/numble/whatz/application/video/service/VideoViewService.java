@@ -43,7 +43,7 @@ public class VideoViewService {
             List<Favorite> favorites = member.getFavorites();
             List<Long> likeList = new ArrayList<>();
             for (Favorite favorite : favorites) {
-                likeList.add(favorite.getVideo().getId());
+                likeList.add(favorite.getVideos().getId());
             }
             homeDto.setLikeList(likeList);
         }
@@ -54,6 +54,7 @@ public class VideoViewService {
         Member member = getMember(principal);
         Page<Videos> page = videoRepository.findByMemberWithPageable(member, pageable);
         List<VideoInfoDto> videoInfoDtos = page.map(videos -> new VideoInfoDto(
+                videos.getSubCategory().getCategory().getName(),
                 videos.getId(),
                 member.getNickName(),
                 member.getThumbnailUrl(),
@@ -64,7 +65,7 @@ public class VideoViewService {
                 videos.getVideoViews(),
                 videos)).toList();
         List<Long> likeList = member.getFavorites()
-                .stream().map(Favorite::getVideo).collect(Collectors.toList())
+                .stream().map(Favorite::getVideos).collect(Collectors.toList())
                 .stream().map(Videos::getId).collect(Collectors.toList());
 
         return new HomeDto(videoInfoDtos, likeList);
@@ -87,6 +88,7 @@ public class VideoViewService {
                 .videoLike(videos.getVideoLike())
                 .profile(videos.getMember().getThumbnailUrl())
                 .videoThumbnail(videos.getThumbnail().getCutFile())
+                .category(videos.getSubCategory().getCategory().getName())
                 .build();
         if (videos instanceof DirectVideo) videoDetailDto.setDirectDir(((DirectVideo) videos).getDirectDir());
         else videoDetailDto.setEmbedLink(((EmbedVideo) videos).getLink());

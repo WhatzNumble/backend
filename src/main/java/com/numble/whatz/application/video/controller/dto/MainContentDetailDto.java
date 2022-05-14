@@ -1,4 +1,4 @@
-package com.numble.whatz.application.video.controller;
+package com.numble.whatz.application.video.controller.dto;
 
 import com.numble.whatz.application.video.domain.DirectVideo;
 import com.numble.whatz.application.video.domain.EmbedVideo;

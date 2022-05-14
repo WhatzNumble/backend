@@ -1,10 +1,12 @@
 package com.numble.whatz.application.video.service;
 
+import com.numble.whatz.application.category.domain.SubCategory;
+import com.numble.whatz.application.category.repository.SubCategoryRepository;
 import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.like.repository.FavoriteRepository;
 import com.numble.whatz.application.member.domain.Member;
 import com.numble.whatz.application.member.repository.MemberRepository;
-import com.numble.whatz.application.video.controller.MainContentDetailDto;
+import com.numble.whatz.application.video.controller.dto.MainContentDetailDto;
 import com.numble.whatz.application.video.controller.dto.MainContentsDto;
 import com.numble.whatz.application.video.controller.dto.MainContentDto;
 import com.numble.whatz.application.video.controller.dto.UserVideoDto;
@@ -20,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class AdminService {
     private final VideoRepository videoRepository;
     private final MemberRepository memberRepository;
     private final FavoriteRepository favoriteRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     public UserVideosDto getUserVideos(Long id, Pageable pageable) {
         Member member = getMember(id);
@@ -82,6 +84,8 @@ public class AdminService {
         for (Favorite favorite : favorites) {
             favoriteRepository.delete(favorite);
         }
+        SubCategory subCategory = videos.getSubCategory();
+        if (subCategory != null) subCategoryRepository.delete(subCategory);
         videoRepository.delete(videos);
     }
 

@@ -1,6 +1,7 @@
 package com.numble.whatz.application.member.domain;
 
 import com.numble.whatz.application.Role;
+import com.numble.whatz.application.category.domain.SubCategory;
 import com.numble.whatz.application.like.domain.Favorite;
 import com.numble.whatz.application.video.domain.Videos;
 import lombok.AccessLevel;
@@ -45,6 +46,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Favorite> favorites = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<SubCategory> categories = new ArrayList<>();
 
     public void addVideo(Videos video) {
         this.videos.add(video);

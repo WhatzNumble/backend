@@ -55,7 +55,7 @@ public class VideoViewControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/home")
+                get("/api/home")
                         .principal(mockPrincipal)
                         .param("page", "1")
                         .param("size", "3")
@@ -82,6 +82,7 @@ public class VideoViewControllerTest {
                                 fieldWithPath("videos[].videoViews").description("조회수"),
                                 fieldWithPath("videos[].directDir").description("직접 업로드 경로").optional(),
                                 fieldWithPath("videos[].embedLink").description("임베드 링크").optional(),
+                                fieldWithPath("videos[].category").description("영상 카테고리").optional(),
                                 fieldWithPath("likeList[]").description("로그인 회원의 관심 리스트")
                         )
                 ));
@@ -94,7 +95,7 @@ public class VideoViewControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/video")
+                get("/api/video")
                         .param("page", "1")
                         .param("size", "3")
                         .accept(MediaType.APPLICATION_JSON)
@@ -120,6 +121,7 @@ public class VideoViewControllerTest {
                                 fieldWithPath("videos[].videoViews").description("조회수"),
                                 fieldWithPath("videos[].directDir").description("직접 업로드 경로").optional(),
                                 fieldWithPath("videos[].embedLink").description("임베드 링크").optional(),
+                                fieldWithPath("videos[].category").description("영상 카테고리").optional(),
                                 fieldWithPath("likeList[]").description("로그인 회원의 관심 리스트")
                         )
                 ));
@@ -133,7 +135,7 @@ public class VideoViewControllerTest {
 
         //when
         ResultActions result = this.mockMvc.perform(
-                get("/video/{id}", 1L)
+                get("/api/video/{id}", 1L)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -156,6 +158,7 @@ public class VideoViewControllerTest {
                                 fieldWithPath("videoViews").description("조회수"),
                                 fieldWithPath("directDir").description("직접 업로드 경로").optional(),
                                 fieldWithPath("embedLink").description("임베드 링크").optional(),
+                                fieldWithPath("category").description("영상 카테고리").optional(),
                                 fieldWithPath("videoThumbnail").description("영상 썸네일")
                         )
                 ));
@@ -177,6 +180,7 @@ public class VideoViewControllerTest {
                 .views(20L)
                 .directDir("/WhatzDev/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4/d6fb2d78-a6e6-4c11-ab91-f7d00dac52d4.m3u8")
                 .embedLink(null)
+                .category("category1")
                 .build();
         VideoInfoDto homeDto2 = VideoInfoDto.builder()
                 .videoId(2L)
@@ -189,6 +193,7 @@ public class VideoViewControllerTest {
                 .views(20L)
                 .directDir("/WhatzDev/ffaf8b8e-7df5-468c-80b2-fe4cba007be4/ffaf8b8e-7df5-468c-80b2-fe4cba007be4.m3u8")
                 .embedLink(null)
+                .category("category1")
                 .build();
         VideoInfoDto homeDto3 = VideoInfoDto.builder()
                 .videoId(3L)
@@ -201,6 +206,7 @@ public class VideoViewControllerTest {
                 .views(20L)
                 .directDir("/WhatzDev/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516/5ebfbf21-4a4b-4361-b00b-d03d3b1d6516.m3u8")
                 .embedLink(null)
+                .category("category2")
                 .build();
         VideoInfoDto homeDto4 = VideoInfoDto.builder()
                 .videoId(4L)
@@ -212,6 +218,7 @@ public class VideoViewControllerTest {
                 .videoDate(LocalDateTime.now())
                 .views(20L)
                 .directDir(null)
+                .category("category2")
                 .embedLink("https://www.youtube.com/watch?v=_whaAD__3vI")
                 .build();
         List<VideoInfoDto> videoInfoDtos = new ArrayList<>();
@@ -226,6 +233,7 @@ public class VideoViewControllerTest {
 
     private VideoDetailDto getVideoInfoDto() {
         VideoDetailDto videoInfoDto = VideoDetailDto.builder()
+                .category("category1")
                 .videoId(1L)
                 .videoContent("content1")
                 .videoTitle("title1")

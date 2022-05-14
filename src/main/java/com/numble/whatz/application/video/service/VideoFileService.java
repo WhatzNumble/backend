@@ -123,6 +123,7 @@ public class VideoFileService {
         if (!category.isEmpty()) {
             SubCategory subCategory = new SubCategory(category.get(), videos);
             subCategoryRepository.save(subCategory);
+            videos.setSubCategory(subCategory);
         }
     }
 

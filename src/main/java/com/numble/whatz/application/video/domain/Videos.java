@@ -45,7 +45,6 @@ public abstract class Videos {
     private List<Favorite> favorites = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 
     public Videos(String title, String content, Member member, Thumbnail thumbnail, Long showId) {
@@ -72,5 +71,9 @@ public abstract class Videos {
 
     public void changeShowId(Long showId) {
         this.showId = showId;
+    }
+
+    public void setSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
     }
 }

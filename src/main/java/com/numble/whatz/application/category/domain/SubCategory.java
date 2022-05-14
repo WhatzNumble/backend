@@ -25,7 +25,8 @@ public class SubCategory {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne(mappedBy = "subCategory", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "video_id")
     private Videos videos;
 
     public SubCategory() {

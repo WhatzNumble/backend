@@ -27,19 +27,21 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         OAuth2User principal = (OAuth2User) authentication.getPrincipal();
         OAuth2Model oAuth2Model = toOAuth2Model(principal);
 
-        if(!crudMemberService.isMember(oAuth2Model.getId()))
+        if(!crudMemberService.isMember(oAuth2Model.getId())) {
             crudMemberService.signUp(oAuth2Model);
-
-        generateAccessToken(response, oAuth2Model);
+            generateAccessToken(response, oAuth2Model, true);
+        } else {
+            generateAccessToken(response, oAuth2Model, false);
+        }
     }
 
-    private void generateAccessToken(HttpServletResponse response, OAuth2Model oAuth2Model) throws IOException {
+    private void generateAccessToken(HttpServletResponse response, OAuth2Model oAuth2Model, boolean condition) throws IOException {
         String token = jwtTokenProvider.createToken(
                 new TokenDataModel(Long.parseLong(oAuth2Model.getId()), oAuth2Model.getEmail(), Role.MEMBER));
         Cookie cookie = new Cookie("access-token", token); // 쿠키 이름을 name으로 생성
         cookie.setPath("/");
         response.addCookie(cookie);
-        response.sendRedirect("https://whatz.kro.kr/oauth/redirect");
+        response.sendRedirect("https://whatz.kro.kr/oauth/redirect?signup=" + condition);
     }
 
     private OAuth2Model toOAuth2Model(OAuth2User principal) {

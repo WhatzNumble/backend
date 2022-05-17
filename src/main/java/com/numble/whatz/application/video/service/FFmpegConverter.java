@@ -19,8 +19,9 @@ public class FFmpegConverter {
     // brew 설치했을시 경로
     public void convert(String storeFilename, String executeFilename) throws VideoStoreException {
         try {
-            FFmpeg ffmpeg = new FFmpeg("/opt/homebrew/Cellar/ffmpeg/5.0.1/bin/ffmpeg");
-            FFprobe ffprobe = new FFprobe("/opt/homebrew/Cellar/ffmpeg/5.0.1/bin/ffprobe");
+
+            FFmpeg ffmpeg = new FFmpeg("/home/linuxbrew/.linuxbrew/Cellar/ffmpeg/5.0.1/bin/ffmpeg");
+            FFprobe ffprobe = new FFprobe("/home/linuxbrew/.linuxbrew/Cellar/ffmpeg/5.0.1/bin/ffprobe");
 
             FFmpegBuilder builder = new FFmpegBuilder()
                     .setInput(getFullPathMp4File(storeFilename))

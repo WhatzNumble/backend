@@ -233,7 +233,6 @@ public class VideoViewControllerTest {
 
     private VideoDetailDto getVideoInfoDto() {
         VideoDetailDto videoInfoDto = VideoDetailDto.builder()
-                .category("category1")
                 .videoId(1L)
                 .videoContent("content1")
                 .videoTitle("title1")

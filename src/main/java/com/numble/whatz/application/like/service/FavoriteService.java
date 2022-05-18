@@ -58,7 +58,6 @@ public class FavoriteService {
         Page<Favorite> favorites = favoriteRepository.findByMemberId(member.getId(), pageable);
         Page<Videos> page = favorites.map(favorite -> favorite.getVideos());
         List<VideoInfoDto> videoInfoDtos = page.map(videos -> new VideoInfoDto(
-                videos.getSubCategory().getCategory().getName(),
                 videos.getId(),
                 member.getNickName(),
                 member.getThumbnailUrl(),

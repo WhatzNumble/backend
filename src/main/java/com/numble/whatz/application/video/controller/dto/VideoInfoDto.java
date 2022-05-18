@@ -25,7 +25,7 @@ public class VideoInfoDto {
     private String category;
 
     @Builder
-    public VideoInfoDto(String category, Long videoId, String nickname, String profile, int likes, String title, String content, LocalDateTime videoDate, long views, String directDir, String embedLink) {
+    public VideoInfoDto(Long videoId, String nickname, String profile, int likes, String title, String content, LocalDateTime videoDate, long views, String directDir, String embedLink) {
         this.videoId = videoId;
         this.nickname = nickname;
         this.profile = profile;
@@ -36,10 +36,9 @@ public class VideoInfoDto {
         this.videoViews = views;
         this.directDir = directDir;
         this.embedLink = embedLink;
-        this.category = category;
     }
 
-    public VideoInfoDto(String category, Long videoId, String nickname, String profile, Integer videoLike, String videoTitle, String videoContent, LocalDateTime videoCreationDate, Long videoViews, Videos DorE) {
+    public VideoInfoDto(Long videoId, String nickname, String profile, Integer videoLike, String videoTitle, String videoContent, LocalDateTime videoCreationDate, Long videoViews, Videos DorE) {
         this.videoId = videoId;
         this.nickname = nickname;
         this.profile = profile;
@@ -48,7 +47,6 @@ public class VideoInfoDto {
         this.videoContent = videoContent;
         this.videoCreationDate = videoCreationDate;
         this.videoViews = videoViews;
-        this.category = category;
         if (DorE instanceof DirectVideo) this.directDir = ((DirectVideo) DorE).getDirectDir();
         else this.embedLink = ((EmbedVideo) DorE).getLink();
     }

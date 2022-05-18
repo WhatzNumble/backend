@@ -54,7 +54,6 @@ public class VideoViewService {
         Member member = getMember(principal);
         Page<Videos> page = videoRepository.findByMemberWithPageable(member, pageable);
         List<VideoInfoDto> videoInfoDtos = page.map(videos -> new VideoInfoDto(
-                videos.getSubCategory().getCategory().getName(),
                 videos.getId(),
                 member.getNickName(),
                 member.getThumbnailUrl(),
@@ -88,7 +87,6 @@ public class VideoViewService {
                 .videoLike(videos.getVideoLike())
                 .profile(videos.getMember().getThumbnailUrl())
                 .videoThumbnail(videos.getThumbnail().getCutFile())
-                .category(videos.getSubCategory().getCategory().getName())
                 .build();
         if (videos instanceof DirectVideo) videoDetailDto.setDirectDir(((DirectVideo) videos).getDirectDir());
         else videoDetailDto.setEmbedLink(((EmbedVideo) videos).getLink());

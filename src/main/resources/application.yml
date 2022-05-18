@@ -1,8 +1,9 @@
 spring:
   profiles:
-    active: ${DEPLOY}
+    active: local
     include:
     - oauth
+    - awskey
   servlet:
     multipart:
       max-file-size: 20MB # 추후 변경
@@ -15,10 +16,10 @@ JWT:
 file:
   dir: /Users/seungjulee/study/demo/file/
 
-cloud:
-  aws:
-    accessKey: ${AWS_ACCESS_KEY}
-    secretKey: ${AWS_SECRET_KEY}
-    s3:
-      bucket: whatz-s3
+#cloud:
+#  aws:
+#    accessKey: DUMMY
+#    secretKey: DUMMY
+#    s3:
+#      bucket: whatz-s3
 
